@@ -35,6 +35,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+    <NuGetPackageImportStamp>bc133ba4</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -130,12 +131,24 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\sqlite.redist.3.8.4.2\build\native\sqlite.redist.targets" Condition="Exists('..\packages\sqlite.redist.3.8.4.2\build\native\sqlite.redist.targets')" />
+    <Import Project="..\packages\sqlite.3.8.4.2\build\native\sqlite.targets" Condition="Exists('..\packages\sqlite.3.8.4.2\build\native\sqlite.targets')" />
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="msvc2013" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\sqlite.redist.3.8.4.2\build\native\sqlite.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sqlite.redist.3.8.4.2\build\native\sqlite.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sqlite.3.8.4.2\build\native\sqlite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sqlite.3.8.4.2\build\native\sqlite.targets'))" />
+  </Target>
 </Project>

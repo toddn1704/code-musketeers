@@ -28,7 +28,7 @@ class Ui_StuffFinderClass
 {
 public:
     QWidget *centralWidget;
-    QPushButton *pushButton;
+    QPushButton *Create_db;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -41,13 +41,13 @@ public:
         StuffFinderClass->resize(600, 400);
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(420, 290, 93, 28));
+        Create_db = new QPushButton(centralWidget);
+        Create_db->setObjectName(QStringLiteral("Create_db"));
+        Create_db->setGeometry(QRect(240, 160, 93, 28));
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 26));
+        menuBar->setGeometry(QRect(0, 0, 600, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
@@ -68,7 +68,7 @@ public:
     void retranslateUi(QMainWindow *StuffFinderClass)
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
-        pushButton->setText(QApplication::translate("StuffFinderClass", "Hello!", 0));
+        Create_db->setText(QApplication::translate("StuffFinderClass", "Create DB", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 
