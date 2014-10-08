@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="Create_db">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>160</y>
+      <x>1000</x>
+      <y>630</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -80,6 +80,9 @@
      </rect>
     </property>
    </widget>
+   <zorder>tabWidget</zorder>
+   <zorder>graphicsView</zorder>
+   <zorder>Create_db</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -87,7 +90,7 @@
      <x>0</x>
      <y>0</y>
      <width>1206</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -53,8 +53,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         Create_db = new QPushButton(centralWidget);
         Create_db->setObjectName(QStringLiteral("Create_db"));
-        pushButton->setGeometry(QRect(1050, 640, 93, 28));
-        Create_db->setGeometry(QRect(240, 160, 93, 28));
+        Create_db->setGeometry(QRect(1000, 630, 93, 28));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setGeometry(QRect(30, 70, 331, 551));
@@ -74,6 +73,9 @@ public:
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(390, 90, 671, 531));
         StuffFinderClass->setCentralWidget(centralWidget);
+        tabWidget->raise();
+        graphicsView->raise();
+        Create_db->raise();
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1206, 26));
@@ -91,7 +93,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);
