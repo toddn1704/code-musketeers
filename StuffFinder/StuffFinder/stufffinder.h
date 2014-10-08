@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_stufffinder.h"
+#include <QMessageBox>
 
 class StuffFinder : public QMainWindow
 {
@@ -14,6 +15,10 @@ public:
 
 private:
 	Ui::StuffFinderClass ui;
+
+public slots:
+void on_Create_db_clicked();
+
 };
 
 #endif // STUFFFINDER_H

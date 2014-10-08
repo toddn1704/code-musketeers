@@ -32,13 +32,17 @@ class Ui_StuffFinderClass
 {
 public:
     QWidget *centralWidget;
-    QPushButton *Create_db;
+<<<<<<< HEAD
+    QPushButton *pushButton;
     QTabWidget *tabWidget;
     QWidget *tab;
     QListWidget *listWidget;
     QWidget *tab_2;
     QListView *listView;
     QGraphicsView *graphicsView;
+=======
+    QPushButton *Create_db;
+>>>>>>> 8ebf2c0bc3b4fa4b47a992af634a81322fe5b94d
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -51,10 +55,10 @@ public:
         StuffFinderClass->resize(1206, 751);
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        Create_db = new QPushButton(centralWidget);
-        Create_db->setObjectName(QStringLiteral("Create_db"));
+<<<<<<< HEAD
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(1050, 640, 93, 28));
-        Create_db->setGeometry(QRect(240, 160, 93, 28));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setGeometry(QRect(30, 70, 331, 551));
@@ -77,6 +81,15 @@ public:
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1206, 26));
+=======
+        Create_db = new QPushButton(centralWidget);
+        Create_db->setObjectName(QStringLiteral("Create_db"));
+        Create_db->setGeometry(QRect(240, 160, 93, 28));
+        StuffFinderClass->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(StuffFinderClass);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 600, 21));
+>>>>>>> 8ebf2c0bc3b4fa4b47a992af634a81322fe5b94d
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
@@ -100,9 +113,13 @@ public:
     void retranslateUi(QMainWindow *StuffFinderClass)
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
-        Create_db->setText(QApplication::translate("StuffFinderClass", "Create DB", 0));
+<<<<<<< HEAD
+        pushButton->setText(QApplication::translate("StuffFinderClass", "Hello!", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "Tab 1", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Tab 2", 0));
+=======
+        Create_db->setText(QApplication::translate("StuffFinderClass", "Create DB", 0));
+>>>>>>> 8ebf2c0bc3b4fa4b47a992af634a81322fe5b94d
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 
