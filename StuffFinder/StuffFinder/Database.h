@@ -3,9 +3,9 @@
 
 class Database
 {
-public:
+	public:
 
-private:
+	private:
 
 };
 
