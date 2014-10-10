@@ -1,6 +1,7 @@
 #include "stufffinder.h"
 #include "sqlite3.h"
 
+
 StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -18,7 +19,7 @@ void StuffFinder::on_Create_db_clicked()
 	sqlite3 *db;
 	char *zErrMsg = 0;
 	int rc;
-
+	
 	rc = sqlite3_open("test.db", &db);
 
 	if (rc)
