@@ -61,7 +61,7 @@ void Database::Create_Database()
 	char *sql;
 	char *zErrMsg = 0;
 
-	/* Create SQL Table String 
+	/* Create SQL Table String
 	   This is just a test item table
 	*/
 	sql = "CREATE TABLE ITEM("  \

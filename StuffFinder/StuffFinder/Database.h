@@ -14,7 +14,7 @@ class Database
 		// Not sure this is the best way to do this
 		std::vector<std::vector<std::string>> qry_result;
 	private:
-		void Create_Database();	//Creates Tables for Database
+		void Create_Database();	// Creates Tables for Database
 		sqlite3 *db;
 		
 };
