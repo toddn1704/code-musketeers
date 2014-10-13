@@ -69,6 +69,7 @@ void Database::Create_Database()
 		"CONTAINER      INT          NOT NULL," \
 		"NAME           TEXT         NOT NULL," \
 		"DESCRIPTION    TEXT," \
+		"CATAGORY    TEXT            NOT NULL," \
 		"QUANTITY        INT         NOT NULL," \
 		"TRACKER         INT );";
 	qDebug() << sql;
