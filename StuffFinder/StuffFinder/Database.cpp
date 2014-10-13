@@ -66,12 +66,22 @@ void Database::Create_Database()
 	*/
 	sql = "CREATE TABLE ITEM("  \
 		"ITEM_ID INT PRIMARY KEY     NOT NULL," \
-		"CONTAINER      INT          NOT NULL," \
-		"NAME           TEXT         NOT NULL," \
-		"DESCRIPTION    TEXT," \
+		"CONTAINER_ID      INT          NOT NULL," \
+		"ITEM_NAME           TEXT         NOT NULL," \
+		"ITEM_DESCRIPTION    TEXT," \
 		"CATAGORY    TEXT            NOT NULL," \
 		"QUANTITY        INT         NOT NULL," \
-		"TRACKER         INT );";
+		"TRACKER         INT );"\
+
+		"CREATE TABLE CONTAINER("  \
+		"CONTAINER_ID INT PRIMARY KEY     NOT NULL," \
+		"CONTAINER_NAME      TEXT         NOT NULL," \
+		"CONTAINER_DESCRIPTION    TEXT);"\
+
+		"CREATE TABLE LAYOUT("  \
+		"LAYOUT_ID INT PRIMARY KEY     NOT NULL," \
+		"LAYOUT_NAME           TEXT         NOT NULL," \
+		"LAYOUT_DESCRIPTION    TEXT);";
 	qDebug() << sql;
 	rc = sqlite3_exec(db, sql, Table_callback, 0,&zErrMsg);
 	if (rc != SQLITE_OK)
