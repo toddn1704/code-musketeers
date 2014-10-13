@@ -3,6 +3,7 @@
 #include "sqlite3.h"
 #include <vector>
 #include <string>
+#include <stdio.h>
 
 class Database
 {
@@ -21,6 +22,7 @@ class Database
 		std::vector<std::vector<std::string>> qry_result;
 	private:
 		void Create_Database();	// Creates Tables for Database
+		void Delete_Database(){ remove("test2.db"); };
 
 		sqlite3 *db;
 		
