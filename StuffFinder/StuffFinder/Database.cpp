@@ -2,6 +2,7 @@
 #include "qdebug.h"
 
 int Select_callback(void *param, int argc, char **argv, char **azColName);
+int Table_callback(void *param, int argc, char **argv, char **azColName);
 
 Database::Database()
 {
@@ -34,6 +35,7 @@ Database::Database()
 	if (qry_result[0][0] == "0")
 	{
 		qDebug() << "Database is empty";
+		Create_Database();
 	}
 
 
@@ -50,7 +52,60 @@ Database::~Database()
 {
 	sqlite3_close(db);
 	qDebug() << "Closed database successfully.";
+	Delete_Database();
+	qDebug() << "Deleted database";
 
+}
+
+void Database::Create_Database()
+{
+	int rc;
+	char *sql;
+	char *zErrMsg = 0;
+
+	/* Create SQL Table String
+	   This is just a test item table
+	*/
+	sql = "CREATE TABLE ITEM("  \
+		"ITEM_ID INT PRIMARY KEY     NOT NULL," \
+		"CONTAINER_ID      INT          NOT NULL," \
+		"ITEM_NAME           TEXT         NOT NULL," \
+		"ITEM_DESCRIPTION    TEXT," \
+		"CATAGORY    TEXT            NOT NULL," \
+		"QUANTITY        INT         NOT NULL," \
+		"TRACKER         INT );"\
+
+		"CREATE TABLE CONTAINER("  \
+		"CONTAINER_ID INT PRIMARY KEY     NOT NULL," \
+		"CONTAINER_NAME      TEXT         NOT NULL," \
+		"CONTAINER_DESCRIPTION    TEXT);"\
+
+		"CREATE TABLE LAYOUT("  \
+		"LAYOUT_ID INT PRIMARY KEY     NOT NULL," \
+		"LAYOUT_NAME           TEXT         NOT NULL," \
+		"LAYOUT_DESCRIPTION    TEXT);";
+	qDebug() << sql;
+	rc = sqlite3_exec(db, sql, Table_callback, 0,&zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Table wasn't created";
+		//sqlite3_free(zErrMsg);
+	}
+	else
+	{
+		//fprintf(stdout, "Table created successfully\n");
+		qDebug() << "Table created successfully";
+	}
+}
+
+int Table_callback(void *param, int argc, char **argv, char **azColName){
+	int i;
+	qDebug() << "Table callback function called";
+	// Loop through columns
+	for (i = 0; i < argc; i++){
+		qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
+	}
+	return 0;
 }
 
 // Callback function puts the results in the qry_result of the class passed to param argument
