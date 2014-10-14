@@ -3,6 +3,7 @@
 
 int Select_callback(void *param, int argc, char **argv, char **azColName);
 int Table_callback(void *param, int argc, char **argv, char **azColName);
+int Insert_callback(void *param, int argc, char **argv, char **azColName);
 
 Database::Database()
 {
@@ -46,6 +47,7 @@ Database::Database()
 	}
 
 	qry_result.clear();
+
 }
 
 Database::~Database()
@@ -67,7 +69,7 @@ void Database::Create_Database()
 	   This is just a test item table
 	*/
 	sql = "CREATE TABLE ITEM("  \
-		"ITEM_ID INT PRIMARY KEY     NOT NULL," \
+		"ITEM_ID INTEGER PRIMARY KEY," \
 		"CONTAINER_ID      INT          NOT NULL," \
 		"ITEM_NAME           TEXT         NOT NULL," \
 		"ITEM_DESCRIPTION    TEXT," \
@@ -98,6 +100,29 @@ void Database::Create_Database()
 	}
 }
 
+int Database::Create_Item(Item newItem)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "INSERT INTO ITEM (CONTAINER_ID, CATAGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
+		"VALUES(1,'test_cat',1,'"+ newItem.get_name() + "','" + newItem.get_description() + "');";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Item wasn't created";
+	}
+	else
+	{
+		qDebug() << "Item created successfully";
+	}
+	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
+	return sqlite3_last_insert_rowid(db);
+}
+
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;
 	qDebug() << "Table callback function called";
@@ -113,13 +138,19 @@ int Select_callback(void *param, int argc, char **argv, char **azColName){
 	// Get the database object
 	Database* database = reinterpret_cast<Database*>(param);
 	int i;
-	qDebug() << "Callback function called";
+	//qDebug() << "Callback function called" << endl;
 	// Loop through columns
 	for (i = 0; i<argc; i++){
-		qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
+		//qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
 		// Set the column result
 		database->qry_result[i].push_back(std::string(argv[i]));
 	}
-	qDebug() << endl;
+	//qDebug() << endl;
+	return 0;
+}
+
+int Insert_callback(void *param, int argc, char **argv, char **azColName){
+	int i;
+	qDebug() << "Insert Callback function called";
 	return 0;
 }

@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include "Item.h"
 
 class Database
 {
 	public:
 		Database();
 		~Database();
-		//Create_Item();
+		int Create_Item(Item newItem);
 		//Delete_Item();
 		//Create_Container();
 		//Delete_Container();

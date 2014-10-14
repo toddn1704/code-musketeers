@@ -118,8 +118,12 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Category.h" />
+    <ClInclude Include="Container.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="GeneratedFiles\ui_stufffinder.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="stufffinder.qrc">
