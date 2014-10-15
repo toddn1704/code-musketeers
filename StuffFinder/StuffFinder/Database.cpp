@@ -128,7 +128,7 @@ void Database::Delete_Item(Item* delItem)
 	char *zErrMsg = 0;
 	int rc;
 	
-	sql = "DELETE FROM ITEM WHERE ITEM_ID = " + std::to_string(delItem->id);
+	sql = "DELETE FROM ITEM WHERE ITEM_ID = " + std::to_string(delItem->get_item_id());
 
 	qDebug() << sql.c_str();
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);

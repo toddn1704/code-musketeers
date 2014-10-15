@@ -11,9 +11,11 @@ int main(int argc, char *argv[])
 
 	// Test create item
 	Item* test_item = new Item;
+	int id;
 	test_item->set_description("hit stuff");
 	test_item->set_name("Hammer");
-	test_item->id = db.Create_Item(test_item);
+	id = db.Create_Item(test_item);
+	test_item->set_item_id(id);
 
 	db.Delete_Item(test_item);
 
