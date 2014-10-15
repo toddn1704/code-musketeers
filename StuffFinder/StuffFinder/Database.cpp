@@ -77,7 +77,7 @@ void Database::Create_Database()
 		"TRACKER         INT );"\
 
 		"CREATE TABLE CONTAINER("  \
-		"CONTAINER_ID INT PRIMARY KEY     NOT NULL," \
+		"CONTAINER_ID INTEGER PRIMARY KEY," \
 		"CONTAINER_NAME      TEXT         NOT NULL," \
 		"CONTAINER_DESCRIPTION    TEXT);"\
 
@@ -128,7 +128,7 @@ void Database::Delete_Item(Item* delItem)
 	char *zErrMsg = 0;
 	int rc;
 	
-	sql = "DELETE FROM ITEM WHERE ITEM_ID = " + std::to_string(delItem->get_item_id());
+	sql = "DELETE FROM ITEM WHERE ITEM_ID = " + std::to_string(delItem->get_item_id()) + ";";
 
 	qDebug() << sql.c_str();
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
@@ -141,6 +141,37 @@ void Database::Delete_Item(Item* delItem)
 		qDebug() << "Item deleted successfully";
 	}
 
+}
+void Database::Load_Items(Container * cont)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM ITEM WHERE CONTAINER_ID = 1;" /*+ std::to_string(cont->get_container_id())*/;
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Items werent loaded";
+	}
+	else
+	{
+		qDebug() << "Item loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	
+	for (int i = 0; i < qry_result.size(); i++)
+	{
+		for (int j = 0; j < qry_result[i].size(); j++)
+		{
+			qDebug() << qry_result[i][j].c_str() << " , ";
+		}
+		
+	}
+
+	qry_result.clear();
+	return;
 }
 
 int Table_callback(void *param, int argc, char **argv, char **azColName){
@@ -159,15 +190,17 @@ int Select_callback(void *param, int argc, char **argv, char **azColName){
 	Database* database = reinterpret_cast<Database*>(param);
 	int i;
 	// Get current index
+	database->qry_result.push_back(std::vector<std::string>());
 	int j = database->qry_result.size();
 	// Add another row
-	database->qry_result.push_back(std::vector<std::string>());
+	
 	//qDebug() << "Callback function called" << endl;
 	// Loop through columns
 	for (i = 0; i<argc; i++){
 		//qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
 		// Set the column result
-		database->qry_result[j].push_back(std::string(argv[i]));
+		if (argv[i] )
+		database->qry_result[j-1].push_back(argv[i] ? std::string(argv[i]) : "NULL");
 	}
 	//qDebug() << endl;
 	return 0;

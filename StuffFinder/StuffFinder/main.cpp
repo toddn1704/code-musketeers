@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
 
 	db.Delete_Item(test_item);
 
-
+	Container * test_cont = new Container;
+	db.Load_Items(test_cont);
 
 	return a.exec();
 }
