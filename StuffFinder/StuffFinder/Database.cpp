@@ -26,12 +26,11 @@ Database::Database()
 	char * sql = "SELECT COUNT(*) from sqlite_master where type = \"table\";";
 	const char* data = 0;
 
-	// Initiate vector to size of one
-	qry_result.push_back(std::vector<std::string>());
+
 	// Use sqlite3_exec might be better to use prepare/step/finalize
 	// so we don't have to deal with callbacks
 	rc = sqlite3_exec(db, sql, Select_callback, this, &zErrMsg);
-	
+
 	// If database is empty create tables
 	if (qry_result[0][0] == "0")
 	{
@@ -138,12 +137,16 @@ int Select_callback(void *param, int argc, char **argv, char **azColName){
 	// Get the database object
 	Database* database = reinterpret_cast<Database*>(param);
 	int i;
+	// Get current index
+	int j = database->qry_result.size();
+	// Add another row
+	database->qry_result.push_back(std::vector<std::string>());
 	//qDebug() << "Callback function called" << endl;
 	// Loop through columns
 	for (i = 0; i<argc; i++){
 		//qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
 		// Set the column result
-		database->qry_result[i].push_back(std::string(argv[i]));
+		database->qry_result[j].push_back(std::string(argv[i]));
 	}
 	//qDebug() << endl;
 	return 0;
