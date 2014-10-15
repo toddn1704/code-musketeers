@@ -79,7 +79,8 @@ void Database::Create_Database()
 		"CREATE TABLE CONTAINER("  \
 		"CONTAINER_ID INTEGER PRIMARY KEY," \
 		"CONTAINER_NAME      TEXT         NOT NULL," \
-		"CONTAINER_DESCRIPTION    TEXT);"\
+		"CONTAINER_DESCRIPTION    TEXT," \
+		"PARENT_CONTAINER_ID INT);"\
 
 		"CREATE TABLE LAYOUT("  \
 		"LAYOUT_ID INT PRIMARY KEY     NOT NULL," \
@@ -174,6 +175,37 @@ void Database::Load_Items(Container * cont)
 	return;
 }
 
+std::vector <Container *> Database::Load_Containers(Container * cont)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM CONTAINER WHERE PARENT_CONTAINER_ID = 0;" /*+ std::to_string(cont->get_container_id())*/;
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Containers werent loaded";
+	}
+	else
+	{
+		qDebug() << "Containers loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	std::vector <Container *> return_containers;
+	for (int i = 0; i < qry_result.size(); i++)
+	{
+		Container * temp = new Container(atoi(qry_result[i][0].c_str()), qry_result[i][1], qry_result[i][2]);
+		return_containers.push_back(temp);
+
+	}
+
+	qry_result.clear();
+	return return_containers;
+}
+
+
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;
 	qDebug() << "Table callback function called";
@@ -199,7 +231,6 @@ int Select_callback(void *param, int argc, char **argv, char **azColName){
 	for (i = 0; i<argc; i++){
 		//qDebug() << azColName[i] << (argv[i] ? argv[i] : "NULL");
 		// Set the column result
-		if (argv[i] )
 		database->qry_result[j-1].push_back(argv[i] ? std::string(argv[i]) : "NULL");
 	}
 	//qDebug() << endl;

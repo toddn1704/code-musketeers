@@ -1,6 +1,7 @@
 #include "stufffinder.h"
 #include <QtWidgets/QApplication>
 #include "Database.h"
+#include "qdebug.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,11 @@ int main(int argc, char *argv[])
 
 	Container * test_cont = new Container;
 	db.Load_Items(test_cont);
-
+	std::vector<Container*> test_containers = db.Load_Containers(test_cont);
+	for (int i = 0; i < test_containers.size(); i++)
+	{
+		qDebug() << test_containers[i]->get_container_id() << "," << test_containers[i]->get_name().c_str() <<
+			"," << test_containers[i]->get_description().c_str();
+	}
 	return a.exec();
 }

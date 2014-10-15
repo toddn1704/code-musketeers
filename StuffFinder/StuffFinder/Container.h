@@ -7,6 +7,7 @@
 class Container {
 public:
 	Container() {};
+	Container(int id, std::string n, std::string d) { container_id = id; name = n; description = d; }
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
 	std::string get_name() { return name; }
