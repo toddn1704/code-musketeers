@@ -99,14 +99,14 @@ void Database::Create_Database()
 	}
 }
 
-int Database::Create_Item(Item newItem)
+int Database::Create_Item(Item *newItem)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 
 	sql = "INSERT INTO ITEM (CONTAINER_ID, CATAGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
-		"VALUES(1,'test_cat',1,'"+ newItem.get_name() + "','" + newItem.get_description() + "');";
+		"VALUES(1,'test_cat',1,'"+ newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
@@ -120,6 +120,27 @@ int Database::Create_Item(Item newItem)
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
 	return sqlite3_last_insert_rowid(db);
+}
+
+void Database::Delete_Item(Item* delItem)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+	
+	sql = "DELETE FROM ITEM WHERE ITEM_ID = " + std::to_string(delItem->id);
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Item wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Item deleted successfully";
+	}
+
 }
 
 int Table_callback(void *param, int argc, char **argv, char **azColName){

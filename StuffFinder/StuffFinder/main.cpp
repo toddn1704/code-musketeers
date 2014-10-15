@@ -10,10 +10,12 @@ int main(int argc, char *argv[])
 	Database db;
 
 	// Test create item
-	Item test_item;
-	test_item.set_description("hit stuff");
-	test_item.set_name("Hammer");
-	db.Create_Item(test_item);
+	Item* test_item = new Item;
+	test_item->set_description("hit stuff");
+	test_item->set_name("Hammer");
+	test_item->id = db.Create_Item(test_item);
+
+	db.Delete_Item(test_item);
 
 
 

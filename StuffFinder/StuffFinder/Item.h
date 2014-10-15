@@ -15,6 +15,7 @@ public:
 	int get_quantity() { return quantity; }
 	int get_min_quantity() { return min_quantity; }
 
+	int id;
 	void increment(int n = 1) { quantity += n; }
 	void decrement(int n = 1) { quantity -= n; }
 private:
