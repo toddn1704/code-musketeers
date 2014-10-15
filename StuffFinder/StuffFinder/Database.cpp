@@ -100,7 +100,7 @@ void Database::Create_Database()
 	}
 }
 
-int Database::Create_Item(Item *newItem)
+void Database::Create_Item(Item *newItem)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -120,7 +120,8 @@ int Database::Create_Item(Item *newItem)
 		qDebug() << "Item created successfully";
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
-	return sqlite3_last_insert_rowid(db);
+	newItem->set_item_id(sqlite3_last_insert_rowid(db));
+	//return sqlite3_last_insert_rowid(db);
 }
 
 void Database::Delete_Item(Item* delItem)
