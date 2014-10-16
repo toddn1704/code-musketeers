@@ -106,7 +106,7 @@ void Database::Create_Item(Item *newItem)
 	char *zErrMsg = 0;
 	int rc;
 
-	sql = "INSERT INTO ITEM (CONTAINER_ID, CATAGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
+	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
 		"VALUES(1,'test_cat',1,'"+ newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
