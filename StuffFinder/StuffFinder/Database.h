@@ -13,13 +13,14 @@ class Database
 	public:
 		Database();
 		~Database();
-		void Create_Item(Item* newItem);
+		void Create_Item(Item* newItem, int parent_id);
 		void Delete_Item(Item* delItem);
 		void Create_Container(Container* new_cont, int parent_id);
 		void Delete_Container(Container* del_cont);
 		void Create_Layout(Layout* new_layout);
 		void Delete_Layout(Layout* del_layout);
-		
+		void Update_Item(Item* up_item);
+
 		void Load_Items(Container * cont);
 		void Load_Containers(Container * cont);
 		void Load_Layout_Containers(Layout * lay);

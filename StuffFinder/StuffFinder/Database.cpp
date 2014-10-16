@@ -147,6 +147,28 @@ void Database::Delete_Item(Item* delItem)
 	}
 
 }
+void Database::Update_Item(Item* up_item)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "UPDATE ITEM SET ITEM_NAME = '" + up_item->get_name() + "', ITEM_DESCRIPTION ='" +
+		up_item->get_description() + "', CATEGORY = '" + up_item->get_category() + "', QUANTITY = " +
+		std::to_string(up_item->get_quantity()) + " WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) +
+		";";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Item wasn't updated";
+	}
+	else
+	{
+		qDebug() << "Item updated successfully";
+	}
+}
 void Database::Create_Container(Container* new_cont, int parent_id)
 {
 	std::string sql;
