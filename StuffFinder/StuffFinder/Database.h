@@ -13,7 +13,7 @@ class Database
 	public:
 		Database();
 		~Database();
-		int Create_Item(Item* newItem);
+		void Create_Item(Item* newItem);
 		void Delete_Item(Item* delItem);
 		void Create_Container(Container* new_cont, int parent_id);
 		void Delete_Container(Container* del_cont);

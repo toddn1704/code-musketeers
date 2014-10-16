@@ -15,9 +15,7 @@ int main(int argc, char *argv[])
 	int id;
 	test_item->set_description("hit stuff");
 	test_item->set_name("Hammer");
-	id = db.Create_Item(test_item);
-	test_item->set_item_id(id);
-
+	db.Create_Item(test_item);
 	db.Delete_Item(test_item);
 
 	Container * test_cont = new Container;

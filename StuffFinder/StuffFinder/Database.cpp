@@ -72,7 +72,7 @@ void Database::Create_Database()
 		"CONTAINER_ID      INT          NOT NULL," \
 		"ITEM_NAME           TEXT         NOT NULL," \
 		"ITEM_DESCRIPTION    TEXT," \
-		"CATAGORY    TEXT            NOT NULL," \
+		"CATEGORY    TEXT            NOT NULL," \
 		"QUANTITY        INT         NOT NULL," \
 		"TRACKER         INT );"\
 
@@ -83,7 +83,7 @@ void Database::Create_Database()
 		"PARENT_CONTAINER_ID INT);"\
 
 		"CREATE TABLE LAYOUT("  \
-		"LAYOUT_ID INT PRIMARY KEY     NOT NULL," \
+		"LAYOUT_ID INTEGER PRIMARY KEY     NOT NULL," \
 		"LAYOUT_NAME           TEXT         NOT NULL," \
 		"LAYOUT_DESCRIPTION    TEXT);";
 	qDebug() << sql;
@@ -100,13 +100,13 @@ void Database::Create_Database()
 	}
 }
 
-int Database::Create_Item(Item *newItem)
+void Database::Create_Item(Item *newItem)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 
-	sql = "INSERT INTO ITEM (CONTAINER_ID, CATAGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
+	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
 		"VALUES(1,'test_cat',1,'"+ newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
@@ -120,7 +120,8 @@ int Database::Create_Item(Item *newItem)
 		qDebug() << "Item created successfully";
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
-	return sqlite3_last_insert_rowid(db);
+	newItem->set_item_id(sqlite3_last_insert_rowid(db));
+	//return sqlite3_last_insert_rowid(db);
 }
 
 void Database::Delete_Item(Item* delItem)
