@@ -12,6 +12,7 @@ class Layout {
 		std::string get_description(){ return desription; }
 		int get_layout_id(){ return layout_id; }
 		std::vector<Container *> get_rooms() { return rooms; }
+		void set_layout_id(int id) { layout_id = id; }
 
 		void add_room(Container * room) { rooms.push_back(room); };
 		void delete_room(Container * room);

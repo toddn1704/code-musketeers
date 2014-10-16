@@ -168,9 +168,81 @@ void Database::Create_Container(Container* new_cont, int parent_id)
 	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
 }
 
-void Delete_Container(Container* del_cont);
-int Create_Layout(Layout* new_layout);
-void Delete_Layout(Layout* del_layout);
+void Database::Delete_Container(Container* del_cont)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	std::vector<Container *> sub_containers = del_cont->get_container();
+	for (int i = 0; i < sub_containers.size(); i++)
+	{
+		Delete_Container(sub_containers[i]);
+	}
+	std::vector<Item *> items = del_cont->get_items();
+	for (int j = 0; j < items.size(); j++)
+	{
+		Delete_Item(items[j]);
+	}
+	sql = "DELETE FROM CONTAINER WHERE CONTAINER_ID = " + std::to_string(del_cont->get_container_id()) + ";";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Container wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Container deleted successfully";
+	}
+
+}
+void Database::Create_Layout(Layout* new_layout)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "INSERT INTO LAYOUT (LAYOUT_NAME, LAYOUT_DESCRIPTION) " \
+		"VALUES(" + new_layout->get_name() + new_layout->get_description() +  ");";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Layout wasn't created";
+	}
+	else
+	{
+		qDebug() << "Layout created successfully";
+	}
+	qDebug() << "new layout id: " << sqlite3_last_insert_rowid(db);
+	new_layout->set_layout_id(sqlite3_last_insert_rowid(db));
+}
+void Database::Delete_Layout(Layout* del_layout)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+	std::vector<Container*> rooms = del_layout->get_rooms();
+	for (int i = 0; i < rooms.size(); i++)
+	{
+		Delete_Container(rooms[i]);
+	}
+	sql = "DELETE FROM LAYOUT WHERE LAYOUT_ID = " + std::to_string(del_layout->get_layout_id()) + ";";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Container wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Container deleted successfully";
+	}
+}
 void Database::Load_Items(Container * cont)
 {
 	std::string sql;

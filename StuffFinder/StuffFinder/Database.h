@@ -17,7 +17,7 @@ class Database
 		void Delete_Item(Item* delItem);
 		void Create_Container(Container* new_cont, int parent_id);
 		void Delete_Container(Container* del_cont);
-		int Create_Layout(Layout* new_layout);
+		void Create_Layout(Layout* new_layout);
 		void Delete_Layout(Layout* del_layout);
 		
 		void Load_Items(Container * cont);
