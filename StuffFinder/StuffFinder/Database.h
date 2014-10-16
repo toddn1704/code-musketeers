@@ -15,10 +15,10 @@ class Database
 		~Database();
 		int Create_Item(Item* newItem);
 		void Delete_Item(Item* delItem);
-		//Create_Container();
-		//Delete_Container();
-		//Create_Layout();
-		//Delete_Layout();
+		void Create_Container(Container* new_cont, int parent_id);
+		void Delete_Container(Container* del_cont);
+		int Create_Layout(Layout* new_layout);
+		void Delete_Layout(Layout* del_layout);
 		
 		void Load_Items(Container * cont);
 		std::vector <Container *> Load_Containers(Container * cont);

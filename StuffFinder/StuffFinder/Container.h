@@ -10,6 +10,7 @@ public:
 	Container(int id, std::string n, std::string d) { container_id = id; name = n; description = d; }
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
+	void set_container_id(int id) { container_id = id; }
 	std::string get_name() { return name; }
 	std::string get_description() { return description; }
 	std::vector<Item*> get_items() { return items; }

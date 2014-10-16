@@ -143,6 +143,32 @@ void Database::Delete_Item(Item* delItem)
 	}
 
 }
+void Database::Create_Container(Container* new_cont, int parent_id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "INSERT INTO CONTAINER (CONTAINER_NAME, CONTAINER_DESCRIPTION, PARENT_CONTAINER_ID) " \
+		"VALUES(" + new_cont->get_name() + new_cont->get_description() + std::to_string(parent_id) + ");";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Container wasn't created";
+	}
+	else
+	{
+		qDebug() << "Container created successfully";
+	}
+	qDebug() << "new container id: " << sqlite3_last_insert_rowid(db);
+	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
+}
+
+void Delete_Container(Container* del_cont);
+int Create_Layout(Layout* new_layout);
+void Delete_Layout(Layout* del_layout);
 void Database::Load_Items(Container * cont)
 {
 	std::string sql;
