@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 	w.show();
 	Database db;
 
+	/*
 	// Test create item
 	Item* test_item = new Item;
 	int id;
@@ -25,6 +26,23 @@ int main(int argc, char *argv[])
 	{
 		qDebug() << test_containers[i]->get_container_id() << "," << test_containers[i]->get_name().c_str() <<
 			"," << test_containers[i]->get_description().c_str();
+	}
+	*/
+	std::vector<Layout*> all_layouts = db.Load_Layouts();
+	for (int i = 0; i < all_layouts.size(); i++)
+	{
+		qDebug() << all_layouts[i]->get_name().c_str();
+		std::vector<Container *> layout_cont = all_layouts[i]->get_rooms();
+		for (int j = 0; j < layout_cont.size(); j++)
+		{
+			qDebug() << layout_cont[j]->get_name().c_str();
+			std::vector<Item *> cont_items = layout_cont[j]->get_items();
+			for (int k = 0; k < cont_items.size(); k++)
+			{
+				qDebug() << cont_items[k]->get_name().c_str();
+			}
+		}
+
 	}
 	return a.exec();
 }

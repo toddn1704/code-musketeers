@@ -16,11 +16,13 @@ public:
 	std::vector<Item*> get_items() { return items; }
 	std::vector<Container*> get_container() { return containers; }
 	int get_container_id() { return container_id; }
-	void add_item(Item* item);
-	void add_container(Container* container);
+
+	void add_item(Item* item) { items.push_back(item); };
+	void add_container(Container* container) { containers.push_back(container); };
 	void delete_item(Item* item);
 	void delete_container(Container* container);
 	void set_coords(int x1, int y1, int x2, int y2);
+	void set_containers(std::vector<Container*> loaded_containers) { containers = loaded_containers; }
 private:
 	int container_id;
 	std::string name;

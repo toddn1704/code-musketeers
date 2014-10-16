@@ -21,7 +21,10 @@ class Database
 		void Delete_Layout(Layout* del_layout);
 		
 		void Load_Items(Container * cont);
-		std::vector <Container *> Load_Containers(Container * cont);
+		void Load_Containers(Container * cont);
+		void Load_Layout_Containers(Layout * lay);
+		std::vector<Layout*> Load_Layouts();
+
 		// Two dimensional vector to store latest query results
 		// Not sure this is the best way to do this
 		std::vector<std::vector<std::string>> qry_result;

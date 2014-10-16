@@ -80,7 +80,8 @@ void Database::Create_Database()
 		"CONTAINER_ID INTEGER PRIMARY KEY," \
 		"CONTAINER_NAME      TEXT         NOT NULL," \
 		"CONTAINER_DESCRIPTION    TEXT," \
-		"PARENT_CONTAINER_ID INT);"\
+		"PARENT_CONTAINER_ID INT,"
+		"PARENT_LAYOUT_ID INT);"\
 
 		"CREATE TABLE LAYOUT("  \
 		"LAYOUT_ID INTEGER PRIMARY KEY     NOT NULL," \
@@ -176,7 +177,7 @@ void Database::Load_Items(Container * cont)
 	char *zErrMsg = 0;
 	int rc;
 
-	sql = "SELECT * FROM ITEM WHERE CONTAINER_ID = 1;" /*+ std::to_string(cont->get_container_id())*/;
+	sql = "SELECT * FROM ITEM WHERE CONTAINER_ID = " + std::to_string(cont->get_container_id()) + ";";
 
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	if (rc != SQLITE_OK)
@@ -197,18 +198,24 @@ void Database::Load_Items(Container * cont)
 		}
 		
 	}
-
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
 	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
+		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
+		cont->add_item(temp_item);
+	}
 	return;
 }
 
-std::vector <Container *> Database::Load_Containers(Container * cont)
+void Database::Load_Containers(Container * cont)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 
-	sql = "SELECT * FROM CONTAINER WHERE PARENT_CONTAINER_ID = 0;" /*+ std::to_string(cont->get_container_id())*/;
+	sql = "SELECT * FROM CONTAINER WHERE PARENT_CONTAINER_ID = " + std::to_string(cont->get_container_id()) + ";";
 
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	if (rc != SQLITE_OK)
@@ -220,18 +227,81 @@ std::vector <Container *> Database::Load_Containers(Container * cont)
 		qDebug() << "Containers loaded successfully";
 	}
 	qDebug() << qry_result.size();
-	std::vector <Container *> return_containers;
-	for (int i = 0; i < qry_result.size(); i++)
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
 	{
-		Container * temp = new Container(atoi(qry_result[i][0].c_str()), qry_result[i][1], qry_result[i][2]);
-		return_containers.push_back(temp);
+		Container * temp = new Container(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		Load_Containers(temp);
+		Load_Items(temp);
+		cont->add_container(temp);
 
 	}
 
-	qry_result.clear();
-	return return_containers;
 }
 
+void Database::Load_Layout_Containers(Layout * lay)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM CONTAINER WHERE PARENT_LAYOUT_ID = " + std::to_string(lay->get_layout_id()) + ";";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Containers werent loaded";
+	}
+	else
+	{
+		qDebug() << "Containers loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Container * temp = new Container(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		Load_Containers(temp);
+		Load_Items(temp);
+		lay->add_room(temp);
+
+	}
+
+}
+
+std::vector<Layout*> Database::Load_Layouts()
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM LAYOUT;";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Layouts werent loaded";
+	}
+	else
+	{
+		qDebug() << "Layouts loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	std::vector <Layout *> return_layouts;
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Layout * temp = new Layout(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		Load_Layout_Containers(temp);
+		return_layouts.push_back(temp);
+
+	}
+
+	return return_layouts;
+}
 
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;
