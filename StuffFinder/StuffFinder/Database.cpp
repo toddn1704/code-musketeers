@@ -101,14 +101,16 @@ void Database::Create_Database()
 	}
 }
 
-void Database::Create_Item(Item *newItem)
+void Database::Create_Item(Item *newItem, int parent_id)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 
 	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
-		"VALUES(1,'test_cat',1,'"+ newItem->get_name() + "','" + newItem->get_description() + "');";
+		"VALUES(" + std::to_string(parent_id) + ",'" +
+		newItem ->get_category() +"'," + std::to_string(newItem->get_quantity()) + ",'" + 
+		newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
