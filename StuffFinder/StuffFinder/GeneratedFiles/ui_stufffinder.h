@@ -15,6 +15,8 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
@@ -39,6 +41,9 @@ public:
     QWidget *tab_2;
     QListView *listView;
     QGraphicsView *graphicsView;
+    QLineEdit *lineEdit;
+    QPushButton *pushButton;
+    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -72,13 +77,26 @@ public:
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(390, 90, 671, 531));
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(480, 40, 461, 20));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(960, 40, 75, 23));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setEnabled(true);
+        label->setGeometry(QRect(490, 40, 121, 16));
         StuffFinderClass->setCentralWidget(centralWidget);
         tabWidget->raise();
         graphicsView->raise();
         Create_db->raise();
+        lineEdit->raise();
+        pushButton->raise();
+        label->raise();
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 26));
+        menuBar->setGeometry(QRect(0, 0, 1206, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
@@ -92,6 +110,7 @@ public:
         menuBar->addAction(menuFile->menuAction());
 
         retranslateUi(StuffFinderClass);
+        QObject::connect(pushButton, SIGNAL(released()), label, SLOT(show()));
 
         tabWidget->setCurrentIndex(0);
 
@@ -103,8 +122,10 @@ public:
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
         Create_db->setText(QApplication::translate("StuffFinderClass", "Create DB", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "Tab 1", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Tab 2", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "List View", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Add Item", 0));
+        pushButton->setText(QApplication::translate("StuffFinderClass", "Search", 0));
+        label->setText(QApplication::translate("StuffFinderClass", "Hullo World", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 
