@@ -234,7 +234,7 @@ void Database::Create_Layout(Layout* new_layout)
 	int rc;
 
 	sql = "INSERT INTO LAYOUT (LAYOUT_NAME, LAYOUT_DESCRIPTION) " \
-		"VALUES(" + new_layout->get_name() + new_layout->get_description() +  ");";
+		"VALUES('" + new_layout->get_name() + "','" + new_layout->get_description() +  "');";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
@@ -272,6 +272,30 @@ void Database::Delete_Layout(Layout* del_layout)
 		qDebug() << "Container deleted successfully";
 	}
 }
+
+void Database::Create_Category(Category* new_cat)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "INSERT INTO CATEGORY (CATEGORY_NAME, CATEGORY_DESCRIPTION) " \
+		"VALUES('" +	new_cat->get_name() + "','" + new_cat->get_description() + "');";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Category wasn't created";
+	}
+	else
+	{
+		qDebug() << "Category created successfully";
+	}
+	qDebug() << "new category id: " << sqlite3_last_insert_rowid(db);
+	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
+}
+
 void Database::Load_Items(Container * cont)
 {
 	std::string sql;

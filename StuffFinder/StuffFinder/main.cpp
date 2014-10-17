@@ -33,6 +33,21 @@ int main(int argc, char *argv[])
 	}
 	*/
 
+	Category * C1 = new Category;
+	Layout * L1 = new Layout;
+	Item * I1 = new Item;
+	I1->set_name("Hammer");
+	I1->set_description("Hits things");
+	I1->set_quantity(1);
+	I1->set_category("Tool");
+	C1->set_name("Tool");
+	C1->set_description("General Tools");
+	L1->set_layout_name("Floor1");
+	L1->set_description("First floor of home");
+	db.Create_Category(C1);
+	db.Create_Layout(L1);
+	db.Create_Item(I1,0);
+	db.Delete_Layout(L1);
 	
 	std::vector<Layout*> all_layouts = db.Load_Layouts();
 	for (int i = 0; i < all_layouts.size(); i++)

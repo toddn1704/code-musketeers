@@ -20,6 +20,7 @@ class Database
 		void Delete_Container(Container* del_cont);
 		void Create_Layout(Layout* new_layout);
 		void Delete_Layout(Layout* del_layout);
+		void Create_Category(Category* new_cat);
 
 		void Update_Item(Item* up_item);
 

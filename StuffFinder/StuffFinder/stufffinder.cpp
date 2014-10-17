@@ -20,7 +20,7 @@ void StuffFinder::on_Add_save_clicked()
 {
 	//get values from entry fields
 	QString name = ui.Item_name->text();
-	QString descript = ui.Item_descript->text();
+	QString descript = ui.Item_descript->toPlainText();
 	QString quant = ui.Item_quant->text();
 	QString minquant = ui.Min_quant->text();
 	QString cost = ui.Item_cost->text();

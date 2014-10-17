@@ -4,7 +4,7 @@
 #include "Container.h"
 class Layout {
 	public:
-		Layout();
+		Layout(){}
 		Layout(int id, std::string n, std::string d) { layout_id = id; name = n; desription = d; }
 		void set_layout_name(std::string ln){ name = ln; }
 		void set_description(std::string d){ desription = d; }

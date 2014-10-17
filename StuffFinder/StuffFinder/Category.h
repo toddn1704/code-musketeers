@@ -6,7 +6,7 @@
 
 class Category {
 public:
-	Category();
+	Category(){}
 	Category(int i,std::string n,std::string d) : category_id(i),name(n),description(d) {}
 
 	void set_name(std::string n) { name = n; }

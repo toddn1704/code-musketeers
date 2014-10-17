@@ -4,7 +4,7 @@
 
 class Item {
 public:
-	Item() {};
+	Item() {}
 	Item(std::string iname,std::string d,int q,std::string c) : name(iname),description(d),quantity(q),category(c) {}
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
