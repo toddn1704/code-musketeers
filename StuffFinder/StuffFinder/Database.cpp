@@ -86,7 +86,12 @@ void Database::Create_Database()
 		"CREATE TABLE LAYOUT("  \
 		"LAYOUT_ID INTEGER PRIMARY KEY     NOT NULL," \
 		"LAYOUT_NAME           TEXT         NOT NULL," \
-		"LAYOUT_DESCRIPTION    TEXT);";
+		"LAYOUT_DESCRIPTION    TEXT);" \
+
+		"CREATE TABLE CATEGORY("  \
+		"CATEGORY_ID INTEGER PRIMARY KEY     NOT NULL," \
+		"CATEGORY_NAME           TEXT         NOT NULL," \
+		"CATEGORY_DESCRIPTION    TEXT);";
 	qDebug() << sql;
 	rc = sqlite3_exec(db, sql, Table_callback, 0,&zErrMsg);
 	if (rc != SQLITE_OK)
@@ -397,6 +402,36 @@ std::vector<Layout*> Database::Load_Layouts()
 	}
 
 	return return_layouts;
+}
+
+std::vector<Category*> Database::Load_Categories()
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM CATEGORY;";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Categories werent loaded";
+	}
+	else
+	{
+		qDebug() << "Categories loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	std::vector <Category *> return_Categories;
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Category * temp = new Category(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		return_Categories.push_back(temp);
+	}
+
+	return return_Categories;
 }
 
 int Table_callback(void *param, int argc, char **argv, char **azColName){
