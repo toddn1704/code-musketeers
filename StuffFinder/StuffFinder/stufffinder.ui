@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -242,32 +242,6 @@
       <property name="geometry">
        <rect>
         <x>150</x>
-        <y>230</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Cancel</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="addSave">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>230</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Save</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="addCancel2">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
         <y>290</y>
         <width>75</width>
         <height>23</height>
@@ -277,7 +251,7 @@
        <string>Cancel</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="addSave2">
+     <widget class="QPushButton" name="addSave">
       <property name="geometry">
        <rect>
         <x>230</x>
@@ -361,214 +335,5 @@
  <resources>
   <include location="stufffinder.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>clicked()</signal>
-   <receiver>label_7</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>117</x>
-     <y>412</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>clicked()</signal>
-   <receiver>label_6</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>372</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>minQuantity</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>182</x>
-     <y>374</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>itemCost</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>197</x>
-     <y>414</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>label_6</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>372</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>label_7</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>117</x>
-     <y>412</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>minQuantity</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>182</x>
-     <y>374</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>itemCost</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>197</x>
-     <y>414</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>trackCheck</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>addSave</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>366</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>addSave2</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>426</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>addCancel</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>219</x>
-     <y>366</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trackCheck</sender>
-   <signal>pressed()</signal>
-   <receiver>addCancel2</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>257</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>219</x>
-     <y>426</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
