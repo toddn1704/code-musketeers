@@ -19,6 +19,8 @@ private:
 public slots:
 void on_Create_db_clicked();
 void on_Add_save_clicked();
+void on_Add_cancel_clicked();
+
 
 };
 

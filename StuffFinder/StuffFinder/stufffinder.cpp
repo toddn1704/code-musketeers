@@ -18,12 +18,26 @@ StuffFinder::~StuffFinder()
 
 void StuffFinder::on_Add_save_clicked()
 {
-	//get value from Item_name field
+	//get values from entry fields
 	QString name = ui.Item_name->text();
+	QString descript = ui.Item_descript->text();
+	QString quant = ui.Item_quant->text();
+	QString minquant = ui.Min_quant->text();
+	QString cost = ui.Item_cost->text();
+
+	//send values to an add/edit item function
+	//  which is connected to the database
+
 	QMessageBox msgBox;
-	
 	msgBox.setText(name);
 	msgBox.exec();
+
+}
+
+void StuffFinder::on_Add_cancel_clicked()
+{
+	//does something when the Add_cancel
+	//   button is clicked.
 
 }
 

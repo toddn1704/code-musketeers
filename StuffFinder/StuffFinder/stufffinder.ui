@@ -117,7 +117,7 @@
        <string>Description:</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="itemDescription">
+     <widget class="QTextEdit" name="Item_descript">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -140,7 +140,7 @@
        <string>Quantity:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="itemQuantity">
+     <widget class="QLineEdit" name="Item_quant">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -150,7 +150,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QComboBox" name="categoryCombo">
+     <widget class="QComboBox" name="Category_menu">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -173,7 +173,7 @@
        <string>Category:</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="trackCheck">
+     <widget class="QCheckBox" name="Track_box">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -205,7 +205,7 @@
        <set>Qt::LinksAccessibleByMouse</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="minQuantity">
+     <widget class="QLineEdit" name="Min_quant">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -228,7 +228,7 @@
        <string>Estimated Cost:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="itemCost">
+     <widget class="QLineEdit" name="Item_cost">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -238,7 +238,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="addCancel">
+     <widget class="QPushButton" name="Add_cancel">
       <property name="geometry">
        <rect>
         <x>150</x>
