@@ -57,6 +57,8 @@ public:
     QLineEdit *minQuantity;
     QLabel *label_7;
     QLineEdit *itemCost;
+    QPushButton *addCancel;
+    QPushButton *addSave;
     QGraphicsView *graphicsView;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
@@ -129,10 +131,16 @@ public:
         minQuantity->setGeometry(QRect(130, 240, 41, 20));
         label_7 = new QLabel(tab_2);
         label_7->setObjectName(QStringLiteral("label_7"));
-        label_7->setGeometry(QRect(40, 280, 91, 16));
+        label_7->setGeometry(QRect(40, 270, 91, 16));
         itemCost = new QLineEdit(tab_2);
         itemCost->setObjectName(QStringLiteral("itemCost"));
-        itemCost->setGeometry(QRect(130, 280, 71, 20));
+        itemCost->setGeometry(QRect(130, 270, 71, 20));
+        addCancel = new QPushButton(tab_2);
+        addCancel->setObjectName(QStringLiteral("addCancel"));
+        addCancel->setGeometry(QRect(140, 300, 75, 23));
+        addSave = new QPushButton(tab_2);
+        addSave->setObjectName(QStringLiteral("addSave"));
+        addSave->setGeometry(QRect(220, 300, 75, 23));
         tabWidget->addTab(tab_2, QString());
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
@@ -169,7 +177,11 @@ public:
         QObject::connect(trackCheck, SIGNAL(clicked()), label_6, SLOT(show()));
         QObject::connect(trackCheck, SIGNAL(clicked()), minQuantity, SLOT(show()));
         QObject::connect(trackCheck, SIGNAL(clicked()), itemCost, SLOT(show()));
-        QObject::connect(listView, SIGNAL(viewportEntered()), label_6, SLOT(hide()));
+        QObject::connect(tabWidget, SIGNAL(currentChanged(int)), label_6, SLOT(hide()));
+        QObject::connect(tabWidget, SIGNAL(currentChanged(int)), label_7, SLOT(hide()));
+        QObject::connect(tabWidget, SIGNAL(currentChanged(int)), minQuantity, SLOT(hide()));
+        QObject::connect(tabWidget, SIGNAL(currentChanged(int)), itemCost, SLOT(hide()));
+        QObject::connect(addCancel, SIGNAL(released()), tabWidget, SLOT(hide()));
 
         tabWidget->setCurrentIndex(1);
 
@@ -190,6 +202,8 @@ public:
         trackCheck->setText(QApplication::translate("StuffFinderClass", "Track for shopping list", 0));
         label_6->setText(QApplication::translate("StuffFinderClass", "Minimum Quantity:", 0));
         label_7->setText(QApplication::translate("StuffFinderClass", "Estimated Cost:", 0));
+        addCancel->setText(QApplication::translate("StuffFinderClass", "Cancel", 0));
+        addSave->setText(QApplication::translate("StuffFinderClass", "Save", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Add Item", 0));
         pushButton->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
