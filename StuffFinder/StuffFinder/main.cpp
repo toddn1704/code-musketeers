@@ -2,13 +2,34 @@
 #include <QtWidgets/QApplication>
 #include "Database.h"
 #include "qdebug.h"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+void testprint()
+{
+	ofstream myfile;
+	myfile.open("sfexample.txt");
+	myfile << "Hullo, World!" << endl;
+	myfile.close();
+}
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+
+	//creates a test button & connects it to a test function
+	QPushButton *button = new QPushButton("Hullo World");
+	button->setGeometry(20, 20, 20, 20);
+	QObject::connect(button, &QPushButton::clicked, testprint);
+	button->show();
+
 	StuffFinder w;
 	w.show();
 	Database db;
+
+
 
 	/*
 	// Test create item
@@ -28,6 +49,8 @@ int main(int argc, char *argv[])
 			"," << test_containers[i]->get_description().c_str();
 	}
 	*/
+
+	/*
 	std::vector<Layout*> all_layouts = db.Load_Layouts();
 	for (int i = 0; i < all_layouts.size(); i++)
 	{
@@ -43,6 +66,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-	}
+	}*/
+
 	return a.exec();
 }

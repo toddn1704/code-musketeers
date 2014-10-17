@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -193,7 +193,7 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>240</y>
+        <y>230</y>
         <width>101</width>
         <height>16</height>
        </rect>
@@ -209,7 +209,7 @@
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>240</y>
+        <y>230</y>
         <width>41</width>
         <height>20</height>
        </rect>
@@ -219,7 +219,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>270</y>
+        <y>260</y>
         <width>91</width>
         <height>16</height>
        </rect>
@@ -231,8 +231,8 @@
      <widget class="QLineEdit" name="itemCost">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>270</y>
+        <x>120</x>
+        <y>260</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -241,8 +241,8 @@
      <widget class="QPushButton" name="addCancel">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>300</y>
+        <x>150</x>
+        <y>230</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -254,8 +254,34 @@
      <widget class="QPushButton" name="addSave">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>300</y>
+        <x>230</x>
+        <y>230</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addCancel2">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>290</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addSave2">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>290</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -370,7 +396,7 @@
   </connection>
   <connection>
    <sender>trackCheck</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>minQuantity</receiver>
    <slot>show()</slot>
    <hints>
@@ -386,7 +412,7 @@
   </connection>
   <connection>
    <sender>trackCheck</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>itemCost</receiver>
    <slot>show()</slot>
    <hints>
@@ -465,18 +491,82 @@
    </hints>
   </connection>
   <connection>
-   <sender>addCancel</sender>
-   <signal>released()</signal>
-   <receiver>tabWidget</receiver>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>trackCheck</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>378</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trackCheck</sender>
+   <signal>pressed()</signal>
+   <receiver>addSave</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>209</x>
-     <y>436</y>
+     <x>257</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>195</x>
-     <y>378</y>
+     <x>299</x>
+     <y>366</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trackCheck</sender>
+   <signal>pressed()</signal>
+   <receiver>addSave2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>426</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trackCheck</sender>
+   <signal>pressed()</signal>
+   <receiver>addCancel</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>366</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trackCheck</sender>
+   <signal>pressed()</signal>
+   <receiver>addCancel2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>426</y>
     </hint>
    </hints>
   </connection>
