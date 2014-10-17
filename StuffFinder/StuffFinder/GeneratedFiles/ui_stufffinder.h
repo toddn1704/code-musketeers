@@ -45,7 +45,7 @@ public:
     QListView *listView;
     QLabel *label;
     QLabel *label_2;
-    QLineEdit *itemName;
+    QLineEdit *Item_name;
     QLabel *label_3;
     QTextEdit *itemDescription;
     QLabel *label_4;
@@ -58,7 +58,7 @@ public:
     QLabel *label_7;
     QLineEdit *itemCost;
     QPushButton *addCancel;
-    QPushButton *addSave;
+    QPushButton *Add_save;
     QGraphicsView *graphicsView;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
@@ -97,9 +97,9 @@ public:
         label_2 = new QLabel(tab_2);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(30, 40, 61, 16));
-        itemName = new QLineEdit(tab_2);
-        itemName->setObjectName(QStringLiteral("itemName"));
-        itemName->setGeometry(QRect(100, 40, 113, 20));
+        Item_name = new QLineEdit(tab_2);
+        Item_name->setObjectName(QStringLiteral("Item_name"));
+        Item_name->setGeometry(QRect(100, 40, 113, 20));
         label_3 = new QLabel(tab_2);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(30, 110, 61, 16));
@@ -138,9 +138,9 @@ public:
         addCancel = new QPushButton(tab_2);
         addCancel->setObjectName(QStringLiteral("addCancel"));
         addCancel->setGeometry(QRect(150, 290, 75, 23));
-        addSave = new QPushButton(tab_2);
-        addSave->setObjectName(QStringLiteral("addSave"));
-        addSave->setGeometry(QRect(230, 290, 75, 23));
+        Add_save = new QPushButton(tab_2);
+        Add_save->setObjectName(QStringLiteral("Add_save"));
+        Add_save->setGeometry(QRect(230, 290, 75, 23));
         tabWidget->addTab(tab_2, QString());
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
@@ -194,7 +194,7 @@ public:
         label_6->setText(QApplication::translate("StuffFinderClass", "Minimum Quantity:", 0));
         label_7->setText(QApplication::translate("StuffFinderClass", "Estimated Cost:", 0));
         addCancel->setText(QApplication::translate("StuffFinderClass", "Cancel", 0));
-        addSave->setText(QApplication::translate("StuffFinderClass", "Save", 0));
+        Add_save->setText(QApplication::translate("StuffFinderClass", "Save", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Add Item", 0));
         pushButton->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));

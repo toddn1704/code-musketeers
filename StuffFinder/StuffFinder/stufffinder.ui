@@ -94,7 +94,7 @@
        <string>Item Name:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="itemName">
+     <widget class="QLineEdit" name="Item_name">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -251,7 +251,7 @@
        <string>Cancel</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="addSave">
+     <widget class="QPushButton" name="Add_save">
       <property name="geometry">
        <rect>
         <x>230</x>
