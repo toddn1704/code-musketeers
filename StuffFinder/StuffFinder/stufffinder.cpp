@@ -16,6 +16,27 @@ StuffFinder::~StuffFinder()
 
 }
 
+void StuffFinder::on_search_returnPressed()
+{
+	//binds return key to on_Search_button_clicked
+	//function, essentially
+	//
+	on_Search_button_clicked();
+}
+
+void StuffFinder::on_Search_button_clicked()
+{
+	//get value from search entry field
+	QString query = ui.search->text();
+
+	//send value to db search function
+
+	//test print
+	QMessageBox msgBox;
+	msgBox.setText(query);
+	msgBox.exec();
+}
+
 void StuffFinder::on_Add_save_clicked()
 {
 	//get values from entry fields
@@ -28,6 +49,7 @@ void StuffFinder::on_Add_save_clicked()
 	//send values to an add/edit item function
 	//  which is connected to the database
 
+	//test print
 	QMessageBox msgBox;
 	msgBox.setText(name);
 	msgBox.exec();
@@ -36,9 +58,14 @@ void StuffFinder::on_Add_save_clicked()
 
 void StuffFinder::on_Add_cancel_clicked()
 {
-	//does something when the Add_cancel
-	//   button is clicked.
-
+	/*clears entry fields when cancel button is
+	clicked (in add/edit item tab).
+	*/
+	ui.Item_name->clear();
+	ui.Item_descript->clear();
+	ui.Item_quant->clear();
+	ui.Min_quant->clear();
+	ui.Item_cost->clear();
 }
 
 void StuffFinder::on_Create_db_clicked()

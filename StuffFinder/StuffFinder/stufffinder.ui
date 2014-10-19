@@ -276,7 +276,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="search">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -286,7 +286,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Search_button">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -302,8 +302,8 @@
    <zorder>tabWidget</zorder>
    <zorder>graphicsView</zorder>
    <zorder>Create_db</zorder>
-   <zorder>lineEdit</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>search</zorder>
+   <zorder>Search_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
