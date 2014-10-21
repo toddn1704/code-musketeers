@@ -8,6 +8,7 @@ class Container {
 public:
 	Container() {};
 	Container(int id, std::string n, std::string d) { container_id = id; name = n; description = d; }
+	~Container();
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
 	void set_container_id(int id) { container_id = id; }
@@ -23,6 +24,8 @@ public:
 	void delete_container(Container* container);
 	void set_coords(int x1, int y1, int x2, int y2);
 	void set_containers(std::vector<Container*> loaded_containers) { containers = loaded_containers; }
+	Item* search(int id);
+	Item* search(std::string name);
 private:
 	int container_id;
 	std::string name;

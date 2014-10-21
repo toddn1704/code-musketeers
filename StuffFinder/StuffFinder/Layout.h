@@ -2,6 +2,7 @@
 #define __layout_h_
 #include <string>
 #include "Container.h"
+#include "Item.h"
 class Layout {
 	public:
 		Layout(){}
@@ -16,6 +17,8 @@ class Layout {
 
 		void add_room(Container * room) { rooms.push_back(room); };
 		void delete_room(Container * room);
+		Item* search(int id);
+		Item* search(std::string name);
 	private:
 		int layout_id;
 		std::string name;
