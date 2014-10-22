@@ -1,13 +1,17 @@
 #include "stufffinder.h"
 #include "sqlite3.h"
+#include "Database.h"
+#include <string>
 
+//included for testing only
+#include<iostream>
+#include<fstream>
 
 
 StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-
 
 }
 
@@ -26,34 +30,36 @@ void StuffFinder::on_search_returnPressed()
 
 void StuffFinder::on_Search_button_clicked()
 {
-	//get value from search entry field
-	QString query = ui.search->text();
+	//get value from search entry field & convert 
+	//to string.
+	//
+	std::string query = ui.search->text().toStdString();
 
 	//send value to db search function
-
-	//test print
-	QMessageBox msgBox;
-	msgBox.setText(query);
-	msgBox.exec();
 }
 
 void StuffFinder::on_Add_save_clicked()
 {
-	//get values from entry fields
-	QString name = ui.Item_name->text();
-	QString descript = ui.Item_descript->toPlainText();
-	QString quant = ui.Item_quant->text();
-	QString minquant = ui.Min_quant->text();
-	QString cost = ui.Item_cost->text();
+	//gets values from entry fields and
+	//converts to string so can be saved in database
+	//
+	std::string name = ui.Item_name->text().toStdString();
+	std::string descript = ui.Item_descript->toPlainText().toStdString();
+	std::string quant = ui.Item_quant->text().toStdString();
+	std::string minquant = ui.Min_quant->text().toStdString();
+	std::string cost = ui.Item_cost->text().toStdString(); 
 
 	//send values to an add/edit item function
 	//  which is connected to the database
 
-	//test print
-	QMessageBox msgBox;
-	msgBox.setText(name);
-	msgBox.exec();
-
+	/*test print
+	using namespace std;
+	ofstream file;
+	file.open("testoutput.txt");
+	file << name << endl;
+	file << iquant << endl;
+	file.close();
+	*/
 }
 
 void StuffFinder::on_Add_cancel_clicked()

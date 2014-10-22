@@ -198,6 +198,7 @@ public:
         label_6->setText(QApplication::translate("StuffFinderClass", "Minimum Quantity:", 0));
         label_7->setText(QApplication::translate("StuffFinderClass", "Estimated Cost:", 0));
         groupBox_2->setTitle(QApplication::translate("StuffFinderClass", "Add/Edit Item", 0));
+        Item_name->setText(QString());
         label_2->setText(QApplication::translate("StuffFinderClass", "Item Name:", 0));
         label_5->setText(QApplication::translate("StuffFinderClass", "Category:", 0));
         label_3->setText(QApplication::translate("StuffFinderClass", "Description:", 0));
