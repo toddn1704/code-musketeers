@@ -30,7 +30,7 @@ void StuffFinder::Output_item_tree()
 	ui.itemsTreeWidget->setColumnCount(1);
 	
 	// Get all the layouts and their items
-	std::vector<Layout *> layouts = db.Load_Layouts();
+	layouts = db.Load_Layouts();
 
 
 	if (layouts.size())
@@ -82,7 +82,25 @@ void StuffFinder::on_Search_button_clicked()
 	//
 	std::string query = ui.search->text().toStdString();
 
+	Item * find_item = layouts[0]->search(query);
 	//send value to db search function
+	if (find_item == NULL)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("Your search found no items with that name.");
+		msgBox.exec();
+		return;
+	}
+	else
+	{
+		QMessageBox msgBox;
+		std::string output = "Found your item!!!!\nName: " + find_item->get_name() + "\nDescription: " + find_item->get_description() + "\nCategory: " 
+			+ find_item->get_category() + "\nQuantity: " + std::to_string(find_item->get_quantity());
+		QString qstr = QString::fromStdString(output);
+		msgBox.setText(qstr);
+		msgBox.exec();
+		return;
+	}
 }
 
 void StuffFinder::on_Add_save_clicked()

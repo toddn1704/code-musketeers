@@ -17,6 +17,7 @@ public:
 private:
 	Ui::StuffFinderClass ui;
 	Database db;
+	std::vector<Layout *> layouts;
 
 	void Output_item_tree();
 	void setItems(QTreeWidgetItem * room, Container * cont);
