@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		qDebug() << test_containers[i]->get_container_id() << "," << test_containers[i]->get_name().c_str() <<
 			"," << test_containers[i]->get_description().c_str();
 	}
-	*/
+	
 
 	Category * C1 = new Category;
 	Layout * L1 = new Layout;
@@ -65,6 +65,6 @@ int main(int argc, char *argv[])
 		}
 
 	}
-
+	*/
 	return a.exec();
 }

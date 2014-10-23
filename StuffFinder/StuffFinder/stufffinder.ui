@@ -37,13 +37,13 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>List View</string>
      </attribute>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QTreeWidget" name="itemsTreeWidget">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -52,6 +52,11 @@
         <height>531</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -327,7 +332,7 @@
      <x>0</x>
      <y>0</y>
      <width>1206</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_stufffinder.h"
 #include <QMessageBox>
+#include "Database.h"
 
 class StuffFinder : public QMainWindow
 {
@@ -15,6 +16,10 @@ public:
 
 private:
 	Ui::StuffFinderClass ui;
+	Database db;
+
+	void Output_item_tree();
+	void setItems(QTreeWidgetItem * room, Container * cont);
 
 public slots:
 void on_Search_button_clicked();

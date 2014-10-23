@@ -53,8 +53,8 @@ Database::~Database()
 {
 	sqlite3_close(db);
 	qDebug() << "Closed database successfully.";
-	Delete_Database();
-	qDebug() << "Deleted database";
+	//Delete_Database();
+	//qDebug() << "Deleted database";
 
 }
 

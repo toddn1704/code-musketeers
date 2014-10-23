@@ -2,6 +2,7 @@
 #define __category_h_
 #include <string>
 #include <vector>
+#include <map>
 #include "Item.h"
 
 class Category {

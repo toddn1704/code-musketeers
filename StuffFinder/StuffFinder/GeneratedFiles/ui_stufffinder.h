@@ -21,7 +21,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListView>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -30,6 +29,7 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,7 +41,7 @@ public:
     QPushButton *Create_db;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QListWidget *listWidget;
+    QTreeWidget *itemsTreeWidget;
     QWidget *tab_2;
     QListView *listView;
     QPushButton *Add_cancel;
@@ -84,9 +84,12 @@ public:
         tabWidget->setGeometry(QRect(30, 70, 331, 551));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
-        listWidget = new QListWidget(tab);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(0, 0, 331, 531));
+        itemsTreeWidget = new QTreeWidget(tab);
+        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
+        __qtreewidgetitem->setText(0, QStringLiteral("1"));
+        itemsTreeWidget->setHeaderItem(__qtreewidgetitem);
+        itemsTreeWidget->setObjectName(QStringLiteral("itemsTreeWidget"));
+        itemsTreeWidget->setGeometry(QRect(0, 0, 331, 531));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -164,7 +167,7 @@ public:
         Search_button->raise();
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 21));
+        menuBar->setGeometry(QRect(0, 0, 1206, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
@@ -179,7 +182,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);

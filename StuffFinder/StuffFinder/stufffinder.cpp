@@ -3,6 +3,8 @@
 #include "Database.h"
 #include <string>
 
+#include <vector>
+#include <Layout.h>
 //included for testing only
 #include<iostream>
 #include<fstream>
@@ -12,12 +14,49 @@ StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-
+	Output_item_tree();
 }
 
 StuffFinder::~StuffFinder()
 {
 
+}
+
+void StuffFinder::Output_item_tree()
+{
+	ui.itemsTreeWidget->clear();
+	ui.itemsTreeWidget->header()->close();
+	ui.itemsTreeWidget->setColumnCount(1);
+	
+	std::vector<Layout *> layouts = db.Load_Layouts();
+
+	if (layouts.size())
+	{
+		for (int i = 0; i < layouts[0]->get_rooms().size(); i++)
+		{
+			QTreeWidgetItem *room = new QTreeWidgetItem(ui.itemsTreeWidget);
+			room->setText(0, QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()));
+			setItems(room, layouts[0]->get_rooms()[i]);
+			ui.itemsTreeWidget->addTopLevelItem(room);
+		}
+	}
+}
+
+void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont)
+{
+	for (int j = 0; j < cont->get_container().size(); j++)
+	{
+		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
+		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
+		setItems(subcontainer, cont->get_container()[j]);
+	}
+	for (int i = 0; i < cont->get_items().size(); i++)
+	{
+		QTreeWidgetItem *item = new QTreeWidgetItem(room);
+		item->setText(0, QString::fromStdString(cont->get_items()[i]->get_name()));
+	}
+
+	return;
 }
 
 void StuffFinder::on_search_returnPressed()
