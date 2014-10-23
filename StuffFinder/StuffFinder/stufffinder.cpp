@@ -129,7 +129,7 @@ void StuffFinder::on_Add_save_clicked()
 	}
 	// Temporary test add item using cost as the container id.
 	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), "temp");
-	db.Create_Item(add_me, std::stoi(cost.c_str()));
+	db.Create_Item(add_me, 1);
 	Output_item_tree();
 
 	ui.Item_name->clear();
