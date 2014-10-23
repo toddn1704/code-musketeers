@@ -24,18 +24,24 @@ StuffFinder::~StuffFinder()
 
 void StuffFinder::Output_item_tree()
 {
+	// Clear and setup tree widget
 	ui.itemsTreeWidget->clear();
 	ui.itemsTreeWidget->header()->close();
 	ui.itemsTreeWidget->setColumnCount(1);
 	
+	// Get all the layouts and their items
 	std::vector<Layout *> layouts = db.Load_Layouts();
+
 
 	if (layouts.size())
 	{
+		// Iterate over all rooms in layout.   Currently by default does only first layout.
 		for (int i = 0; i < layouts[0]->get_rooms().size(); i++)
 		{
+			// Create top level item and set text
 			QTreeWidgetItem *room = new QTreeWidgetItem(ui.itemsTreeWidget);
 			room->setText(0, QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()));
+			// Get all of its children with recursive function
 			setItems(room, layouts[0]->get_rooms()[i]);
 			ui.itemsTreeWidget->addTopLevelItem(room);
 		}
@@ -44,12 +50,14 @@ void StuffFinder::Output_item_tree()
 
 void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont)
 {
+	// Recursively go through all subcontainers
 	for (int j = 0; j < cont->get_container().size(); j++)
 	{
 		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
 		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
 		setItems(subcontainer, cont->get_container()[j]);
 	}
+	// Add owned items to the tree
 	for (int i = 0; i < cont->get_items().size(); i++)
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(room);
@@ -82,14 +90,35 @@ void StuffFinder::on_Add_save_clicked()
 	//gets values from entry fields and
 	//converts to string so can be saved in database
 	//
+	
 	std::string name = ui.Item_name->text().toStdString();
 	std::string descript = ui.Item_descript->toPlainText().toStdString();
 	std::string quant = ui.Item_quant->text().toStdString();
 	std::string minquant = ui.Min_quant->text().toStdString();
 	std::string cost = ui.Item_cost->text().toStdString(); 
 
+
 	//send values to an add/edit item function
 	//  which is connected to the database
+	// Check if the fields are populated
+	if (name.empty() || descript.empty() || quant.empty() || minquant.empty()
+		|| cost.empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You didnt fill in all the boxees silly!");
+		msgBox.exec();
+		return;
+	}
+	// Temporary test add item using cost as the container id.
+	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), "temp");
+	db.Create_Item(add_me, std::stoi(cost.c_str()));
+	Output_item_tree();
+
+	ui.Item_name->clear();
+	ui.Item_descript->clear();
+	ui.Item_quant->clear();
+	ui.Min_quant->clear();
+	ui.Item_cost->clear();
 
 	/*test print
 	using namespace std;
