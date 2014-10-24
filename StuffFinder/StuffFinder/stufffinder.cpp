@@ -15,6 +15,21 @@ StuffFinder::StuffFinder(QWidget *parent)
 {
 	ui.setupUi(this);
 	Output_item_tree();
+
+	// Create context menus
+	containerContextMenu = new QMenu(ui.itemsTreeWidget);
+	itemContextMenu = new QMenu(ui.itemsTreeWidget);
+	ui.itemsTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	
+	// Connect the tree widget to the onCustomContextMenu slot function
+	connect(ui.itemsTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+	// Add actions to the menus and connect them to their slots
+	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
+	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
+	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
+
+
+	
 }
 
 StuffFinder::~StuffFinder()
@@ -41,6 +56,10 @@ void StuffFinder::Output_item_tree()
 			// Create top level item and set text
 			QTreeWidgetItem *room = new QTreeWidgetItem(ui.itemsTreeWidget);
 			room->setText(0, QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()));
+			// Add the container id to the tree widget item
+			room->setData(0, Qt::UserRole, layouts[0]->get_rooms()[i]->get_container_id());
+
+
 			ui.containerComboBox->addItem(QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()), 
 				layouts[0]->get_rooms()[i]->get_container_id());
 			// Get all of its children with recursive function
@@ -60,6 +79,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 	{
 		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
 		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
+		// Add the container id to the tree widget item
+		subcontainer->setData(0, Qt::UserRole, cont->get_container()[j]->get_container_id());
 
 		// Get container name and add "-" for each level its at
 		QString container_name = QString::fromStdString(cont->get_container()[j]->get_name());
@@ -77,6 +98,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(room);
 		item->setText(0, QString::fromStdString(cont->get_items()[i]->get_name()));
+		// Set "container id" to 0 so we know its an item
+		item->setData(0, Qt::UserRole, 0);
 	}
 
 	return;
@@ -196,4 +219,42 @@ void StuffFinder::on_Create_db_clicked()
 		msgBox.exec();
 	}
 	sqlite3_close(db);
+}
+
+void StuffFinder::onCustomContextMenu(const QPoint &point)
+{
+	// Check if its a container
+	if (ui.itemsTreeWidget->itemAt(point)->data(0, Qt::UserRole).toInt())
+	{
+		containerContextMenu->exec(ui.itemsTreeWidget->mapToGlobal(point));
+	}
+	// Its an item
+	else
+	{
+		itemContextMenu->exec(ui.itemsTreeWidget->mapToGlobal(point));
+	}
+}
+
+void StuffFinder::addContainerClicked()
+{
+	// Temp code
+	QMessageBox msgBox;
+	msgBox.setText("Eventually I'll do something!");
+	msgBox.exec();
+}
+
+void StuffFinder::addItemClicked()
+{
+	// Temp code
+	QMessageBox msgBox;
+	msgBox.setText("Eventually I'll do something(like adding an item)!");
+	msgBox.exec();
+}
+
+void StuffFinder::editItemClicked()
+{
+	// Temp code
+	QMessageBox msgBox;
+	msgBox.setText("Eventually I'll do something to an item!");
+	msgBox.exec();
 }

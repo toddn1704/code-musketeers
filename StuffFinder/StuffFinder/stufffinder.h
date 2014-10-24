@@ -22,12 +22,21 @@ private:
 	void Output_item_tree();
 	void setItems(QTreeWidgetItem * room, Container * cont, int level);
 
+	QMenu* containerContextMenu;
+	QMenu* itemContextMenu;
+
+private slots:
+void addContainerClicked();
+void addItemClicked();
+void editItemClicked();
+
 public slots:
 void on_Search_button_clicked();
 void on_search_returnPressed();
 void on_Create_db_clicked();
 void on_Add_save_clicked();
 void on_Add_cancel_clicked();
+void onCustomContextMenu(const QPoint &point);
 
 
 };
