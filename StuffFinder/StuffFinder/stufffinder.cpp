@@ -46,6 +46,7 @@ void StuffFinder::Output_item_tree()
 	
 	// Get all the layouts and their items
 	layouts = db.Load_Layouts();
+	ui.containerComboBox->clear();
 
 
 	if (layouts.size())
