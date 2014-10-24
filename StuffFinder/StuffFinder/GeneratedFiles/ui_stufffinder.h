@@ -61,6 +61,8 @@ public:
     QLabel *label_3;
     QTextEdit *Item_descript;
     QComboBox *Category_menu;
+    QComboBox *containerComboBox;
+    QLabel *label;
     QGraphicsView *graphicsView;
     QLineEdit *search;
     QPushButton *Search_button;
@@ -98,13 +100,13 @@ public:
         listView->setGeometry(QRect(0, 0, 331, 531));
         Add_cancel = new QPushButton(tab_2);
         Add_cancel->setObjectName(QStringLiteral("Add_cancel"));
-        Add_cancel->setGeometry(QRect(130, 360, 75, 23));
+        Add_cancel->setGeometry(QRect(130, 380, 75, 23));
         Add_save = new QPushButton(tab_2);
         Add_save->setObjectName(QStringLiteral("Add_save"));
-        Add_save->setGeometry(QRect(210, 360, 75, 23));
+        Add_save->setGeometry(QRect(210, 380, 75, 23));
         groupBox = new QGroupBox(tab_2);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(20, 220, 291, 131));
+        groupBox->setGeometry(QRect(20, 240, 291, 131));
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(10, 30, 51, 16));
@@ -130,7 +132,7 @@ public:
         Item_cost->setGeometry(QRect(100, 90, 71, 20));
         groupBox_2 = new QGroupBox(tab_2);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(20, 10, 291, 191));
+        groupBox_2->setGeometry(QRect(20, 10, 291, 221));
         Item_name = new QLineEdit(groupBox_2);
         Item_name->setObjectName(QStringLiteral("Item_name"));
         Item_name->setGeometry(QRect(90, 30, 113, 20));
@@ -149,6 +151,12 @@ public:
         Category_menu = new QComboBox(groupBox_2);
         Category_menu->setObjectName(QStringLiteral("Category_menu"));
         Category_menu->setGeometry(QRect(90, 60, 131, 22));
+        containerComboBox = new QComboBox(groupBox_2);
+        containerComboBox->setObjectName(QStringLiteral("containerComboBox"));
+        containerComboBox->setGeometry(QRect(90, 180, 131, 22));
+        label = new QLabel(groupBox_2);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(12, 180, 61, 20));
         tabWidget->addTab(tab_2, QString());
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
@@ -182,7 +190,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);
@@ -205,6 +213,7 @@ public:
         label_2->setText(QApplication::translate("StuffFinderClass", "Item Name:", 0));
         label_5->setText(QApplication::translate("StuffFinderClass", "Category:", 0));
         label_3->setText(QApplication::translate("StuffFinderClass", "Description:", 0));
+        label->setText(QApplication::translate("StuffFinderClass", "Container", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Add Item", 0));
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));

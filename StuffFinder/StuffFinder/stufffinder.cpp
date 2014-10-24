@@ -41,21 +41,36 @@ void StuffFinder::Output_item_tree()
 			// Create top level item and set text
 			QTreeWidgetItem *room = new QTreeWidgetItem(ui.itemsTreeWidget);
 			room->setText(0, QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()));
+			ui.containerComboBox->addItem(QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()), 
+				layouts[0]->get_rooms()[i]->get_container_id());
 			// Get all of its children with recursive function
-			setItems(room, layouts[0]->get_rooms()[i]);
+			setItems(room, layouts[0]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
 		}
 	}
+	
+	ui.containerComboBox->setCurrentIndex(-1);
+
 }
 
-void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont)
+void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 {
 	// Recursively go through all subcontainers
 	for (int j = 0; j < cont->get_container().size(); j++)
 	{
 		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
 		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
-		setItems(subcontainer, cont->get_container()[j]);
+
+		// Get container name and add "-" for each level its at
+		QString container_name = QString::fromStdString(cont->get_container()[j]->get_name());
+		for (int k = 0; k < level; k++)
+		{
+			container_name = "-" + container_name;
+		}
+		// Add container to combo box
+		ui.containerComboBox->addItem(container_name,
+			cont->get_container()[j]->get_container_id());
+		setItems(subcontainer, cont->get_container()[j], ++level);
 	}
 	// Add owned items to the tree
 	for (int i = 0; i < cont->get_items().size(); i++)
@@ -114,22 +129,22 @@ void StuffFinder::on_Add_save_clicked()
 	std::string quant = ui.Item_quant->text().toStdString();
 	std::string minquant = ui.Min_quant->text().toStdString();
 	std::string cost = ui.Item_cost->text().toStdString(); 
-
+	int container_id = ui.containerComboBox->itemData(ui.containerComboBox->currentIndex(), Qt::UserRole).toInt();
 
 	//send values to an add/edit item function
 	//  which is connected to the database
 	// Check if the fields are populated
 	if (name.empty() || descript.empty() || quant.empty() || minquant.empty()
-		|| cost.empty())
+		|| cost.empty() || ui.containerComboBox->currentIndex() == -1)
 	{
 		QMessageBox msgBox;
 		msgBox.setText("You didnt fill in all the boxees silly!");
 		msgBox.exec();
 		return;
 	}
-	// Temporary test add item using cost as the container id.
+	// Add item and update list
 	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), "temp");
-	db.Create_Item(add_me, 1);
+	db.Create_Item(add_me, container_id);
 	Output_item_tree();
 
 	ui.Item_name->clear();
@@ -137,7 +152,7 @@ void StuffFinder::on_Add_save_clicked()
 	ui.Item_quant->clear();
 	ui.Min_quant->clear();
 	ui.Item_cost->clear();
-
+	ui.containerComboBox->setCurrentIndex(-1);
 	/*test print
 	using namespace std;
 	ofstream file;

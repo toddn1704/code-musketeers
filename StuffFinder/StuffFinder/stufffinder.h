@@ -20,7 +20,7 @@ private:
 	std::vector<Layout *> layouts;
 
 	void Output_item_tree();
-	void setItems(QTreeWidgetItem * room, Container * cont);
+	void setItems(QTreeWidgetItem * room, Container * cont, int level);
 
 public slots:
 void on_Search_button_clicked();
