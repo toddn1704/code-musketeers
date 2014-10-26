@@ -1,3 +1,10 @@
+/*User.h
+
+This header file contains the User class, which defines
+a user of the application. 
+
+*/
+
 #ifndef __user_h_
 #define __user_h_
 #include <string>

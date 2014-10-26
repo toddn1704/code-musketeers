@@ -1,3 +1,11 @@
+/*stufffinder.h
+
+This file contains the StuffFinder class. StuffFinder is 
+a giant class that allows the interface to interact with
+the database functions. 
+
+*/
+
 #ifndef STUFFFINDER_H
 #define STUFFFINDER_H
 

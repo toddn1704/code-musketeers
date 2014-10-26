@@ -1,3 +1,11 @@
+/*Category.h
+
+This file contains the Category class, which simply defines
+a category. A category can have many items, which are stored
+in a map of item names and item pointers.
+
+*/
+
 #ifndef __category_h_
 #define __category_h_
 #include <string>

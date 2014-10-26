@@ -1,3 +1,11 @@
+/*Layout.h
+
+This file contains the Layout class, which represents a single 
+floor of a house. Each layout has a vector of Container pointers
+which represent rooms on the floor. 
+
+*/
+
 #ifndef __layout_h_
 #define __layout_h_
 #include <string>

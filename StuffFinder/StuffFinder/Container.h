@@ -1,3 +1,12 @@
+/*Container.h
+
+This file contains the Container class, which describes a 
+container (eg. room, box, dresser, etc.). A container can hold
+multiple containers (as a vector of container pointers), and
+multiple items (as a vector of item pointers).
+
+*/
+
 #ifndef __container_h_
 #define __container_h_
 #include <string>

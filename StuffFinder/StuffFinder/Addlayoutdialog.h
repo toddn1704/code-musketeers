@@ -1,3 +1,10 @@
+/*Addlayoutdialog.h
+
+This file holds the Addlayoutdialog class, which defines
+a seperate window allowing the user to create a new layout.
+
+*/
+
 #ifndef ADDLAYOUTDIALOG_H
 #define ADDLAYOUTDIALOG_H
 

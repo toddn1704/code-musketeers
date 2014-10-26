@@ -1,3 +1,11 @@
+/*Database.h
+
+This file contains the Database class, which is responsible 
+for creating and deleting the database; and creating, editing,
+and deleting items, containers, layouts, and categories.
+
+*/
+
 #ifndef DATABASE_H
 #define DATABASE_H
 #include "sqlite3.h"

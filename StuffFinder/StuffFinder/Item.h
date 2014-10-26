@@ -1,3 +1,13 @@
+/*Item.h
+
+This file contains the Item class, which holds all attributes
+of an item, including the item's id, name, description, quantity,
+and category. An item can also be marked for tracking, which will
+allow that items quantity, cost, and consumption rate to be tracked
+in order to generate a shopping list.
+
+*/
+
 #ifndef __item_h_
 #define __item_h_
 #include <string>

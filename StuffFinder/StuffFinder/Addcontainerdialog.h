@@ -1,3 +1,11 @@
+/*Addcontainerdialog.h
+
+This file holds the Addcontainerdialog class which defines
+a separate window that allows the user to add a new
+container.
+
+*/
+
 #ifndef ADDCONTAINERDIALOG_H
 #define ADDCONTAINERDIALOG_H
 
