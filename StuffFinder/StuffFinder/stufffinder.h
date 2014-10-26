@@ -39,6 +39,7 @@ void on_Search_button_clicked();
 void on_search_returnPressed();
 void on_Add_save_clicked();
 void on_Add_cancel_clicked();
+void on_AddLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
 
 

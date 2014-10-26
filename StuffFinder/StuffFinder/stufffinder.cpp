@@ -2,15 +2,14 @@
 #include "sqlite3.h"
 #include "Database.h"
 #include <string>
-
+#include "Addcontainerdialog.h"
+#include "Addlayoutdialog.h"
 #include <vector>
 #include <Layout.h>
 //included for testing only
 #include<iostream>
 #include<fstream>
 #include<qdebug.h>
-
-#include "Addcontainerdialog.h"
 
 StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
@@ -258,6 +257,27 @@ void StuffFinder::addContainerClicked()
 	// Create the container and reload list
 	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
 	Output_item_tree();
+}
+
+void StuffFinder::on_AddLayout_clicked()
+{
+	// Create a layout
+	Layout *new_layout = new Layout;
+
+	// Popup dialog for user to enter
+	Addlayoutdialog *new_layout_window = new Addlayoutdialog(this, new_layout);
+	new_layout_window->exec();
+	if (new_layout->get_name().empty() || new_layout->get_description().empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You didnt fill in all the boxees silly!");
+		msgBox.exec();
+		return;
+	}
+	db.Create_Layout(new_layout);
+	layouts.push_back(new_layout);
+	ui.layoutComboBox->addItem(QString::fromStdString(new_layout->get_name()),
+		new_layout->get_layout_id());
 }
 
 void StuffFinder::addTopContainerClicked()

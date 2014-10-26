@@ -1,5 +1,5 @@
-#ifndef ADDITEMDIALOG_H
-#define ADDITEMDIALOG_H
+#ifndef ADDCONTAINERDIALOG_H
+#define ADDCONTAINERDIALOG_H
 
 #include <qdialog.h>
 #include <Container.h>
