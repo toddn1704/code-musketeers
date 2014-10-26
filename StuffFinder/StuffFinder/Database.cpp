@@ -181,7 +181,7 @@ void Database::Create_Container(Container* new_cont, int parent_id)
 	int rc;
 
 	sql = "INSERT INTO CONTAINER (CONTAINER_NAME, CONTAINER_DESCRIPTION, PARENT_CONTAINER_ID) " \
-		"VALUES(" + new_cont->get_name() + new_cont->get_description() + std::to_string(parent_id) + ");";
+		"VALUES('" + new_cont->get_name() +"','"+ new_cont->get_description() +"',"+ std::to_string(parent_id) + ");";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);

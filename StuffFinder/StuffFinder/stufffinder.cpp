@@ -8,7 +8,9 @@
 //included for testing only
 #include<iostream>
 #include<fstream>
+#include<qdebug.h>
 
+#include "Addcontainerdialog.h"
 
 StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
@@ -238,10 +240,15 @@ void StuffFinder::onCustomContextMenu(const QPoint &point)
 
 void StuffFinder::addContainerClicked()
 {
-	// Temp code
-	QMessageBox msgBox;
-	msgBox.setText("Eventually I'll do something!");
-	msgBox.exec();
+	// Create a container
+	Container *new_container = new Container;
+
+	// Popup dialog for user to enter
+	Addcontainerdialog *new_container_window = new Addcontainerdialog(this, new_container);
+	new_container_window->exec();
+	// Create the container and reload list
+	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	Output_item_tree();
 }
 
 void StuffFinder::addItemClicked()
