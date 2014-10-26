@@ -152,6 +152,27 @@ void Database::Delete_Item(Item* delItem)
 	}
 
 }
+
+void Database::Delete_Item(std::string name)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "DELETE FROM ITEM WHERE ITEM_NAME = '" + name + "';";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Item wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Item deleted successfully";
+	}
+
+}
 void Database::Update_Item(Item* up_item)
 {
 	std::string sql;
@@ -399,7 +420,6 @@ Container* Database::Load_Container(int id)
 	Load_Items(temp);
 	return temp;
 }
-
 void Database::Load_Layout_Containers(Layout * lay)
 {
 	std::string sql;

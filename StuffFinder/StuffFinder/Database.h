@@ -16,6 +16,7 @@ class Database
 		~Database();
 		void Create_Item(Item* newItem, int parent_id);
 		void Delete_Item(Item* delItem);
+		void Delete_Item(std::string name);
 		void Create_Container(Container* new_cont, int parent_id, bool top);
 		void Delete_Container(int id) { Delete_Container(Load_Container(id)); }
 		void Delete_Container(Container* del_cont);

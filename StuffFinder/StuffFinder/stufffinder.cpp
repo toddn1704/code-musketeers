@@ -43,6 +43,8 @@ StuffFinder::StuffFinder(QWidget *parent)
 	containerContextMenu->addSeparator();
 	containerContextMenu->addAction("Delete Container", this, SLOT(deleteContainerClicked()));
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
+	itemContextMenu->addSeparator();
+	itemContextMenu->addAction("Delete Item",this, SLOT(deleteItemClicked()));
 	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
 
 	
@@ -326,6 +328,15 @@ void StuffFinder::addItemClicked()
 	msgBox.exec();
 }
 
+void StuffFinder::deleteItemClicked()
+{
+	//Get current item name you want to delete
+	std::string str = ui.itemsTreeWidget->currentItem()->text(0).toStdString();
+	//Delete item from database
+	db.Delete_Item(str);
+	//Reload tree
+	Output_item_tree();
+}
 void StuffFinder::editItemClicked()
 {
 	// Temp code

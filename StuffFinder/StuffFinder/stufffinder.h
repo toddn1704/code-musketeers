@@ -30,6 +30,7 @@ private slots:
 void addContainerClicked();
 void addItemClicked();
 void editItemClicked();
+void deleteItemClicked();
 void addTopContainerClicked();
 void deleteContainerClicked();
 void handleLayoutChange(int index) { Output_item_tree(); }
