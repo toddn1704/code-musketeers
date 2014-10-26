@@ -14,19 +14,6 @@
    <string>StuffFinder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="Create_db">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>630</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Create DB</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -343,11 +330,6 @@
      <string>Search</string>
     </property>
    </widget>
-   <zorder>tabWidget</zorder>
-   <zorder>graphicsView</zorder>
-   <zorder>Create_db</zorder>
-   <zorder>search</zorder>
-   <zorder>Search_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

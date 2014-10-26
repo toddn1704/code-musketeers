@@ -38,7 +38,6 @@ class Ui_StuffFinderClass
 {
 public:
     QWidget *centralWidget;
-    QPushButton *Create_db;
     QTabWidget *tabWidget;
     QWidget *tab;
     QTreeWidget *itemsTreeWidget;
@@ -78,9 +77,6 @@ public:
         StuffFinderClass->resize(1206, 751);
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        Create_db = new QPushButton(centralWidget);
-        Create_db->setObjectName(QStringLiteral("Create_db"));
-        Create_db->setGeometry(QRect(1000, 630, 93, 28));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setGeometry(QRect(30, 70, 331, 551));
@@ -168,11 +164,6 @@ public:
         Search_button->setObjectName(QStringLiteral("Search_button"));
         Search_button->setGeometry(QRect(960, 40, 75, 23));
         StuffFinderClass->setCentralWidget(centralWidget);
-        tabWidget->raise();
-        graphicsView->raise();
-        Create_db->raise();
-        search->raise();
-        Search_button->raise();
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1206, 26));
@@ -199,7 +190,6 @@ public:
     void retranslateUi(QMainWindow *StuffFinderClass)
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
-        Create_db->setText(QApplication::translate("StuffFinderClass", "Create DB", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "List View", 0));
         Add_cancel->setText(QApplication::translate("StuffFinderClass", "Cancel", 0));
         Add_save->setText(QApplication::translate("StuffFinderClass", "Save", 0));

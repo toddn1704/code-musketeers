@@ -201,29 +201,6 @@ void StuffFinder::on_Add_cancel_clicked()
 	ui.Item_cost->clear();
 }
 
-void StuffFinder::on_Create_db_clicked()
-{
-	sqlite3 *db;
-	char *zErrMsg = 0;
-	int rc;
-	
-	rc = sqlite3_open("test.db", &db);
-
-	if (rc)
-	{
-		QMessageBox msgBox;
-		msgBox.setText("Can't open database: %s.");
-		msgBox.exec();
-	}
-	else
-	{
-		QMessageBox msgBox;
-		msgBox.setText("Opened database successfully.");
-		msgBox.exec();
-	}
-	sqlite3_close(db);
-}
-
 void StuffFinder::onCustomContextMenu(const QPoint &point)
 {
 	// Check if its a container
