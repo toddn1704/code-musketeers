@@ -274,8 +274,11 @@ void StuffFinder::on_AddLayout_clicked()
 		msgBox.exec();
 		return;
 	}
+	//Add layout to db
 	db.Create_Layout(new_layout);
+	//Add layout to loaded layouts
 	layouts.push_back(new_layout);
+	//Add layout name and id to layout combo box
 	ui.layoutComboBox->addItem(QString::fromStdString(new_layout->get_name()),
 		new_layout->get_layout_id());
 }
