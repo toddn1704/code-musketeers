@@ -374,6 +374,32 @@ void Database::Load_Containers(Container * cont)
 
 }
 
+Container* Database::Load_Container(int id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM CONTAINER WHERE CONTAINER_ID = " + std::to_string(id) + ";";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Containers werent loaded";
+	}
+	else
+	{
+		qDebug() << "Containers loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	Container * temp = new Container(atoi(c_qry_result[0][0].c_str()), c_qry_result[0][1], c_qry_result[0][2]);
+	Load_Containers(temp);
+	Load_Items(temp);
+	return temp;
+}
+
 void Database::Load_Layout_Containers(Layout * lay)
 {
 	std::string sql;

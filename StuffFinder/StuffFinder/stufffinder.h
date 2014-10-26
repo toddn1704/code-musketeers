@@ -31,6 +31,7 @@ void addContainerClicked();
 void addItemClicked();
 void editItemClicked();
 void addTopContainerClicked();
+void deleteContainerClicked();
 
 public slots:
 void on_Search_button_clicked();

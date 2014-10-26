@@ -29,6 +29,8 @@ StuffFinder::StuffFinder(QWidget *parent)
 	// Add actions to the menus and connect them to their slots
 	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
 	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
+	containerContextMenu->addSeparator();
+	containerContextMenu->addAction("Delete Container", this, SLOT(deleteContainerClicked()));
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
 	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
 
@@ -232,7 +234,13 @@ void StuffFinder::addContainerClicked()
 	// Popup dialog for user to enter
 	Addcontainerdialog *new_container_window = new Addcontainerdialog(this, new_container);
 	new_container_window->exec();
-
+	if (new_container->get_name().empty() || new_container->get_description().empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You didnt fill in all the boxees silly!");
+		msgBox.exec();
+		return;
+	}
 	// Create the container and reload list
 	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
 	Output_item_tree();
@@ -248,10 +256,22 @@ void StuffFinder::addTopContainerClicked()
 	new_container_window->exec();
 
 	// Create the container and reload list  ***Currently defaults to layout 1****
+	if (new_container->get_name().empty() || new_container->get_description().empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You didnt fill in all the boxees silly!");
+		msgBox.exec();
+		return;
+	}
 	db.Create_Container(new_container, 1, true);
 	Output_item_tree();
 }
 
+void StuffFinder::deleteContainerClicked()
+{
+	db.Delete_Container(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	Output_item_tree();
+}
 void StuffFinder::addItemClicked()
 {
 	// Temp code
