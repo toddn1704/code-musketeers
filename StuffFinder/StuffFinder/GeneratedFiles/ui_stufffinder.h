@@ -65,6 +65,7 @@ public:
     QGraphicsView *graphicsView;
     QLineEdit *search;
     QPushButton *Search_button;
+    QComboBox *layoutComboBox;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -163,6 +164,9 @@ public:
         Search_button = new QPushButton(centralWidget);
         Search_button->setObjectName(QStringLiteral("Search_button"));
         Search_button->setGeometry(QRect(960, 40, 75, 23));
+        layoutComboBox = new QComboBox(centralWidget);
+        layoutComboBox->setObjectName(QStringLiteral("layoutComboBox"));
+        layoutComboBox->setGeometry(QRect(30, 40, 151, 22));
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -181,7 +185,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);

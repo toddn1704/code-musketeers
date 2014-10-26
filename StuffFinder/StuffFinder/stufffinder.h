@@ -32,6 +32,7 @@ void addItemClicked();
 void editItemClicked();
 void addTopContainerClicked();
 void deleteContainerClicked();
+void handleLayoutChange(int index) { Output_item_tree(); }
 
 public slots:
 void on_Search_button_clicked();

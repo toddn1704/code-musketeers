@@ -16,6 +16,18 @@ StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
+	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(handleLayoutChange(int)));
+	layouts = db.Load_Layouts();
+	if (layouts.size())
+	{
+		for (int i = 0; i < layouts.size(); i++)
+		{
+			ui.layoutComboBox->addItem(QString::fromStdString(layouts[i]->get_name()),
+				layouts[i]->get_layout_id());
+		}
+	}
+	
 	Output_item_tree();
 
 	// Create context menus
@@ -34,7 +46,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
 	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
 
-
+	
 	
 }
 
@@ -55,22 +67,24 @@ void StuffFinder::Output_item_tree()
 	ui.containerComboBox->clear();
 
 
+	
 	if (layouts.size())
 	{
+		int j = ui.layoutComboBox->currentIndex();
 		// Iterate over all rooms in layout.   Currently by default does only first layout.
-		for (int i = 0; i < layouts[0]->get_rooms().size(); i++)
+		for (int i = 0; i < layouts[ui.layoutComboBox->currentIndex()]->get_rooms().size(); i++)
 		{
 			// Create top level item and set text
 			QTreeWidgetItem *room = new QTreeWidgetItem(ui.itemsTreeWidget);
-			room->setText(0, QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()));
+			room->setText(0, QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()));
 			// Add the container id to the tree widget item
-			room->setData(0, Qt::UserRole, layouts[0]->get_rooms()[i]->get_container_id());
+			room->setData(0, Qt::UserRole, layouts[j]->get_rooms()[i]->get_container_id());
 
 
-			ui.containerComboBox->addItem(QString::fromStdString(layouts[0]->get_rooms()[i]->get_name()), 
-				layouts[0]->get_rooms()[i]->get_container_id());
+			ui.containerComboBox->addItem(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()), 
+				layouts[j]->get_rooms()[i]->get_container_id());
 			// Get all of its children with recursive function
-			setItems(room, layouts[0]->get_rooms()[i], 1);
+			setItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
 		}
 	}
@@ -263,7 +277,7 @@ void StuffFinder::addTopContainerClicked()
 		msgBox.exec();
 		return;
 	}
-	db.Create_Container(new_container, 1, true);
+	db.Create_Container(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	Output_item_tree();
 }
 
