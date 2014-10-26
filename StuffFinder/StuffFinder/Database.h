@@ -16,7 +16,7 @@ class Database
 		~Database();
 		void Create_Item(Item* newItem, int parent_id);
 		void Delete_Item(Item* delItem);
-		void Create_Container(Container* new_cont, int parent_id);
+		void Create_Container(Container* new_cont, int parent_id, bool top);
 		void Delete_Container(Container* del_cont);
 		void Create_Layout(Layout* new_layout);
 		void Delete_Layout(Layout* del_layout);

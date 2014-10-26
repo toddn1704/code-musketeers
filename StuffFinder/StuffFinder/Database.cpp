@@ -174,14 +174,23 @@ void Database::Update_Item(Item* up_item)
 		qDebug() << "Item updated successfully";
 	}
 }
-void Database::Create_Container(Container* new_cont, int parent_id)
+void Database::Create_Container(Container* new_cont, int parent_id, bool top)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
-
-	sql = "INSERT INTO CONTAINER (CONTAINER_NAME, CONTAINER_DESCRIPTION, PARENT_CONTAINER_ID) " \
-		"VALUES('" + new_cont->get_name() +"','"+ new_cont->get_description() +"',"+ std::to_string(parent_id) + ");";
+	// If it's a top level container use layout id
+	if (top)
+	{
+		sql = "INSERT INTO CONTAINER (CONTAINER_NAME, CONTAINER_DESCRIPTION, PARENT_LAYOUT_ID) " \
+			"VALUES('" + new_cont->get_name() + "','" + new_cont->get_description() + "'," + std::to_string(parent_id) + ");";
+	}
+	// If its a normal container use container id
+	else
+	{
+		sql = "INSERT INTO CONTAINER (CONTAINER_NAME, CONTAINER_DESCRIPTION, PARENT_CONTAINER_ID) " \
+			"VALUES('" + new_cont->get_name() + "','" + new_cont->get_description() + "'," + std::to_string(parent_id) + ");";
+	}
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);

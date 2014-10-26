@@ -24,11 +24,13 @@ private:
 
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;
+	QMenu* topLevelContainerMenu;
 
 private slots:
 void addContainerClicked();
 void addItemClicked();
 void editItemClicked();
+void addTopContainerClicked();
 
 public slots:
 void on_Search_button_clicked();

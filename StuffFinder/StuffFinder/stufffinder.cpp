@@ -21,6 +21,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	// Create context menus
 	containerContextMenu = new QMenu(ui.itemsTreeWidget);
 	itemContextMenu = new QMenu(ui.itemsTreeWidget);
+	topLevelContainerMenu = new QMenu(ui.itemsTreeWidget);
 	ui.itemsTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	
 	// Connect the tree widget to the onCustomContextMenu slot function
@@ -29,6 +30,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
 	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
+	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
 
 
 	
@@ -203,8 +205,15 @@ void StuffFinder::on_Add_cancel_clicked()
 
 void StuffFinder::onCustomContextMenu(const QPoint &point)
 {
+	qDebug() << ui.itemsTreeWidget->itemAt(point);
+	// Check if user is clicking outside any items
+	if (!ui.itemsTreeWidget->itemAt(point))
+	{
+		topLevelContainerMenu->exec(ui.itemsTreeWidget->mapToGlobal(point));
+		return;
+	}
 	// Check if its a container
-	if (ui.itemsTreeWidget->itemAt(point)->data(0, Qt::UserRole).toInt())
+	else if (ui.itemsTreeWidget->itemAt(point)->data(0, Qt::UserRole).toInt())
 	{
 		containerContextMenu->exec(ui.itemsTreeWidget->mapToGlobal(point));
 	}
@@ -223,8 +232,23 @@ void StuffFinder::addContainerClicked()
 	// Popup dialog for user to enter
 	Addcontainerdialog *new_container_window = new Addcontainerdialog(this, new_container);
 	new_container_window->exec();
+
 	// Create the container and reload list
-	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
+	Output_item_tree();
+}
+
+void StuffFinder::addTopContainerClicked()
+{
+	// Create a container
+	Container *new_container = new Container;
+
+	// Popup dialog for user to enter
+	Addcontainerdialog *new_container_window = new Addcontainerdialog(this, new_container);
+	new_container_window->exec();
+
+	// Create the container and reload list  ***Currently defaults to layout 1****
+	db.Create_Container(new_container, 1, true);
 	Output_item_tree();
 }
 
