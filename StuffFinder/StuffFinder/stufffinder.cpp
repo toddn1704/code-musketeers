@@ -140,7 +140,16 @@ void StuffFinder::on_Search_button_clicked()
 	//
 	std::string query = ui.search->text().toStdString();
 
-	Item * find_item = layouts[0]->search(query);
+	//Search all layouts
+	Item * find_item = NULL;
+	for (int i = 0; i < layouts.size(); i++)
+	{
+		find_item = layouts[i]->search(query);
+		if (find_item != NULL)
+		{
+			break;
+		}
+	}
 	//send value to db search function
 	if (find_item == NULL)
 	{
