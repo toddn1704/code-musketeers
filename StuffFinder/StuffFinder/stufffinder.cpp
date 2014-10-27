@@ -12,12 +12,15 @@
 #include<fstream>
 #include<qdebug.h>
 
+// Constructo sets up ui and outputs whatever is currently in the database
 StuffFinder::StuffFinder(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(handleLayoutChange(int)));
+
+	// Add layouts to comboBox
 	layouts = db.Load_Layouts();
 	if (layouts.size())
 	{
@@ -27,7 +30,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 				layouts[i]->get_layout_id());
 		}
 	}
-	
+	// Set the list views
 	Output_item_tree();
 
 	// Create context menus
@@ -52,6 +55,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	itemContextMenu->addAction("Delete Item",this, SLOT(deleteItemClicked()));
 	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
 
+	// Setup category context menus and actions
 	connect(ui.categoryTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCatCustomContextMenu(const QPoint &)));
 	nocategoryContextMenu->addAction("Add Category", this, SLOT(addCategoryClicked()));
 	categoryContextMenu->addAction("Delete Category", this, SLOT(deleteCategoryClicked()));
@@ -65,6 +69,7 @@ StuffFinder::~StuffFinder()
 
 }
 
+// Function loads data from the database and outputs it to the GUI(list views and comboboxes)
 void StuffFinder::Output_item_tree()
 {
 	// Clear and setup tree widget
@@ -126,6 +131,7 @@ void StuffFinder::Output_item_tree()
 
 }
 
+// Adds children of containers to the QTreeWidget
 void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 {
 	// Recursively go through all subcontainers
@@ -159,6 +165,7 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 	return;
 }
 
+// Search button SLOT
 void StuffFinder::on_search_returnPressed()
 {
 	//binds return key to on_Search_button_clicked
@@ -167,6 +174,7 @@ void StuffFinder::on_search_returnPressed()
 	on_Search_button_clicked();
 }
 
+// Searches layouts for user entered item by name and outputs result to messagebox
 void StuffFinder::on_Search_button_clicked()
 {
 	//get value from search entry field & convert 
@@ -204,6 +212,7 @@ void StuffFinder::on_Search_button_clicked()
 	}
 }
 
+// Saves User entered item if data is valid
 void StuffFinder::on_Add_save_clicked()
 {
 	//gets values from entry fields and
@@ -251,6 +260,7 @@ void StuffFinder::on_Add_save_clicked()
 	*/
 }
 
+// Clears data
 void StuffFinder::on_Add_cancel_clicked()
 {
 	/*clears entry fields when cancel button is
@@ -263,6 +273,7 @@ void StuffFinder::on_Add_cancel_clicked()
 	ui.Item_cost->clear();
 }
 
+// Handles right click within List View tab
 void StuffFinder::onCustomContextMenu(const QPoint &point)
 {
 	qDebug() << ui.itemsTreeWidget->itemAt(point);
@@ -284,6 +295,7 @@ void StuffFinder::onCustomContextMenu(const QPoint &point)
 	}
 }
 
+// When user clicks "Add Container" creates dialog box to enter information
 void StuffFinder::addContainerClicked()
 {
 	// Create a container
@@ -304,6 +316,7 @@ void StuffFinder::addContainerClicked()
 	Output_item_tree();
 }
 
+// When user clicks "Add Layout" button creates dialog box to enter information
 void StuffFinder::on_addLayout_clicked()
 {
 	// Create a layout
@@ -328,6 +341,7 @@ void StuffFinder::on_addLayout_clicked()
 		new_layout->get_layout_id());
 }
 
+// Handles when "Add Container" is clicked with no parent 
 void StuffFinder::addTopContainerClicked()
 {
 	// Create a container
@@ -349,11 +363,14 @@ void StuffFinder::addTopContainerClicked()
 	Output_item_tree();
 }
 
+// Deletes container from database then reloads lists
 void StuffFinder::deleteContainerClicked()
 {
 	db.Delete_Container(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	Output_item_tree();
 }
+
+// Doesn't do anything yet
 void StuffFinder::addItemClicked()
 {
 	// Temp code
@@ -362,6 +379,7 @@ void StuffFinder::addItemClicked()
 	msgBox.exec();
 }
 
+// Deletes item from database and reloads list
 void StuffFinder::deleteItemClicked()
 {
 	//Get current item name you want to delete
@@ -371,6 +389,8 @@ void StuffFinder::deleteItemClicked()
 	//Reload tree
 	Output_item_tree();
 }
+
+// Doesn't do anything yet
 void StuffFinder::editItemClicked()
 {
 	// Temp code
@@ -379,6 +399,7 @@ void StuffFinder::editItemClicked()
 	msgBox.exec();
 }
 
+// Handles when user right clicks within category tab
 void StuffFinder::onCatCustomContextMenu(const QPoint &point)
 {
 	// No category selected
@@ -395,6 +416,7 @@ void StuffFinder::onCatCustomContextMenu(const QPoint &point)
 	
 }
 
+// Creates dialog window and creates a container from entered information
 void StuffFinder::addCategoryClicked()
 {
 	// Create a category
@@ -416,6 +438,7 @@ void StuffFinder::addCategoryClicked()
 	Output_item_tree();
 }
 
+// Deletes selected category
 void StuffFinder::deleteCategoryClicked()
 {
 
