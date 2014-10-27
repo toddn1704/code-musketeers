@@ -62,12 +62,16 @@ void StuffFinder::Output_item_tree()
 	ui.itemsTreeWidget->clear();
 	ui.itemsTreeWidget->header()->close();
 	ui.itemsTreeWidget->setColumnCount(1);
+
+	ui.categoryTreeWidget->clear();
+	ui.categoryTreeWidget->header()->close();
+	ui.categoryTreeWidget->setColumnCount(1);
 	
 	// Get all the layouts and their items
 	layouts = db.Load_Layouts();
 	ui.containerComboBox->clear();
 
-
+	ui.Category_menu->clear();
 	
 	if (layouts.size())
 	{
@@ -90,6 +94,23 @@ void StuffFinder::Output_item_tree()
 		}
 	}
 	
+	std::vector<Category*> categories = db.Load_Categories();
+	for (int k = 0; k < categories.size(); k++)
+	{
+		ui.Category_menu->addItem(QString::fromStdString(categories[k]->get_name()), categories[k]->get_category_id());
+		QTreeWidgetItem * category = new QTreeWidgetItem(ui.categoryTreeWidget);
+		category->setText(0, QString::fromStdString(categories[k]->get_name()));
+		category->setData(0, Qt::UserRole, categories[k]->get_category_id());
+
+		ui.categoryTreeWidget->addTopLevelItem(category);
+		for (std::map<std::string, Item*>::iterator it = categories[k]->get_items().begin();
+			it != categories[k]->get_items().end(); it++)
+		{
+			QTreeWidgetItem * item = new QTreeWidgetItem(category);
+			item->setText(0, QString::fromStdString(it->first));
+		}
+	}
+	ui.Category_menu->setCurrentIndex(-1);
 	ui.containerComboBox->setCurrentIndex(-1);
 
 }
@@ -184,12 +205,14 @@ void StuffFinder::on_Add_save_clicked()
 	std::string minquant = ui.Min_quant->text().toStdString();
 	std::string cost = ui.Item_cost->text().toStdString(); 
 	int container_id = ui.containerComboBox->itemData(ui.containerComboBox->currentIndex(), Qt::UserRole).toInt();
+	int category_id = ui.Category_menu->itemData(ui.Category_menu->currentIndex(), Qt::UserRole).toInt();
 
 	//send values to an add/edit item function
 	//  which is connected to the database
 	// Check if the fields are populated
 	if (name.empty() || descript.empty() || quant.empty() || minquant.empty()
-		|| cost.empty() || ui.containerComboBox->currentIndex() == -1)
+		|| cost.empty() || ui.containerComboBox->currentIndex() == -1
+		|| ui.Category_menu->currentIndex() == -1)
 	{
 		QMessageBox msgBox;
 		msgBox.setText("You didnt fill in all the boxees silly!");
@@ -198,7 +221,7 @@ void StuffFinder::on_Add_save_clicked()
 	}
 	// Add item and update list
 	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), "temp");
-	db.Create_Item(add_me, container_id);
+	db.Create_Item(add_me, container_id, category_id);
 	Output_item_tree();
 
 	ui.Item_name->clear();

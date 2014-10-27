@@ -26,7 +26,7 @@ public:
 	int get_category_id() { return category_id; }
 	std::string get_name() { return name; }
 	std::string get_description() { return description; }
-	std::map<std::string, Item*> get_items() { return items; }
+	std::map<std::string, Item*> &get_items() { return items; }
 	
 
 private:

@@ -22,7 +22,7 @@ class Database
 	public:
 		Database();
 		~Database();
-		void Create_Item(Item* newItem, int parent_id);
+		void Create_Item(Item* newItem, int parent_id, int category);
 		void Delete_Item(Item* delItem);
 		void Delete_Item(std::string name);
 		void Create_Container(Container* new_cont, int parent_id, bool top);
@@ -35,6 +35,7 @@ class Database
 		void Update_Item(Item* up_item);
 
 		void Load_Items(Container * cont);
+		void Load_Items(Category * categ);
 		void Load_Containers(Container * cont);
 
 		void Load_Layout_Containers(Layout * lay);
