@@ -4,6 +4,7 @@
 #include <string>
 #include "Addcontainerdialog.h"
 #include "Addlayoutdialog.h"
+#include "Addcategorydialog.h"
 #include <vector>
 #include <Layout.h>
 //included for testing only
@@ -34,6 +35,10 @@ StuffFinder::StuffFinder(QWidget *parent)
 	itemContextMenu = new QMenu(ui.itemsTreeWidget);
 	topLevelContainerMenu = new QMenu(ui.itemsTreeWidget);
 	ui.itemsTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+
+	categoryContextMenu = new QMenu(ui.categoryTreeWidget);
+	nocategoryContextMenu = new QMenu(ui.categoryTreeWidget);
+	ui.categoryTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	
 	// Connect the tree widget to the onCustomContextMenu slot function
 	connect(ui.itemsTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
@@ -46,6 +51,10 @@ StuffFinder::StuffFinder(QWidget *parent)
 	itemContextMenu->addSeparator();
 	itemContextMenu->addAction("Delete Item",this, SLOT(deleteItemClicked()));
 	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
+
+	connect(ui.categoryTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCatCustomContextMenu(const QPoint &)));
+	nocategoryContextMenu->addAction("Add Category", this, SLOT(addCategoryClicked()));
+	categoryContextMenu->addAction("Delete Category", this, SLOT(deleteCategoryClicked()));
 
 	
 	
@@ -94,6 +103,8 @@ void StuffFinder::Output_item_tree()
 		}
 	}
 	
+	// Load Categories and add them to the category view with their items
+	// and set the combobox for user to choose from
 	std::vector<Category*> categories = db.Load_Categories();
 	for (int k = 0; k < categories.size(); k++)
 	{
@@ -293,7 +304,7 @@ void StuffFinder::addContainerClicked()
 	Output_item_tree();
 }
 
-void StuffFinder::on_AddLayout_clicked()
+void StuffFinder::on_addLayout_clicked()
 {
 	// Create a layout
 	Layout *new_layout = new Layout;
@@ -366,4 +377,48 @@ void StuffFinder::editItemClicked()
 	QMessageBox msgBox;
 	msgBox.setText("Eventually I'll do something to an item!");
 	msgBox.exec();
+}
+
+void StuffFinder::onCatCustomContextMenu(const QPoint &point)
+{
+	// No category selected
+	if (!ui.categoryTreeWidget->itemAt(point))
+	{
+		nocategoryContextMenu->exec(ui.categoryTreeWidget->mapToGlobal(point));
+		return;
+	}
+	
+	else
+	{
+		categoryContextMenu->exec(ui.categoryTreeWidget->mapToGlobal(point));
+	}
+	
+}
+
+void StuffFinder::addCategoryClicked()
+{
+	// Create a category
+	Category *new_category = new Category;
+
+	// Popup dialog for user to enter
+	Addcategorydialog *new_category_window = new Addcategorydialog(this, new_category);
+	new_category_window->exec();
+	if (new_category->get_name().empty() || new_category->get_description().empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You didnt fill in all the boxees silly!");
+		msgBox.exec();
+		return;
+	}
+	//Add category to db
+	db.Create_Category(new_category);
+	//Reload trees
+	Output_item_tree();
+}
+
+void StuffFinder::deleteCategoryClicked()
+{
+
+	db.Delete_Category(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	Output_item_tree();
 }

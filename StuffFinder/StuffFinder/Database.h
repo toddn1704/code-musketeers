@@ -31,6 +31,7 @@ class Database
 		void Create_Layout(Layout* new_layout);
 		void Delete_Layout(Layout* del_layout);
 		void Create_Category(Category* new_cat);
+		void Delete_Category(int id);
 
 		void Update_Item(Item* up_item);
 

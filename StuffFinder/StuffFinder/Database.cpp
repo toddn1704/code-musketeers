@@ -326,6 +326,27 @@ void Database::Create_Category(Category* new_cat)
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
 }
 
+void Database::Delete_Category(int id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "DELETE FROM CATEGORY WHERE CATEGORY_ID = " + std::to_string(id) + ";";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Category wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Category deleted successfully";
+	}
+
+}
+
 void Database::Load_Items(Container * cont)
 {
 	std::string sql;
