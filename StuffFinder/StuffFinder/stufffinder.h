@@ -33,6 +33,8 @@ private:
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;
 	QMenu* topLevelContainerMenu;
+	QMenu* categoryContextMenu;
+	QMenu* nocategoryContextMenu;
 
 private slots:
 void addContainerClicked();
@@ -42,14 +44,17 @@ void deleteItemClicked();
 void addTopContainerClicked();
 void deleteContainerClicked();
 void handleLayoutChange(int index) { Output_item_tree(); }
+void addCategoryClicked();
+void deleteCategoryClicked();
 
 public slots:
 void on_Search_button_clicked();
 void on_search_returnPressed();
 void on_Add_save_clicked();
 void on_Add_cancel_clicked();
-void on_AddLayout_clicked();
+void on_addLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
+void onCatCustomContextMenu(const QPoint &point);
 
 
 };

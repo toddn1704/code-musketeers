@@ -72,7 +72,7 @@ void Database::Create_Database()
 		"CONTAINER_ID      INT          NOT NULL," \
 		"ITEM_NAME           TEXT         NOT NULL," \
 		"ITEM_DESCRIPTION    TEXT," \
-		"CATEGORY    TEXT            NOT NULL," \
+		"CATEGORY_ID    INT            NOT NULL," \
 		"QUANTITY        INT         NOT NULL," \
 		"TRACKER         INT );"\
 
@@ -106,15 +106,15 @@ void Database::Create_Database()
 	}
 }
 
-void Database::Create_Item(Item *newItem, int parent_id)
+void Database::Create_Item(Item *newItem, int parent_id, int category)
 {
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 
-	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
+	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY_ID, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
 		"VALUES(" + std::to_string(parent_id) + ",'" +
-		newItem ->get_category() +"'," + std::to_string(newItem->get_quantity()) + ",'" + 
+		std::to_string(category) +"'," + std::to_string(newItem->get_quantity()) + ",'" + 
 		newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
@@ -326,6 +326,27 @@ void Database::Create_Category(Category* new_cat)
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
 }
 
+void Database::Delete_Category(int id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "DELETE FROM CATEGORY WHERE CATEGORY_ID = " + std::to_string(id) + ";";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Category wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Category deleted successfully";
+	}
+
+}
+
 void Database::Load_Items(Container * cont)
 {
 	std::string sql;
@@ -360,6 +381,44 @@ void Database::Load_Items(Container * cont)
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
 		cont->add_item(temp_item);
+	}
+	return;
+}
+
+void Database::Load_Items(Category * categ)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM ITEM WHERE CATEGORY_ID = " + std::to_string(categ->get_category_id()) + ";";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Items werent loaded";
+	}
+	else
+	{
+		qDebug() << "Item loaded successfully";
+	}
+	qDebug() << qry_result.size();
+
+	for (int i = 0; i < qry_result.size(); i++)
+	{
+		for (int j = 0; j < qry_result[i].size(); j++)
+		{
+			qDebug() << qry_result[i][j].c_str() << " , ";
+		}
+
+	}
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
+		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
+		categ->add_item(temp_item);
 	}
 	return;
 }
@@ -507,6 +566,7 @@ std::vector<Category*> Database::Load_Categories()
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
 		Category * temp = new Category(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		Load_Items(temp);
 		return_Categories.push_back(temp);
 	}
 

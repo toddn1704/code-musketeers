@@ -62,11 +62,13 @@ public:
     QComboBox *Category_menu;
     QComboBox *containerComboBox;
     QLabel *label;
+    QWidget *tab_3;
+    QTreeWidget *categoryTreeWidget;
     QGraphicsView *graphicsView;
     QLineEdit *search;
     QPushButton *Search_button;
     QComboBox *layoutComboBox;
-    QPushButton *AddLayout;
+    QPushButton *addLayout;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -156,6 +158,15 @@ public:
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(12, 180, 61, 20));
         tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QStringLiteral("tab_3"));
+        categoryTreeWidget = new QTreeWidget(tab_3);
+        QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem();
+        __qtreewidgetitem1->setText(0, QStringLiteral("1"));
+        categoryTreeWidget->setHeaderItem(__qtreewidgetitem1);
+        categoryTreeWidget->setObjectName(QStringLiteral("categoryTreeWidget"));
+        categoryTreeWidget->setGeometry(QRect(0, 0, 331, 531));
+        tabWidget->addTab(tab_3, QString());
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(390, 90, 671, 531));
@@ -168,13 +179,13 @@ public:
         layoutComboBox = new QComboBox(centralWidget);
         layoutComboBox->setObjectName(QStringLiteral("layoutComboBox"));
         layoutComboBox->setGeometry(QRect(30, 40, 151, 22));
-        AddLayout = new QPushButton(centralWidget);
-        AddLayout->setObjectName(QStringLiteral("AddLayout"));
-        AddLayout->setGeometry(QRect(190, 40, 31, 23));
+        addLayout = new QPushButton(centralWidget);
+        addLayout->setObjectName(QStringLiteral("addLayout"));
+        addLayout->setGeometry(QRect(190, 40, 93, 28));
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 21));
+        menuBar->setGeometry(QRect(0, 0, 1206, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
@@ -189,7 +200,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);
@@ -213,8 +224,9 @@ public:
         label_3->setText(QApplication::translate("StuffFinderClass", "Description:", 0));
         label->setText(QApplication::translate("StuffFinderClass", "Container", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Add Item", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Category view", 0));
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
-        AddLayout->setText(QApplication::translate("StuffFinderClass", "Add", 0));
+        addLayout->setText(QApplication::translate("StuffFinderClass", "Add Layout", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 

@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -296,6 +296,26 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Category view</string>
+     </attribute>
+     <widget class="QTreeWidget" name="categoryTreeWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>331</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
@@ -340,17 +360,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="AddLayout">
+   <widget class="QPushButton" name="addLayout">
     <property name="geometry">
      <rect>
       <x>190</x>
       <y>40</y>
-      <width>31</width>
-      <height>23</height>
+      <width>93</width>
+      <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Add</string>
+     <string>Add Layout</string>
     </property>
    </widget>
   </widget>
@@ -360,7 +380,7 @@
      <x>0</x>
      <y>0</y>
      <width>1206</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
