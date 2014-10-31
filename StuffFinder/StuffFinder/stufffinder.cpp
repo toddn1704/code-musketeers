@@ -122,6 +122,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 		item->setText(0, QString::fromStdString(cont->get_items()[i]->get_name()));
 		// Set "container id" to 0 so we know its an item
 		item->setData(0, Qt::UserRole, 0);
+		//set column "1" to item id.
+		item->setData(1,Qt::UserRole,cont->get_items()[i]->get_item_id());
 	}
 
 	return;
@@ -341,6 +343,9 @@ void StuffFinder::editItemClicked()
 {
 	// Temp code
 	QMessageBox msgBox;
-	msgBox.setText("Eventually I'll do something to an item!");
+	std::string str = "Item id is:";
+	//str.append(ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toString());
+	QString qstr = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toString();
+	msgBox.setText(qstr);
 	msgBox.exec();
 }
