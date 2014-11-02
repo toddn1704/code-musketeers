@@ -181,7 +181,7 @@ void Database::Update_Item(Item* up_item)
 
 	sql = "UPDATE ITEM SET ITEM_NAME = '" + up_item->get_name() + "', ITEM_DESCRIPTION ='" +
 		up_item->get_description() + "', CATEGORY = '" + up_item->get_category() + "', QUANTITY = " +
-		std::to_string(up_item->get_quantity()) + " WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) +
+		std::to_string(up_item->get_quantity()) + ", CONTAINER_ID = " + std::to_string(up_item->get_container_id()) + " WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) +
 		";";
 	qDebug() << sql.c_str();
 

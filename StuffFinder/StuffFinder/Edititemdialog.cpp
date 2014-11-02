@@ -1,11 +1,11 @@
 #include "Edititemdialog.h"
 #include "qmessagebox.h"
 
-Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vector<QString> combocontainer)
+Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vector<QString> combocontainer,std::vector<QString> combocategory)
 	: QDialog(parent)
 {
 	new_item = item;
-	int count = 0,combo_index = 0;
+	int count = 0;
 
 	ui.setupUi(this);
 	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveItem()));
@@ -14,27 +14,48 @@ Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vect
 	// load the container combo box
 	// also save when we find the container the item is in so that we can pre select it from the combo box
 	for (unsigned int i = 0; i < combocontainer.size(); i=i+2)
-	{
+	{									// text               id
 		ui.EditcontainerComboBox->addItem(combocontainer[i],combocontainer[i+1]);
 		//save combo index for preselect
 		if (cont_id == combocontainer[i + 1].toInt())
 		{
-			combo_index = count;
+			// preSelect the container that the item is in
+			ui.EditcontainerComboBox->setCurrentIndex(count);
 		}
 		count++;
 	}
-	// preSelect the container that the item is in
-	ui.EditcontainerComboBox->setCurrentIndex(combo_index);
-
+	count = 0;
+	//load categories and preSelect category if it exists
+	for (unsigned int i = 0; i < combocategory.size(); i= i+2)
+	{
+		ui.Edit_category_menu->addItem(combocategory[i],combocategory[i+1]);
+		//save combo index for preselect
+		if (item->get_category() == combocategory[i].toStdString())
+		{
+			// preSelect the container that the item is in
+			ui.Edit_category_menu->setCurrentIndex(count);
+		}
+		count++;
+	}
+	//prefill name description and quantity
+	ui.Item_name->setText(QString::fromStdString(item->get_name()));
+	ui.Item_descript->setText(QString::fromStdString(item->get_description()));
+	ui.Item_quant->setValue(item->get_quantity());
 }
 
 void Edititemdialog::saveItem()
 {
 	// Get user input and validate
-	//std::string name = ui.container_name->text().toStdString();
-	//std::string description = ui.container_description->toPlainText().toStdString();
+	std::string name = ui.Item_name->text().toStdString();
+	std::string description = ui.Item_descript->toPlainText().toStdString();
+	int quant = ui.Item_quant->value();
+	int new_cont_id = ui.EditcontainerComboBox->itemData(ui.EditcontainerComboBox->currentIndex(),Qt::UserRole).toInt();
+	std::string new_category_name = ui.Edit_category_menu->itemData(ui.Edit_category_menu->currentIndex(), Qt::UserRole).toString().toStdString();
 
 	// Set Item attributes
-	//new_container->set_name(name);
-	//new_container->set_description(description);
+	new_item->set_name(name);
+	new_item->set_description(description);
+	new_item->set_quantity(quant);
+	new_item->set_category(new_category_name);
+	new_item->set_container_id(new_cont_id);
 }
