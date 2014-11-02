@@ -5,6 +5,7 @@
 #include "Addcontainerdialog.h"
 #include "Addlayoutdialog.h"
 #include "Addcategorydialog.h"
+#include "Edititemdialog.h"
 #include <vector>
 #include <Layout.h>
 //included for testing only
@@ -395,15 +396,33 @@ void StuffFinder::deleteItemClicked()
 // Doesn't do anything yet
 void StuffFinder::editItemClicked()
 {
-	// Temp code
-	QMessageBox msgBox;
-	std::string str = "Item id is:";
-	//str.append(ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toString());
-	QString qstr = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toString();
-	msgBox.setText(qstr);
-	msgBox.exec();
+	int item_id = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
+	// Create a Item
+	Item *new_item = new Item;
+	for (int i = 0; i < layouts.size(); i++)
+	{
+		new_item = layouts[i]->search(item_id);
+		if (new_item != NULL)
+		{
+			break;
+		}
+	}
+	//send value to db search function
+	if (new_item == NULL)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("Error: could not find item.(INTERNAL ERROR)");
+		msgBox.exec();
+		return;
+	}
+	else
+	{
+		// Popup dialog for user to enter
+		Edititemdialog *new_item_window = new Edititemdialog(this, new_item);
+		new_item_window->exec();
+		Output_item_tree();
+	}
 }
-
 // Handles when user right clicks within category tab
 void StuffFinder::onCatCustomContextMenu(const QPoint &point)
 {
