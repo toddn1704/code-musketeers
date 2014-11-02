@@ -409,7 +409,6 @@ void StuffFinder::editItemClicked()
 			break;
 		}
 	}
-	//send value to db search function
 	if (new_item == NULL)
 	{
 		QMessageBox msgBox;
@@ -423,6 +422,8 @@ void StuffFinder::editItemClicked()
 		int cont_id;
 		std::vector<QString> contcombo;
 		std::vector<QString> layoutcombo;
+		//loop through container combobox to get info
+		//Im saving container name, then id
 		for(int i = 0; i < ui.containerComboBox->count(); i++)
 		{
 			contcombo.push_back(ui.containerComboBox->itemText(i));
