@@ -163,6 +163,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 		item->setData(0, Qt::UserRole, 0);
 		//set column "1" to item id.
 		item->setData(1,Qt::UserRole,cont->get_items()[i]->get_item_id());
+		//set column "2" to cont id
+		item->setData(2, Qt::UserRole, cont->get_container_id());
 	}
 
 	return;
@@ -417,8 +419,19 @@ void StuffFinder::editItemClicked()
 	}
 	else
 	{
+		// Get combobox info
+		int cont_id;
+		std::vector<QString> contcombo;
+		std::vector<QString> layoutcombo;
+		for(int i = 0; i < ui.containerComboBox->count(); i++)
+		{
+			contcombo.push_back(ui.containerComboBox->itemText(i));
+			contcombo.push_back(ui.containerComboBox->itemData(i,Qt::UserRole).toString());
+		}
+		//set container id for item
+		cont_id = ui.itemsTreeWidget->currentItem()->data(2, Qt::UserRole).toInt();
 		// Popup dialog for user to enter
-		Edititemdialog *new_item_window = new Edititemdialog(this, new_item);
+		Edititemdialog *new_item_window = new Edititemdialog(this, new_item,cont_id,contcombo);
 		new_item_window->exec();
 		Output_item_tree();
 	}

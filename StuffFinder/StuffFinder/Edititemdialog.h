@@ -17,7 +17,7 @@ item.
 class Edititemdialog : public QDialog {Q_OBJECT
 	
 public:
-	Edititemdialog(QWidget *parent, Item *item);
+	Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vector<QString> combocontainers);
 	~Edititemdialog(){}
 
 private:
