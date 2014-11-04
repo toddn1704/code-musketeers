@@ -52,10 +52,20 @@ void Edititemdialog::saveItem()
 	int new_cont_id = ui.EditcontainerComboBox->itemData(ui.EditcontainerComboBox->currentIndex(),Qt::UserRole).toInt();
 	std::string new_category_name = ui.Edit_category_menu->itemData(ui.Edit_category_menu->currentIndex(), Qt::UserRole).toString().toStdString();
 
-	// Set Item attributes
-	new_item->set_name(name);
-	new_item->set_description(description);
-	new_item->set_quantity(quant);
-	new_item->set_category(new_category_name);
-	new_item->set_container_id(new_cont_id);
+	if (name.empty() || description.empty() || new_category_name.empty())
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You forgot to fill something out.");
+		msgBox.exec();
+		return;
+	}
+	else
+	{
+		// Set Item attributes
+		new_item->set_name(name);
+		new_item->set_description(description);
+		new_item->set_quantity(quant);
+		new_item->set_category(new_category_name);
+		new_item->set_container_id(new_cont_id);
+	}
 }

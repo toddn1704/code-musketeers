@@ -26,6 +26,8 @@ private:
 	Ui::StuffFinderClass ui;
 	Database db;
 	std::vector<Layout *> layouts;
+	std::vector<QString> contcombo;//holds container name then id ie[container1,conatainer1 id,container2,container2 id]
+	std::vector<QString> categorycombo;//holds category name and id
 
 	void Output_item_tree();
 	void setItems(QTreeWidgetItem * room, Container * cont, int level);

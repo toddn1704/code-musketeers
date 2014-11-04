@@ -85,7 +85,8 @@ void StuffFinder::Output_item_tree()
 	// Get all the layouts and their items
 	layouts = db.Load_Layouts();
 	ui.containerComboBox->clear();
-
+	contcombo.clear();
+	categorycombo.clear();
 	ui.Category_menu->clear();
 	
 	if (layouts.size())
@@ -103,6 +104,8 @@ void StuffFinder::Output_item_tree()
 
 			ui.containerComboBox->addItem(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()), 
 				layouts[j]->get_rooms()[i]->get_container_id());
+			contcombo.push_back(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()));
+			contcombo.push_back(QString::number(layouts[j]->get_rooms()[i]->get_container_id()));
 			// Get all of its children with recursive function
 			setItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
@@ -115,6 +118,8 @@ void StuffFinder::Output_item_tree()
 	for (int k = 0; k < categories.size(); k++)
 	{
 		ui.Category_menu->addItem(QString::fromStdString(categories[k]->get_name()), categories[k]->get_category_id());
+		categorycombo.push_back(QString::fromStdString(categories[k]->get_name()));
+		categorycombo.push_back(QString::number(categories[k]->get_category_id()));
 		QTreeWidgetItem * category = new QTreeWidgetItem(ui.categoryTreeWidget);
 		category->setText(0, QString::fromStdString(categories[k]->get_name()));
 		category->setData(0, Qt::UserRole, categories[k]->get_category_id());
@@ -152,6 +157,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 		// Add container to combo box
 		ui.containerComboBox->addItem(container_name,
 			cont->get_container()[j]->get_container_id());
+		contcombo.push_back(container_name);
+		contcombo.push_back(QString::number(cont->get_container()[j]->get_container_id()));
 		setItems(subcontainer, cont->get_container()[j], ++level);
 	}
 	// Add owned items to the tree
@@ -420,21 +427,7 @@ void StuffFinder::editItemClicked()
 	{
 		// Get combobox info
 		int cont_id;
-		std::vector<QString> contcombo;
-		std::vector<QString> categorycombo;
-		//loop through container combobox to get info
-		//Im saving container name, then id
-		for(int i = 0; i < ui.containerComboBox->count(); i++)
-		{
-			contcombo.push_back(ui.containerComboBox->itemText(i));
-			contcombo.push_back(ui.containerComboBox->itemData(i,Qt::UserRole).toString());
-		}
-		//loop through categories
-		for (int i = 0; i < ui.Category_menu->count(); i++)
-		{
-			categorycombo.push_back(ui.Category_menu->itemText(i));
-			categorycombo.push_back(ui.Category_menu->itemData(i, Qt::UserRole).toString());
-		}
+
 		//set container id for item
 		cont_id = ui.itemsTreeWidget->currentItem()->data(2, Qt::UserRole).toInt();
 		// Popup dialog for user to enter

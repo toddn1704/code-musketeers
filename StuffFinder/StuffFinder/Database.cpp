@@ -380,6 +380,7 @@ void Database::Load_Items(Container * cont)
 	{
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
+		temp_item->set_container_id(atoi(c_qry_result[i][1].c_str()));
 		cont->add_item(temp_item);
 	}
 	return;
