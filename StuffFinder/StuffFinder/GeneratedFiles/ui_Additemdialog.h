@@ -123,7 +123,7 @@ public:
 
     void retranslateUi(QDialog *Additemdialog)
     {
-        Additemdialog->setWindowTitle(QApplication::translate("Additemdialog", "Dialog", 0));
+        Additemdialog->setWindowTitle(QApplication::translate("Additemdialog", "Add Item", 0));
         groupBox_2->setTitle(QApplication::translate("Additemdialog", "Edit Item", 0));
         Item_name->setText(QString());
         label_2->setText(QApplication::translate("Additemdialog", "Item Name:", 0));

@@ -122,7 +122,7 @@ public:
 
     void retranslateUi(QDialog *Edititemdialog)
     {
-        Edititemdialog->setWindowTitle(QApplication::translate("Edititemdialog", "Dialog", 0));
+        Edititemdialog->setWindowTitle(QApplication::translate("Edititemdialog", "Edit Item", 0));
         groupBox_2->setTitle(QApplication::translate("Edititemdialog", "Edit Item", 0));
         Item_name->setText(QString());
         label_2->setText(QApplication::translate("Edititemdialog", "Item Name:", 0));

@@ -63,7 +63,7 @@ public:
 
     void retranslateUi(QDialog *Addcategorydialog)
     {
-        Addcategorydialog->setWindowTitle(QApplication::translate("Addcategorydialog", "Dialog", 0));
+        Addcategorydialog->setWindowTitle(QApplication::translate("Addcategorydialog", "Add Category", 0));
         label->setText(QApplication::translate("Addcategorydialog", "Name", 0));
         label_2->setText(QApplication::translate("Addcategorydialog", "Description", 0));
     } // retranslateUi

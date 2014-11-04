@@ -63,7 +63,7 @@ public:
 
     void retranslateUi(QDialog *Addlayoutdialog)
     {
-        Addlayoutdialog->setWindowTitle(QApplication::translate("Addlayoutdialog", "Dialog", 0));
+        Addlayoutdialog->setWindowTitle(QApplication::translate("Addlayoutdialog", "Add Layout", 0));
         label->setText(QApplication::translate("Addlayoutdialog", "Name", 0));
         label_2->setText(QApplication::translate("Addlayoutdialog", "Description", 0));
     } // retranslateUi
