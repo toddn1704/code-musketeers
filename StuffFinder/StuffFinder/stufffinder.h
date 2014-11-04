@@ -52,8 +52,6 @@ void deleteCategoryClicked();
 public slots:
 void on_Search_button_clicked();
 void on_search_returnPressed();
-void on_Add_save_clicked();
-void on_Add_cancel_clicked();
 void on_addLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
 void onCatCustomContextMenu(const QPoint &point);

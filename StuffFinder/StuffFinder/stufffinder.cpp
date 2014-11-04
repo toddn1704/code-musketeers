@@ -85,10 +85,10 @@ void StuffFinder::Output_item_tree()
 	
 	// Get all the layouts and their items
 	layouts = db.Load_Layouts();
-	ui.containerComboBox->clear();
+	//ui.containerComboBox->clear();
 	contcombo.clear();
 	categorycombo.clear();
-	ui.Category_menu->clear();
+	//ui.Category_menu->clear();
 	
 	if (layouts.size())
 	{
@@ -103,8 +103,8 @@ void StuffFinder::Output_item_tree()
 			room->setData(0, Qt::UserRole, layouts[j]->get_rooms()[i]->get_container_id());
 
 
-			ui.containerComboBox->addItem(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()), 
-				layouts[j]->get_rooms()[i]->get_container_id());
+			//ui.containerComboBox->addItem(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()), 
+				//layouts[j]->get_rooms()[i]->get_container_id());
 			contcombo.push_back(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()));
 			contcombo.push_back(QString::number(layouts[j]->get_rooms()[i]->get_container_id()));
 			// Get all of its children with recursive function
@@ -118,7 +118,7 @@ void StuffFinder::Output_item_tree()
 	std::vector<Category*> categories = db.Load_Categories();
 	for (int k = 0; k < categories.size(); k++)
 	{
-		ui.Category_menu->addItem(QString::fromStdString(categories[k]->get_name()), categories[k]->get_category_id());
+		//ui.Category_menu->addItem(QString::fromStdString(categories[k]->get_name()), categories[k]->get_category_id());
 		categorycombo.push_back(QString::fromStdString(categories[k]->get_name()));
 		categorycombo.push_back(QString::number(categories[k]->get_category_id()));
 		QTreeWidgetItem * category = new QTreeWidgetItem(ui.categoryTreeWidget);
@@ -133,8 +133,8 @@ void StuffFinder::Output_item_tree()
 			item->setText(0, QString::fromStdString(it->first));
 		}
 	}
-	ui.Category_menu->setCurrentIndex(-1);
-	ui.containerComboBox->setCurrentIndex(-1);
+	//ui.Category_menu->setCurrentIndex(-1);
+	//ui.containerComboBox->setCurrentIndex(-1);
 
 }
 
@@ -156,8 +156,8 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 			container_name = "-" + container_name;
 		}
 		// Add container to combo box
-		ui.containerComboBox->addItem(container_name,
-			cont->get_container()[j]->get_container_id());
+		//ui.containerComboBox->addItem(container_name,
+			//cont->get_container()[j]->get_container_id());
 		contcombo.push_back(container_name);
 		contcombo.push_back(QString::number(cont->get_container()[j]->get_container_id()));
 		setItems(subcontainer, cont->get_container()[j], ++level);
@@ -223,67 +223,6 @@ void StuffFinder::on_Search_button_clicked()
 		msgBox.exec();
 		return;
 	}
-}
-
-// Saves User entered item if data is valid
-void StuffFinder::on_Add_save_clicked()
-{
-	//gets values from entry fields and
-	//converts to string so can be saved in database
-	//
-	
-	std::string name = ui.Item_name->text().toStdString();
-	std::string descript = ui.Item_descript->toPlainText().toStdString();
-	std::string quant = ui.Item_quant->text().toStdString();
-	std::string minquant = ui.Min_quant->text().toStdString();
-	std::string cost = ui.Item_cost->text().toStdString(); 
-	int container_id = ui.containerComboBox->itemData(ui.containerComboBox->currentIndex(), Qt::UserRole).toInt();
-	int category_id = ui.Category_menu->itemData(ui.Category_menu->currentIndex(), Qt::UserRole).toInt();
-
-	//send values to an add/edit item function
-	//  which is connected to the database
-	// Check if the fields are populated
-	if (name.empty() || descript.empty() || quant.empty() || minquant.empty()
-		|| cost.empty() || ui.containerComboBox->currentIndex() == -1
-		|| ui.Category_menu->currentIndex() == -1)
-	{
-		QMessageBox msgBox;
-		msgBox.setText("You didnt fill in all the boxees silly!");
-		msgBox.exec();
-		return;
-	}
-	// Add item and update list
-	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), 1);
-	db.Create_Item(add_me, container_id, category_id);
-	Output_item_tree();
-
-	ui.Item_name->clear();
-	ui.Item_descript->clear();
-	ui.Item_quant->clear();
-	ui.Min_quant->clear();
-	ui.Item_cost->clear();
-	ui.containerComboBox->setCurrentIndex(-1);
-	/*test print
-	using namespace std;
-	ofstream file;
-	file.open("testoutput.txt");
-	file << name << endl;
-	file << iquant << endl;
-	file.close();
-	*/
-}
-
-// Clears data
-void StuffFinder::on_Add_cancel_clicked()
-{
-	/*clears entry fields when cancel button is
-	clicked (in add/edit item tab).
-	*/
-	ui.Item_name->clear();
-	ui.Item_descript->clear();
-	ui.Item_quant->clear();
-	ui.Min_quant->clear();
-	ui.Item_cost->clear();
 }
 
 // Handles right click within List View tab
