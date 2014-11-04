@@ -30,7 +30,7 @@ Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vect
 	{
 		ui.Edit_category_menu->addItem(combocategory[i],combocategory[i+1]);
 		//save combo index for preselect
-		if (item->get_category() == combocategory[i].toStdString())
+		if (item->get_category() == combocategory[i+1].toInt())
 		{
 			// preSelect the container that the item is in
 			ui.Edit_category_menu->setCurrentIndex(count);
@@ -50,9 +50,9 @@ void Edititemdialog::saveItem()
 	std::string description = ui.Item_descript->toPlainText().toStdString();
 	int quant = ui.Item_quant->value();
 	int new_cont_id = ui.EditcontainerComboBox->itemData(ui.EditcontainerComboBox->currentIndex(),Qt::UserRole).toInt();
-	std::string new_category_name = ui.Edit_category_menu->itemData(ui.Edit_category_menu->currentIndex(), Qt::UserRole).toString().toStdString();
+	int new_category_id = ui.Edit_category_menu->itemData(ui.Edit_category_menu->currentIndex(), Qt::UserRole).toInt();
 
-	if (name.empty() || description.empty() || new_category_name.empty())
+	if (name.empty() || description.empty())
 	{
 		QMessageBox msgBox;
 		msgBox.setText("You forgot to fill something out.");
@@ -65,7 +65,7 @@ void Edititemdialog::saveItem()
 		new_item->set_name(name);
 		new_item->set_description(description);
 		new_item->set_quantity(quant);
-		new_item->set_category(new_category_name);
+		new_item->set_category(new_category_id);
 		new_item->set_container_id(new_cont_id);
 	}
 }

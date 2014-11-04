@@ -6,6 +6,7 @@
 #include "Addlayoutdialog.h"
 #include "Addcategorydialog.h"
 #include "Edititemdialog.h"
+#include "Additemdialog.h"
 #include <vector>
 #include <Layout.h>
 //included for testing only
@@ -216,7 +217,7 @@ void StuffFinder::on_Search_button_clicked()
 	{
 		QMessageBox msgBox;
 		std::string output = "Found your item!!!!\nName: " + find_item->get_name() + "\nDescription: " + find_item->get_description() + "\nCategory: " 
-			+ find_item->get_category() + "\nQuantity: " + std::to_string(find_item->get_quantity());
+			+ std::to_string(find_item->get_category()) + "\nQuantity: " + std::to_string(find_item->get_quantity());
 		QString qstr = QString::fromStdString(output);
 		msgBox.setText(qstr);
 		msgBox.exec();
@@ -252,7 +253,7 @@ void StuffFinder::on_Add_save_clicked()
 		return;
 	}
 	// Add item and update list
-	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), "temp");
+	Item * add_me = new Item(name, descript, std::stoi(quant.c_str()), 1);
 	db.Create_Item(add_me, container_id, category_id);
 	Output_item_tree();
 
@@ -385,10 +386,19 @@ void StuffFinder::deleteContainerClicked()
 // Doesn't do anything yet
 void StuffFinder::addItemClicked()
 {
-	// Temp code
-	QMessageBox msgBox;
-	msgBox.setText("Eventually I'll do something(like adding an item)!");
-	msgBox.exec();
+	Item * new_item = new Item;
+	//get container id and name to add item to
+	int container_id = ui.itemsTreeWidget->currentItem()->data(0,Qt::UserRole).toInt();
+	std::string container_name = ui.itemsTreeWidget->currentItem()->text(0).toStdString();
+	
+	Additemdialog *new_item_window = new Additemdialog(this, new_item, container_id,container_name, categorycombo);
+	new_item_window->exec();
+	
+	if (new_item->get_min_quantity() != -1)
+	{
+		db.Create_Item(new_item,new_item->get_container_id(),new_item->get_category());
+		Output_item_tree();
+	}
 }
 
 // Deletes item from database and reloads list

@@ -113,8 +113,8 @@ void Database::Create_Item(Item *newItem, int parent_id, int category)
 	int rc;
 
 	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY_ID, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
-		"VALUES(" + std::to_string(parent_id) + ",'" +
-		std::to_string(category) +"'," + std::to_string(newItem->get_quantity()) + ",'" + 
+		"VALUES(" + std::to_string(parent_id) + "," +
+		std::to_string(category) +"," + std::to_string(newItem->get_quantity()) + ",'" + 
 		newItem->get_name() + "','" + newItem->get_description() + "');";
 	qDebug() << sql.c_str();
 
@@ -180,7 +180,7 @@ void Database::Update_Item(Item* up_item)
 	int rc;
 
 	sql = "UPDATE ITEM SET ITEM_NAME = '" + up_item->get_name() + "', ITEM_DESCRIPTION ='" +
-		up_item->get_description() + "', CATEGORY = '" + up_item->get_category() + "', QUANTITY = " +
+		up_item->get_description() + "', CATEGORY_ID = " + std::to_string(up_item->get_category()) + ", QUANTITY = " +
 		std::to_string(up_item->get_quantity()) + ", CONTAINER_ID = " + std::to_string(up_item->get_container_id()) + " WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) +
 		";";
 	qDebug() << sql.c_str();
@@ -378,7 +378,7 @@ void Database::Load_Items(Container * cont)
 	qry_result.clear();
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
-		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
+		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
 		temp_item->set_container_id(atoi(c_qry_result[i][1].c_str()));
 		cont->add_item(temp_item);
@@ -417,7 +417,7 @@ void Database::Load_Items(Category * categ)
 	qry_result.clear();
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
-		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), c_qry_result[i][4]);
+		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
 		categ->add_item(temp_item);
 	}
