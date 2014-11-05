@@ -7,6 +7,7 @@
 #include "Addcategorydialog.h"
 #include "Edititemdialog.h"
 #include "Additemdialog.h"
+#include "editcontainerdialog.h"
 #include <vector>
 #include <Layout.h>
 //included for testing only
@@ -54,6 +55,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
 	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
 	containerContextMenu->addSeparator(); //visual line
+	containerContextMenu->addAction("Edit Container", this, SLOT(EditContainerClicked()));
 	containerContextMenu->addAction("Delete Container", this, SLOT(deleteContainerClicked()));
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
 	itemContextMenu->addSeparator();
@@ -150,9 +152,10 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 	{
 		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
 		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
-		// Add the container id to the tree widget item
+		// Add the container id to the tree widget item column "0"
 		subcontainer->setData(0, Qt::UserRole, cont->get_container()[j]->get_container_id());
-
+		// Add the conainer id that the sub container is in to column "1"
+		subcontainer->setData(1, Qt::UserRole, cont->get_container_id());
 		// Get container name and add "-" for each level its at
 		QString container_name = QString::fromStdString(cont->get_container()[j]->get_name());
 		for (int k = 0; k < level; k++)
@@ -391,6 +394,39 @@ void StuffFinder::editItemClicked()
 		db.Update_Item(new_item);
 		Output_item_tree();
 	}
+}
+
+void StuffFinder::EditContainerClicked()
+{
+	int container_id = ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt();
+	int parent_container_id = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
+	Container *new_container = new Container;
+	for (int i = 0; i < layouts.size(); i++)
+	{
+		new_container = layouts[i]->SearchContainer(container_id);
+		if (new_container != NULL)
+		{
+			break;
+		}
+	}
+	if (new_container == NULL)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("Error: could not find container.(INTERNAL ERROR)");
+		msgBox.exec();
+		return;
+	}
+	else
+	{
+		// Popup dialog for user to enter
+		EditContainerDialog *new_container_window = new EditContainerDialog(this, new_container, parent_container_id, contcombo);
+		new_container_window->exec();
+
+		//update database container
+		db.UpdateContainer(new_container,parent_container_id);
+		Output_item_tree();
+	}
+
 }
 // Handles when user right clicks within category tab
 void StuffFinder::onCatCustomContextMenu(const QPoint &point)

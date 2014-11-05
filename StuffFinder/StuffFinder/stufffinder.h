@@ -40,6 +40,7 @@ private:
 
 private slots:
 void addContainerClicked();
+void EditContainerClicked();
 void addItemClicked();
 void editItemClicked();
 void deleteItemClicked();

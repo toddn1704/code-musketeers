@@ -195,6 +195,27 @@ void Database::Update_Item(Item* up_item)
 		qDebug() << "Item updated successfully";
 	}
 }
+void Database::UpdateContainer(Container* container,int parent_id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "UPDATE CONTAINER SET CONTAINER_NAME = '" + container->get_name() + "', CONTAINER_DESCRIPTION ='" +
+		container->get_description() + "', PARENT_CONTAINER_ID = " + std::to_string(parent_id) + " WHERE CONTAINER_ID = " + std::to_string(container->get_container_id()) +
+		";";
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Container wasn't updated";
+	}
+	else
+	{
+		qDebug() << "Container updated successfully";
+	}
+}
 void Database::Create_Container(Container* new_cont, int parent_id, bool top)
 {
 	std::string sql;

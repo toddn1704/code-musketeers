@@ -34,6 +34,7 @@ class Database
 		void Delete_Category(int id);
 
 		void Update_Item(Item* up_item);
+		void UpdateContainer(Container* container, int parent_id);
 
 		void Load_Items(Container * cont);
 		void Load_Items(Category * categ);

@@ -20,4 +20,3 @@ void Addcontainerdialog::saveContainer()
 	new_container->set_name(name);
 	new_container->set_description(description);
 }
-
