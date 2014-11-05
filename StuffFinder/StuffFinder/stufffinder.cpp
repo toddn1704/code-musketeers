@@ -23,6 +23,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(handleLayoutChange(int)));
 
 	// Add layouts to comboBox
+	//iterates through layouts and adds them to a combo box
 	layouts = db.Load_Layouts();
 	if (layouts.size())
 	{
@@ -33,9 +34,11 @@ StuffFinder::StuffFinder(QWidget *parent)
 		}
 	}
 	// Set the list views
+	//updates list
 	Output_item_tree();
 
 	// Create context menus
+	//things that pop-up when you right-click
 	containerContextMenu = new QMenu(ui.itemsTreeWidget);
 	itemContextMenu = new QMenu(ui.itemsTreeWidget);
 	topLevelContainerMenu = new QMenu(ui.itemsTreeWidget);
@@ -50,7 +53,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	// Add actions to the menus and connect them to their slots
 	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
 	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
-	containerContextMenu->addSeparator();
+	containerContextMenu->addSeparator(); //visual line
 	containerContextMenu->addAction("Delete Container", this, SLOT(deleteContainerClicked()));
 	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
 	itemContextMenu->addSeparator();
@@ -72,6 +75,7 @@ StuffFinder::~StuffFinder()
 }
 
 // Function loads data from the database and outputs it to the GUI(list views and comboboxes)
+//reloads list view
 void StuffFinder::Output_item_tree()
 {
 	// Clear and setup tree widget
