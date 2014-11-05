@@ -89,3 +89,28 @@ Item* Container::search(std::string name) {
 		return NULL;
 	}
 }
+
+Container* Container::SearchContainer(int id) {
+	Container* found = NULL;
+
+	for (unsigned int x = 0; x < containers.size(); x++) {
+		if (containers[x]->get_container_id() == id)
+		{
+			found = containers[x];
+		}
+		else
+		{
+			found = containers[x]->SearchContainer(id);
+		}
+		if (found != NULL) {
+			break;
+		}
+	}
+
+	if (found != NULL) {
+		return found;
+	}
+	else {
+		return NULL;
+	}
+}

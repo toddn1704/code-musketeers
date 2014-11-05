@@ -43,3 +43,21 @@ Item* Layout::search(std::string name) {
 		return NULL;
 	}
 }
+
+Container* Layout::SearchContainer(int id) {
+	Container* found;
+	for (unsigned int x = 0; x < rooms.size(); x++) {
+		found = rooms[x]->SearchContainer(id);
+		if (found != NULL) {
+			break;
+		}
+	}
+	if (found != NULL) {
+		//output found
+		return found;
+	}
+	else {
+		//output not found
+		return NULL;
+	}
+}

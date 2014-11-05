@@ -27,6 +27,7 @@ class Layout {
 		void delete_room(Container * room);
 		Item* search(int id);
 		Item* search(std::string name);
+		Container* SearchContainer(int id);
 	private:
 		int layout_id;
 		std::string name;

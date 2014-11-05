@@ -35,6 +35,7 @@ public:
 	void set_containers(std::vector<Container*> loaded_containers) { containers = loaded_containers; }
 	Item* search(int id);
 	Item* search(std::string name);
+	Container* SearchContainer(int id);
 private:
 	int container_id;
 	std::string name;
