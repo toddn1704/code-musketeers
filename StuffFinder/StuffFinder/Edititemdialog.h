@@ -10,8 +10,9 @@ item.
 #define EDITITEMDIALOG_H
 
 #include <qdialog.h>
-#include <Item.h>
-#include <ui_Edititemdialog.h>
+#include <item.h>
+#include <ui_edititemdialog.h>
+//#include <ui_Edititemdialog.h>
 
 
 class Edititemdialog : public QDialog {Q_OBJECT

@@ -1,4 +1,4 @@
-#include "Addcontainerdialog.h"
+#include "addcontainerdialog.h"
 #include "qmessagebox.h"
 
 Addcontainerdialog::Addcontainerdialog(QWidget *parent, Container *cont)

@@ -1,15 +1,15 @@
 #include "stufffinder.h"
 #include "sqlite3.h"
-#include "Database.h"
+#include "database.h"
 #include <string>
-#include "Addcontainerdialog.h"
-#include "Addlayoutdialog.h"
-#include "Addcategorydialog.h"
-#include "Edititemdialog.h"
-#include "Additemdialog.h"
+#include "addcontainerdialog.h"
+#include "addlayoutdialog.h"
+#include "addcategorydialog.h"
+#include "edititemdialog.h"
+#include "additemdialog.h"
 #include "editcontainerdialog.h"
 #include <vector>
-#include <Layout.h>
+#include <layout.h>
 //included for testing only
 #include<iostream>
 #include<fstream>

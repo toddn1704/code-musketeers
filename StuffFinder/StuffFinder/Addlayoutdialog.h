@@ -9,9 +9,9 @@ a seperate window allowing the user to create a new layout.
 #define ADDLAYOUTDIALOG_H
 
 #include <qdialog.h>
-#include <Layout.h>
-#include <ui_Addlayoutdialog.h>
-
+#include <layout.h>
+#include <ui_addlayoutdialog.h>
+//#include <ui_Addlayoutdialog.h>
 
 class Addlayoutdialog : public QDialog {
 	Q_OBJECT

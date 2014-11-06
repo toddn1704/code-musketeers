@@ -12,10 +12,10 @@ and deleting items, containers, layouts, and categories.
 #include <vector>
 #include <string>
 #include <stdio.h>
-#include "Item.h"
-#include "Container.h"
-#include "Layout.h"
-#include "Category.h"
+#include "item.h"
+#include "container.h"
+#include "layout.h"
+#include "category.h"
 
 class Database
 {

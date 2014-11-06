@@ -10,8 +10,9 @@ container.
 #define ADDCONTAINERDIALOG_H
 
 #include <qdialog.h>
-#include <Container.h>
-#include <ui_Addcontainerdialog.h>
+#include <container.h>
+#include <ui_addcontainerdialog.h>
+//#include <ui_Addcontainerdialog.h>
 
 
 class Addcontainerdialog : public QDialog {

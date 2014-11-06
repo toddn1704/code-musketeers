@@ -12,7 +12,7 @@ the database functions.
 #include <QtWidgets/QMainWindow>
 #include "ui_stufffinder.h"
 #include <QMessageBox>
-#include "Database.h"
+#include "database.h"
 
 class StuffFinder : public QMainWindow
 {

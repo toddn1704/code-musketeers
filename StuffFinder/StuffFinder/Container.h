@@ -11,7 +11,7 @@ multiple items (as a vector of item pointers).
 #define __container_h_
 #include <string>
 #include <vector>
-#include "Item.h"
+#include "item.h"
 
 class Container {
 public:

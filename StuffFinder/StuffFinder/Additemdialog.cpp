@@ -1,4 +1,4 @@
-#include "Additemdialog.h"
+#include "additemdialog.h"
 #include "qmessagebox.h"
 
 Additemdialog::Additemdialog(QWidget *parent, Item *item, int cont_id,std::string cont_name, std::vector<QString> combocategory)

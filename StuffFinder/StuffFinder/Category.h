@@ -11,7 +11,7 @@ in a map of item names and item pointers.
 #include <string>
 #include <vector>
 #include <map>
-#include "Item.h"
+#include "item.h"
 
 class Category {
 public:

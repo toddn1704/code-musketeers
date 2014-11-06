@@ -10,7 +10,7 @@ container.
 #define EDITCONTAINERDIALOG_H
 
 #include <qdialog.h>
-#include <Container.h>
+#include <container.h>
 #include <ui_editcontainerdialog.h>
 
 

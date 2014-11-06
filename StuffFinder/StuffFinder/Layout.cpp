@@ -1,4 +1,4 @@
-#include "Layout.h"
+#include "layout.h"
 
 void Layout::delete_room(Container * room) {
 	for (unsigned int x = 0; x < rooms.size(); x++) {

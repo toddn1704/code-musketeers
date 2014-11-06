@@ -1,6 +1,6 @@
 #include "stufffinder.h"
 #include <QtWidgets/QApplication>
-#include "Database.h"
+#include "database.h"
 #include "qdebug.h"
 #include <iostream>
 #include <fstream>

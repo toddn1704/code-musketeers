@@ -1,4 +1,4 @@
-#include "Addlayoutdialog.h"
+#include "addlayoutdialog.h"
 #include "qmessagebox.h"
 
 Addlayoutdialog::Addlayoutdialog(QWidget *parent, Layout *lay)

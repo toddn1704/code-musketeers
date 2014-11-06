@@ -1,4 +1,4 @@
-#include "Database.h"
+#include "database.h"
 #include "qdebug.h"
 
 int Select_callback(void *param, int argc, char **argv, char **azColName);

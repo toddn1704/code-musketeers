@@ -1,7 +1,7 @@
 /*This file will create a dialog box that allows the user to add a category.
 */
 
-#include "Addcategorydialog.h"
+#include "addcategorydialog.h"
 #include "qmessagebox.h"
 
 Addcategorydialog::Addcategorydialog(QWidget *parent, Category *cat)

@@ -9,8 +9,8 @@ which represent rooms on the floor.
 #ifndef __layout_h_
 #define __layout_h_
 #include <string>
-#include "Container.h"
-#include "Item.h"
+#include "container.h"
+#include "item.h"
 class Layout {
 	public:
 		Layout(){}

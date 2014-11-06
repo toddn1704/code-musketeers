@@ -2,8 +2,9 @@
 #define ADDCATEGORYDIALOG_H
 
 #include <qdialog.h>
-#include <Category.h>
-#include <ui_Addcategorydialog.h>
+#include <category.h>
+#include <ui_addcategorydialog.h>
+//#include <ui_Addcategorydialog.h>
 
 
 class Addcategorydialog : public QDialog {
