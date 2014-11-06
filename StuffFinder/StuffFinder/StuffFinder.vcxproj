@@ -35,7 +35,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
-    <NuGetPackageImportStamp>59df674f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>abae107b</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -77,14 +77,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Addcategorydialog.cpp" />
-    <ClCompile Include="Addcontainerdialog.cpp" />
-    <ClCompile Include="Additemdialog.cpp" />
-    <ClCompile Include="Addlayoutdialog.cpp" />
-    <ClCompile Include="Container.cpp" />
-    <ClCompile Include="Database.cpp" />
+    <ClCompile Include="addcategorydialog.cpp" />
+    <ClCompile Include="addcontainerdialog.cpp" />
+    <ClCompile Include="additemdialog.cpp" />
+    <ClCompile Include="addlayoutdialog.cpp" />
+    <ClCompile Include="container.cpp" />
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="editcontainerdialog.cpp" />
-    <ClCompile Include="Edititemdialog.cpp" />
+    <ClCompile Include="edititemdialog.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_Addcategorydialog.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_Addcontainerdialog.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_Additemdialog.cpp">
@@ -125,7 +125,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_stufffinder.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="layout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stufffinder.cpp" />
   </ItemGroup>
@@ -301,6 +301,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
