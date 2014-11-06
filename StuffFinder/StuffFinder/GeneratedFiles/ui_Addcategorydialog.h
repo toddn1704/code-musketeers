@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'Addcategorydialog.ui'
+** Form generated from reading UI file 'addcategorydialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.3.2
 **

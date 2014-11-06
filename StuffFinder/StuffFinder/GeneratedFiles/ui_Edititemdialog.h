@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'Edititemdialog.ui'
+** Form generated from reading UI file 'edititemdialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.3.2
 **

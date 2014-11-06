@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'Addlayoutdialog.ui'
+** Form generated from reading UI file 'addlayoutdialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.3.2
 **
