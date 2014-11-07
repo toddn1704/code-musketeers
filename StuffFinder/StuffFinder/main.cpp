@@ -1,3 +1,11 @@
+/*main.cpp
+
+This function opens the main window of the application
+and creates a database object.
+
+*/
+
+
 #include "stufffinder.h"
 #include <QtWidgets/QApplication>
 #include "database.h"

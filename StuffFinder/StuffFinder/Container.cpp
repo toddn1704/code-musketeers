@@ -1,6 +1,12 @@
+/*container.cpp
+
+This file will implement the functions declared in the
+container.h file.
+
+*/
+
 #include "container.h"
 
-//void Container::DeleteItem(Item* item) {
 void Container::DeleteItem(Item* item) {
 	for (unsigned int x = 0; x < items.size(); x++) {
 		if (items[x] == item) {
@@ -11,7 +17,7 @@ void Container::DeleteItem(Item* item) {
 		}
 	}
 }
-//void Container::DeleteContainer(Container* container) {
+
 void Container::DeleteContainer(Container* container) {
 	for (unsigned int x = 0; x < containers.size(); x++) {
 		if (containers[x] == container) {

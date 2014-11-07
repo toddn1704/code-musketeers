@@ -1,3 +1,10 @@
+/*layout.cpp
+
+This file will implement the functions declared in the
+layout.h file.
+
+*/
+
 #include "layout.h"
 
 void Layout::DeleteRoom(Container * room) {

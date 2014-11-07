@@ -1,3 +1,12 @@
+/*edititemdialog.cpp
+
+This file will implement the functions declared in the
+edititemdialog.h file.
+
+*/
+
+
+
 #include "edititemdialog.h"
 #include "qmessagebox.h"
 

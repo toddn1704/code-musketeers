@@ -1,6 +1,6 @@
 /*editcontainerdialog.h
 
-This file holds the editcontainerdialog class which defines
+This file holds the EditContainerDialog class which defines
 a separate window that allows the user to edit an existing 
 container.
 

@@ -1,4 +1,4 @@
-/*Item.h
+/*item.h
 
 This file contains the Item class, which holds all attributes
 of an item, including the item's id, name, description, quantity,
@@ -33,6 +33,7 @@ public:
 	int get_container_id(){ return container_id; }
 	void Increment(int n = 1) { quantity += n; }
 	void Decrement(int n = 1) { quantity -= n; }
+
 private:
 	int item_id;
 	int container_id;

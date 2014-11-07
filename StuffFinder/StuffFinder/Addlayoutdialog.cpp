@@ -1,3 +1,10 @@
+/*addlayoutdialog.cpp
+
+This file will implement the functions declared in the
+addlayoutdialog.h file.
+
+*/
+
 #include "addlayoutdialog.h"
 #include "qmessagebox.h"
 

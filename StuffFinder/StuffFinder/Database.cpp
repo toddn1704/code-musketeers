@@ -1,3 +1,10 @@
+/*database.cpp
+
+This file will implement the functions declared in the
+database.h file.
+
+*/
+
 #include "database.h"
 #include "qdebug.h"
 

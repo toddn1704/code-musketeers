@@ -1,4 +1,8 @@
-/*This file will create a dialog box that allows the user to add a category.
+/*addcategorydialog.cpp
+
+This file will implement the functions declared in the
+addcategorydialog.h file.
+
 */
 
 #include "addcategorydialog.h"

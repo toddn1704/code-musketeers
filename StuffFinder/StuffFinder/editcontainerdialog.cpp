@@ -1,3 +1,10 @@
+/*editcontainerdialog.cpp
+
+This file will implement the functions declared in the
+editcontainerdialog.h file.
+
+*/
+
 #include "editcontainerdialog.h"
 #include "qmessagebox.h"
 

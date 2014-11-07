@@ -1,3 +1,13 @@
+/*stufffinder.cpp
+
+This file will implement the functions declared in the stufffinder.h
+file.
+
+This file is also responsible for handling user input and communicating
+with the database accordingly.
+
+*/
+
 #include "stufffinder.h"
 #include "sqlite3.h"
 #include "database.h"

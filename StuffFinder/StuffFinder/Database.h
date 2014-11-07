@@ -1,4 +1,4 @@
-/*Database.h
+/*database.h
 
 This file contains the Database class, which is responsible 
 for creating and deleting the database; and creating, editing,

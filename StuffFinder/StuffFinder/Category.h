@@ -1,4 +1,4 @@
-/*Category.h
+/*category.h
 
 This file contains the Category class, which simply defines
 a category. A category can have many items, which are stored

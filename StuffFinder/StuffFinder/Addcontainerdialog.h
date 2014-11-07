@@ -1,8 +1,7 @@
-/*Addcontainerdialog.h
+/*addcontainerdialog.h
 
-This file holds the Addcontainerdialog class which defines
-a separate window that allows the user to add a new
-container.
+This header file holds the AddContainerDialog class, which defines
+a simple dialog window which allowing the user to add a new container.
 
 */
 
@@ -12,7 +11,7 @@ container.
 #include <qdialog.h>
 #include <container.h>
 #include <ui_addcontainerdialog.h>
-//#include <ui_Addcontainerdialog.h>
+
 
 
 class Addcontainerdialog : public QDialog {

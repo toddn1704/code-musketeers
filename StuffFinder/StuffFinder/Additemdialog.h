@@ -1,8 +1,7 @@
-/*Additemdialog.h
+/*additemdialog.h
 
-This file holds the Additemdialog class which defines
-a separate window that allows the user to add a new
-item.
+This file holds the AddItemDialog class which defines a dialog
+window that allows the user to add a new item.
 
 */
 
@@ -12,8 +11,6 @@ item.
 #include <qdialog.h>
 #include <item.h>
 #include <ui_additemdialog.h>
-//#include <ui_Additemdialog.h>
-
 
 class Additemdialog : public QDialog {
 	Q_OBJECT

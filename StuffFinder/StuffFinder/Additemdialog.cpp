@@ -1,3 +1,10 @@
+/*additemdialog.cpp
+
+This file will implement the functions declared in the
+additemdialog.h file.
+
+*/
+
 #include "additemdialog.h"
 #include "qmessagebox.h"
 

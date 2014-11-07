@@ -1,4 +1,4 @@
-/*Layout.h
+/*layout.h
 
 This file contains the Layout class, which represents a single 
 floor of a house. Each layout has a vector of Container pointers

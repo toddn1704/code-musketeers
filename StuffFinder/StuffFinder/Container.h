@@ -1,4 +1,4 @@
-/*Container.h
+/*container.h
 
 This file contains the Container class, which describes a 
 container (eg. room, box, dresser, etc.). A container can hold

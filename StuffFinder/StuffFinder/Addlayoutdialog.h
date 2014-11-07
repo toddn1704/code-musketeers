@@ -1,7 +1,7 @@
-/*Addlayoutdialog.h
+/*addlayoutdialog.h
 
-This file holds the Addlayoutdialog class, which defines
-a seperate window allowing the user to create a new layout.
+This file holds the AddLayoutDialog class, which defines
+a dialog window allowing the user to create a new layout.
 
 */
 
@@ -11,7 +11,6 @@ a seperate window allowing the user to create a new layout.
 #include <qdialog.h>
 #include <layout.h>
 #include <ui_addlayoutdialog.h>
-//#include <ui_Addlayoutdialog.h>
 
 class Addlayoutdialog : public QDialog {
 	Q_OBJECT

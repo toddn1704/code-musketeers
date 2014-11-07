@@ -1,3 +1,10 @@
+/*addcontainerdialog.cpp
+
+This file will implement the functions declared in the
+addcontainerdialog.h file.
+
+*/
+
 #include "addcontainerdialog.h"
 #include "qmessagebox.h"
 

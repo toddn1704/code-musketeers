@@ -1,4 +1,4 @@
-/*User.h
+/*user.h
 
 This header file contains the User class, which defines
 a user of the application. 
