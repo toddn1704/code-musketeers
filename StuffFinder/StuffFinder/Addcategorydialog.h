@@ -20,7 +20,7 @@ private:
 	Category * new_category;
 
 	public slots:
-	void saveCategory();
+	void SaveCategory();
 
 };
 #endif

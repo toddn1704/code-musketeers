@@ -35,7 +35,7 @@ Database::Database()
 	if (qry_result[0][0] == "0")
 	{
 		qDebug() << "Database is empty";
-		Create_Database();
+		CreateDatabase();
 	}
 
 
@@ -53,12 +53,12 @@ Database::~Database()
 {
 	sqlite3_close(db);
 	qDebug() << "Closed database successfully.";
-	//Delete_Database();
+	//DeleteDatabase();
 	//qDebug() << "Deleted database";
 
 }
 
-void Database::Create_Database()
+void Database::CreateDatabase()
 {
 	int rc;
 	char *sql;
@@ -106,7 +106,7 @@ void Database::Create_Database()
 	}
 }
 
-void Database::Create_Item(Item *newItem, int parent_id, int category)
+void Database::CreateItem(Item *newItem, int parent_id, int category)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -132,7 +132,7 @@ void Database::Create_Item(Item *newItem, int parent_id, int category)
 	//return sqlite3_last_insert_rowid(db);
 }
 
-void Database::Delete_Item(Item* delItem)
+void Database::DeleteItem(Item* delItem)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -153,7 +153,7 @@ void Database::Delete_Item(Item* delItem)
 
 }
 
-void Database::Delete_Item(std::string name)
+void Database::DeleteItem(std::string name)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -173,7 +173,7 @@ void Database::Delete_Item(std::string name)
 	}
 
 }
-void Database::Update_Item(Item* up_item)
+void Database::UpdateItem(Item* up_item)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -216,7 +216,7 @@ void Database::UpdateContainer(Container* container,int parent_id)
 		qDebug() << "Container updated successfully";
 	}
 }
-void Database::Create_Container(Container* new_cont, int parent_id, bool top)
+void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -248,7 +248,7 @@ void Database::Create_Container(Container* new_cont, int parent_id, bool top)
 	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
 }
 
-void Database::Delete_Container(Container* del_cont)
+void Database::DeleteContainer(Container* del_cont)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -257,12 +257,12 @@ void Database::Delete_Container(Container* del_cont)
 	std::vector<Container *> sub_containers = del_cont->get_container();
 	for (int i = 0; i < sub_containers.size(); i++)
 	{
-		Delete_Container(sub_containers[i]);
+		DeleteContainer(sub_containers[i]);
 	}
 	std::vector<Item *> items = del_cont->get_items();
 	for (int j = 0; j < items.size(); j++)
 	{
-		Delete_Item(items[j]);
+		DeleteItem(items[j]);
 	}
 	sql = "DELETE FROM CONTAINER WHERE CONTAINER_ID = " + std::to_string(del_cont->get_container_id()) + ";";
 
@@ -278,7 +278,7 @@ void Database::Delete_Container(Container* del_cont)
 	}
 
 }
-void Database::Create_Layout(Layout* new_layout)
+void Database::CreateLayout(Layout* new_layout)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -300,7 +300,7 @@ void Database::Create_Layout(Layout* new_layout)
 	qDebug() << "new layout id: " << sqlite3_last_insert_rowid(db);
 	new_layout->set_layout_id(sqlite3_last_insert_rowid(db));
 }
-void Database::Delete_Layout(Layout* del_layout)
+void Database::DeleteLayout(Layout* del_layout)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -308,7 +308,7 @@ void Database::Delete_Layout(Layout* del_layout)
 	std::vector<Container*> rooms = del_layout->get_rooms();
 	for (int i = 0; i < rooms.size(); i++)
 	{
-		Delete_Container(rooms[i]);
+		DeleteContainer(rooms[i]);
 	}
 	sql = "DELETE FROM LAYOUT WHERE LAYOUT_ID = " + std::to_string(del_layout->get_layout_id()) + ";";
 
@@ -324,7 +324,7 @@ void Database::Delete_Layout(Layout* del_layout)
 	}
 }
 
-void Database::Create_Category(Category* new_cat)
+void Database::CreateCategory(Category* new_cat)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -347,7 +347,7 @@ void Database::Create_Category(Category* new_cat)
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
 }
 
-void Database::Delete_Category(int id)
+void Database::DeleteCategory(int id)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -368,7 +368,7 @@ void Database::Delete_Category(int id)
 
 }
 
-void Database::Load_Items(Container * cont)
+void Database::LoadItems(Container * cont)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -402,12 +402,13 @@ void Database::Load_Items(Container * cont)
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
 		temp_item->set_container_id(atoi(c_qry_result[i][1].c_str()));
-		cont->add_item(temp_item);
+		//cont->AddItem(temp_item);
+		cont->AddItem(temp_item);
 	}
 	return;
 }
 
-void Database::Load_Items(Category * categ)
+void Database::LoadItems(Category * categ)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -440,12 +441,12 @@ void Database::Load_Items(Category * categ)
 	{
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
-		categ->add_item(temp_item);
+		categ->AddItem(temp_item);
 	}
 	return;
 }
 
-void Database::Load_Containers(Container * cont)
+void Database::LoadContainers(Container * cont)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -468,15 +469,16 @@ void Database::Load_Containers(Container * cont)
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
 		Container * temp = new Container(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
-		Load_Containers(temp);
-		Load_Items(temp);
-		cont->add_container(temp);
+		LoadContainers(temp);
+		LoadItems(temp);
+		//cont->AddContainer(temp);
+		cont->AddContainer(temp);
 
 	}
 
 }
 
-Container* Database::Load_Container(int id)
+Container* Database::LoadContainer(int id)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -497,11 +499,11 @@ Container* Database::Load_Container(int id)
 	std::vector<std::vector<std::string>> c_qry_result = qry_result;
 	qry_result.clear();
 	Container * temp = new Container(atoi(c_qry_result[0][0].c_str()), c_qry_result[0][1], c_qry_result[0][2]);
-	Load_Containers(temp);
-	Load_Items(temp);
+	LoadContainers(temp);
+	LoadItems(temp);
 	return temp;
 }
-void Database::Load_Layout_Containers(Layout * lay)
+void Database::LoadLayoutContainers(Layout * lay)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -524,15 +526,15 @@ void Database::Load_Layout_Containers(Layout * lay)
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
 		Container * temp = new Container(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
-		Load_Containers(temp);
-		Load_Items(temp);
-		lay->add_room(temp);
+		LoadContainers(temp);
+		LoadItems(temp);
+		lay->AddRoom(temp);
 
 	}
 
 }
 
-std::vector<Layout*> Database::Load_Layouts()
+std::vector<Layout*> Database::LoadLayouts()
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -556,7 +558,7 @@ std::vector<Layout*> Database::Load_Layouts()
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
 		Layout * temp = new Layout(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
-		Load_Layout_Containers(temp);
+		LoadLayoutContainers(temp);
 		return_layouts.push_back(temp);
 
 	}
@@ -564,7 +566,7 @@ std::vector<Layout*> Database::Load_Layouts()
 	return return_layouts;
 }
 
-std::vector<Category*> Database::Load_Categories()
+std::vector<Category*> Database::LoadCategories()
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -588,7 +590,7 @@ std::vector<Category*> Database::Load_Categories()
 	for (int i = 0; i < c_qry_result.size(); i++)
 	{
 		Category * temp = new Category(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
-		Load_Items(temp);
+		LoadItems(temp);
 		return_Categories.push_back(temp);
 	}
 

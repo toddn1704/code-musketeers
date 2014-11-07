@@ -77,7 +77,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="search">
+   <widget class="QLineEdit" name="Search">
     <property name="geometry">
      <rect>
       <x>480</x>

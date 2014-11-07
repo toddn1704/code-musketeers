@@ -27,7 +27,7 @@ private:
 	Item *new_item;
 
 	public slots:
-	void saveItem();
+	void SaveItem();
 
 };
 #endif

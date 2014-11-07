@@ -13,7 +13,7 @@ class User {
 public:
 	User();
 	std::string get_name() { return name; }
-	bool login(std::string pw);
+	bool Login(std::string pw);
 
 private:
 	std::string name;

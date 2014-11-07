@@ -28,7 +28,7 @@ private:
 	Ui::Additemdialog ui;
 
 	public slots:
-	void saveItem();
+	void SaveItem();
 
 };
 #endif

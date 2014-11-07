@@ -21,7 +21,7 @@ public:
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
 	void set_category_id(int i) { category_id = i; }
-	void add_item(Item* i) { items.insert(std::make_pair(i->get_name(),i)); }
+	void AddItem(Item* i) { items.insert(std::make_pair(i->get_name(), i)); }
 
 	int get_category_id() { return category_id; }
 	std::string get_name() { return name; }

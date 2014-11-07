@@ -9,11 +9,11 @@ Addcategorydialog::Addcategorydialog(QWidget *parent, Category *cat)
 {
 	new_category = cat;
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveCategory()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveCategory()));
 
 }
 
-void Addcategorydialog::saveCategory()
+void Addcategorydialog::SaveCategory()
 {
 	// Get user input and validate
 	std::string name = ui.category_name->text().toStdString();

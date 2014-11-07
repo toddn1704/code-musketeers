@@ -39,7 +39,7 @@ public:
     QWidget *tab_3;
     QTreeWidget *categoryTreeWidget;
     QGraphicsView *graphicsView;
-    QLineEdit *search;
+    QLineEdit *Search;
     QPushButton *Search_button;
     QComboBox *layoutComboBox;
     QPushButton *addLayout;
@@ -79,9 +79,9 @@ public:
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(390, 90, 671, 531));
-        search = new QLineEdit(centralWidget);
-        search->setObjectName(QStringLiteral("search"));
-        search->setGeometry(QRect(480, 40, 461, 20));
+        Search = new QLineEdit(centralWidget);
+        Search->setObjectName(QStringLiteral("Search"));
+        Search->setGeometry(QRect(480, 40, 461, 20));
         Search_button = new QPushButton(centralWidget);
         Search_button->setObjectName(QStringLiteral("Search_button"));
         Search_button->setGeometry(QRect(960, 40, 75, 23));

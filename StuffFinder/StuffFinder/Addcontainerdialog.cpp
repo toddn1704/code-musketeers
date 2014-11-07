@@ -6,11 +6,11 @@ Addcontainerdialog::Addcontainerdialog(QWidget *parent, Container *cont)
 {
 	new_container = cont;
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveContainer()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveContainer()));
 
 }
 
-void Addcontainerdialog::saveContainer()
+void Addcontainerdialog::SaveContainer()
 {
 	// Get user input and validate
 	std::string name = ui.container_name->text().toStdString();

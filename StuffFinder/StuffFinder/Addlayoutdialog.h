@@ -25,7 +25,7 @@ private:
 	Layout *new_layout;
 
 	public slots:
-	void savelayout();
+	void SaveLayout();
 
 };
 #endif

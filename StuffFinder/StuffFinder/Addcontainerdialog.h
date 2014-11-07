@@ -27,7 +27,7 @@ private:
 	Container *new_container;
 
 public slots:
-void saveContainer();
+void SaveContainer();
 
 };
 #endif

@@ -23,10 +23,10 @@ class Layout {
 		std::vector<Container *> get_rooms() { return rooms; }
 		void set_layout_id(int id) { layout_id = id; }
 
-		void add_room(Container * room) { rooms.push_back(room); };
-		void delete_room(Container * room);
-		Item* search(int id);
-		Item* search(std::string name);
+		void AddRoom(Container * room) { rooms.push_back(room); };
+		void DeleteRoom(Container * room);
+		Item* Search(int id);
+		Item* Search(std::string name);
 
 		//SearchContainer(int id), Search the current layout for a container based on container id.
 		//return a Container pointer if container found, else return NULL

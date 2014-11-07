@@ -8,7 +8,7 @@ Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vect
 	int count = 0;
 
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveItem()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveItem()));
 
 	ui.EditcontainerComboBox->clear();
 	// load the container combo box
@@ -43,7 +43,7 @@ Edititemdialog::Edititemdialog(QWidget *parent, Item *item,int cont_id,std::vect
 	ui.Item_quant->setValue(item->get_quantity());
 }
 
-void Edititemdialog::saveItem()
+void Edititemdialog::SaveItem()
 {
 	// Get user input and validate
 	std::string name = ui.Item_name->text().toStdString();

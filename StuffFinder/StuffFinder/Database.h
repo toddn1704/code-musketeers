@@ -22,37 +22,38 @@ class Database
 	public:
 		Database();
 		~Database();
-		void Create_Item(Item* newItem, int parent_id, int category);
-		void Delete_Item(Item* delItem);
-		void Delete_Item(std::string name);
-		void Create_Container(Container* new_cont, int parent_id, bool top);
-		void Delete_Container(int id) { Delete_Container(Load_Container(id)); }
-		void Delete_Container(Container* del_cont);
-		void Create_Layout(Layout* new_layout);
-		void Delete_Layout(Layout* del_layout);
-		void Create_Category(Category* new_cat);
-		void Delete_Category(int id);
+		void CreateItem(Item* newItem, int parent_id, int category);
+		void DeleteItem(Item* delItem);
+		void DeleteItem(std::string name);
+		void CreateContainer(Container* new_cont, int parent_id, bool top);
+		void DeleteContainer(int id) { DeleteContainer(LoadContainer(id)); }
+		void DeleteContainer(Container* del_cont);
+		void CreateLayout(Layout* new_layout);
+		void DeleteLayout(Layout* del_layout);
+		void CreateCategory(Category* new_cat);
+		void DeleteCategory(int id);
 
-		void Update_Item(Item* up_item);
+		void UpdateItem(Item* up_item);
 		void UpdateContainer(Container* container, int parent_id);
 
-		void Load_Items(Container * cont);
-		void Load_Items(Category * categ);
-		void Load_Containers(Container * cont);
+		void LoadItems(Container * cont);
+		void LoadItems(Category * categ);
+		void LoadContainers(Container * cont);
 
-		void Load_Layout_Containers(Layout * lay);
-		std::vector<Category*> Load_Categories();
-		std::vector<Layout*> Load_Layouts();
+		void LoadLayoutContainers(Layout * lay);
+		std::vector<Category*> LoadCategories();
+		std::vector<Layout*> LoadLayouts();
 
 		// Two dimensional vector to store latest query results
 		// Not sure this is the best way to do this
 		std::vector<std::vector<std::string>> qry_result;
-	private:
-		void Create_Database();	// Creates Tables for Database
-		void Delete_Database(){ remove("test2.db"); };
+private:
+	void CreateDatabase();	// Creates Tables for Database
+	void DeleteDatabase(){ remove("test2.db"); };
 
-		Container* Load_Container(int id);
-		sqlite3 *db;
+	Container* LoadContainer(int id);
+	sqlite3 *db;
 };
 
 #endif
+
