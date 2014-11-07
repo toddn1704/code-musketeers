@@ -38,7 +38,7 @@ public:
     QTreeWidget *itemsTreeWidget;
     QWidget *tab_3;
     QTreeWidget *categoryTreeWidget;
-    QGraphicsView *graphicsView;
+    QGraphicsView *graphics_view;
     QLineEdit *Search;
     QPushButton *Search_button;
     QComboBox *layoutComboBox;
@@ -76,9 +76,10 @@ public:
         categoryTreeWidget->setObjectName(QStringLiteral("categoryTreeWidget"));
         categoryTreeWidget->setGeometry(QRect(0, 0, 331, 531));
         tabWidget->addTab(tab_3, QString());
-        graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(390, 90, 671, 531));
+        graphics_view = new QGraphicsView(centralWidget);
+        graphics_view->setObjectName(QStringLiteral("graphics_view"));
+        graphics_view->setGeometry(QRect(390, 90, 671, 531));
+        graphics_view->setMouseTracking(true);
         Search = new QLineEdit(centralWidget);
         Search->setObjectName(QStringLiteral("Search"));
         Search->setGeometry(QRect(480, 40, 461, 20));
