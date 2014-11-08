@@ -1,4 +1,11 @@
-#include "Additemdialog.h"
+/*additemdialog.cpp
+
+This file will implement the functions declared in the
+additemdialog.h file.
+
+*/
+
+#include "additemdialog.h"
 #include "qmessagebox.h"
 
 Additemdialog::Additemdialog(QWidget *parent, Item *item, int cont_id,std::string cont_name, std::vector<QString> combocategory)
@@ -7,7 +14,7 @@ Additemdialog::Additemdialog(QWidget *parent, Item *item, int cont_id,std::strin
 	new_item = item;
 	container_id = cont_id;
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveItem()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveItem()));
 
 	ui.Item_container->setText(QString::fromStdString(cont_name));
 	//load categories and preSelect category if it exists
@@ -18,7 +25,7 @@ Additemdialog::Additemdialog(QWidget *parent, Item *item, int cont_id,std::strin
 	ui.Add_category_menu->setCurrentIndex(-1);
 }
 
-void Additemdialog::saveItem()
+void Additemdialog::SaveItem()
 {
 	// Get user input and validate
 	std::string name = ui.Item_name->text().toStdString();

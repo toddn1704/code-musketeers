@@ -1,4 +1,11 @@
-#include "Addcontainerdialog.h"
+/*addcontainerdialog.cpp
+
+This file will implement the functions declared in the
+addcontainerdialog.h file.
+
+*/
+
+#include "addcontainerdialog.h"
 #include "qmessagebox.h"
 
 Addcontainerdialog::Addcontainerdialog(QWidget *parent, Container *cont)
@@ -6,11 +13,11 @@ Addcontainerdialog::Addcontainerdialog(QWidget *parent, Container *cont)
 {
 	new_container = cont;
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(saveContainer()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveContainer()));
 
 }
 
-void Addcontainerdialog::saveContainer()
+void Addcontainerdialog::SaveContainer()
 {
 	// Get user input and validate
 	std::string name = ui.container_name->text().toStdString();
@@ -20,4 +27,3 @@ void Addcontainerdialog::saveContainer()
 	new_container->set_name(name);
 	new_container->set_description(description);
 }
-

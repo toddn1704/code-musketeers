@@ -1,19 +1,33 @@
+/*stufffinder.cpp
+
+This file will implement the functions declared in the stufffinder.h
+file.
+
+This file is also responsible for handling user input and communicating
+with the database accordingly.
+
+*/
+
 #include "stufffinder.h"
 #include "sqlite3.h"
-#include "Database.h"
+#include "database.h"
 #include <string>
-#include "Addcontainerdialog.h"
-#include "Addlayoutdialog.h"
-#include "Addcategorydialog.h"
-#include "Edititemdialog.h"
-#include "Additemdialog.h"
+#include "addcontainerdialog.h"
+#include "addlayoutdialog.h"
+#include "addcategorydialog.h"
+#include "edititemdialog.h"
+#include "additemdialog.h"
+#include "editcontainerdialog.h"
 #include <vector>
-#include <Layout.h>
+#include <layout.h>
 #include <layoutgraphicsitem.h>
 //included for testing only
 #include<iostream>
 #include<fstream>
 #include<qdebug.h>
+#include<QGraphicsRectItem>
+#include<QGraphicsScene>
+#include<QGraphicsView>
 
 // Constructo sets up ui and outputs whatever is currently in the database
 StuffFinder::StuffFinder(QWidget *parent)
@@ -21,11 +35,28 @@ StuffFinder::StuffFinder(QWidget *parent)
 {
 	ui.setupUi(this);
 
-	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(handleLayoutChange(int)));
+	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
+
+	//Test drawing
+	//create a scene to draw item on
+	QGraphicsScene *scene = new QGraphicsScene;
+	scene_ = scene;
+	//set scene_ as a rectangle so it matches graphic_view
+	scene_->setSceneRect(0,0,665,525);
+	//set the graphic_view scene as scene_
+	ui.graphics_view->setScene(scene_);
+	//create a rectangle item
+	QGraphicsRectItem *item1 = new QGraphicsRectItem( QRect(0,0,200,100));
+	item1->setPen(QPen(Qt::red, 3, Qt::DashDotLine));
+	//draw item on scene
+	scene_->addItem(item1);
+	//show the scene
+	ui.graphics_view->show();
+	//end of Test drawing
 
 	// Add layouts to comboBox
 	//iterates through layouts and adds them to a combo box
-	layouts = db.Load_Layouts();
+	layouts = db.LoadLayouts();
 	if (layouts.size())
 	{
 		for (int i = 0; i < layouts.size(); i++)
@@ -36,7 +67,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	}
 	// Set the list views
 	//updates list
-	Output_item_tree();
+	OutputItemTree();
 
 	// Create context menus
 	//things that pop-up when you right-click
@@ -52,19 +83,20 @@ StuffFinder::StuffFinder(QWidget *parent)
 	// Connect the tree widget to the onCustomContextMenu slot function
 	connect(ui.itemsTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
 	// Add actions to the menus and connect them to their slots
-	containerContextMenu->addAction("Add Container", this, SLOT(addContainerClicked()));
-	containerContextMenu->addAction("Add Item", this, SLOT(addItemClicked()));
+	containerContextMenu->addAction("Add Container", this, SLOT(AddContainerClicked()));
+	containerContextMenu->addAction("Add Item", this, SLOT(AddItemClicked()));
 	containerContextMenu->addSeparator(); //visual line
-	containerContextMenu->addAction("Delete Container", this, SLOT(deleteContainerClicked()));
-	itemContextMenu->addAction("Edit Item", this, SLOT(editItemClicked()));
+	containerContextMenu->addAction("Edit Container", this, SLOT(EditContainerClicked()));
+	containerContextMenu->addAction("Delete Container", this, SLOT(DeleteContainerClicked()));
+	itemContextMenu->addAction("Edit Item", this, SLOT(EditItemClicked()));
 	itemContextMenu->addSeparator();
-	itemContextMenu->addAction("Delete Item",this, SLOT(deleteItemClicked()));
-	topLevelContainerMenu->addAction("Add Container", this, SLOT(addTopContainerClicked()));
+	itemContextMenu->addAction("Delete Item",this, SLOT(DeleteItemClicked()));
+	topLevelContainerMenu->addAction("Add Container", this, SLOT(AddTopContainerClicked()));
 
 	// Setup category context menus and actions
 	connect(ui.categoryTreeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCatCustomContextMenu(const QPoint &)));
-	nocategoryContextMenu->addAction("Add Category", this, SLOT(addCategoryClicked()));
-	categoryContextMenu->addAction("Delete Category", this, SLOT(deleteCategoryClicked()));
+	nocategoryContextMenu->addAction("Add Category", this, SLOT(AddCategoryClicked()));
+	categoryContextMenu->addAction("Delete Category", this, SLOT(DeleteCategoryClicked()));
 
 	
 	//
@@ -90,7 +122,7 @@ StuffFinder::~StuffFinder()
 
 // Function loads data from the database and outputs it to the GUI(list views and comboboxes)
 //reloads list view
-void StuffFinder::Output_item_tree()
+void StuffFinder::OutputItemTree()
 {
 	// Clear and setup tree widget
 	ui.itemsTreeWidget->clear();
@@ -102,7 +134,7 @@ void StuffFinder::Output_item_tree()
 	ui.categoryTreeWidget->setColumnCount(1);
 	
 	// Get all the layouts and their items
-	layouts = db.Load_Layouts();
+	layouts = db.LoadLayouts();
 	//ui.containerComboBox->clear();
 	contcombo.clear();
 	categorycombo.clear();
@@ -126,14 +158,14 @@ void StuffFinder::Output_item_tree()
 			contcombo.push_back(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()));
 			contcombo.push_back(QString::number(layouts[j]->get_rooms()[i]->get_container_id()));
 			// Get all of its children with recursive function
-			setItems(room, layouts[j]->get_rooms()[i], 1);
+			SetItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
 		}
 	}
 	
 	// Load Categories and add them to the category view with their items
 	// and set the combobox for user to choose from
-	std::vector<Category*> categories = db.Load_Categories();
+	std::vector<Category*> categories = db.LoadCategories();
 	for (int k = 0; k < categories.size(); k++)
 	{
 		//ui.Category_menu->addItem(QString::fromStdString(categories[k]->get_name()), categories[k]->get_category_id());
@@ -157,16 +189,17 @@ void StuffFinder::Output_item_tree()
 }
 
 // Adds children of containers to the QTreeWidget
-void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
+void StuffFinder::SetItems(QTreeWidgetItem * room, Container * cont, int level)
 {
 	// Recursively go through all subcontainers
 	for (int j = 0; j < cont->get_container().size(); j++)
 	{
 		QTreeWidgetItem * subcontainer = new QTreeWidgetItem(room);
 		subcontainer->setText(0, QString::fromStdString(cont->get_container()[j]->get_name()));
-		// Add the container id to the tree widget item
+		// Add the container id to the tree widget item column "0"
 		subcontainer->setData(0, Qt::UserRole, cont->get_container()[j]->get_container_id());
-
+		// Add the conainer id that the sub container is in to column "1"
+		subcontainer->setData(1, Qt::UserRole, cont->get_container_id());
 		// Get container name and add "-" for each level its at
 		QString container_name = QString::fromStdString(cont->get_container()[j]->get_name());
 		for (int k = 0; k < level; k++)
@@ -178,7 +211,7 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 			//cont->get_container()[j]->get_container_id());
 		contcombo.push_back(container_name);
 		contcombo.push_back(QString::number(cont->get_container()[j]->get_container_id()));
-		setItems(subcontainer, cont->get_container()[j], ++level);
+		SetItems(subcontainer, cont->get_container()[j], ++level);
 	}
 	// Add owned items to the tree
 	for (int i = 0; i < cont->get_items().size(); i++)
@@ -197,7 +230,7 @@ void StuffFinder::setItems(QTreeWidgetItem * room, Container * cont, int level)
 }
 
 // Search button SLOT
-void StuffFinder::on_search_returnPressed()
+void StuffFinder::on_Search_returnPressed()
 {
 	//binds return key to on_Search_button_clicked
 	//function, essentially
@@ -208,26 +241,26 @@ void StuffFinder::on_search_returnPressed()
 // Searches layouts for user entered item by name and outputs result to messagebox
 void StuffFinder::on_Search_button_clicked()
 {
-	//get value from search entry field & convert 
+	//get value from Search entry field & convert 
 	//to string.
 	//
-	std::string query = ui.search->text().toStdString();
+	std::string query = ui.Search->text().toStdString();
 
 	//Search all layouts
 	Item * find_item = NULL;
 	for (int i = 0; i < layouts.size(); i++)
 	{
-		find_item = layouts[i]->search(query);
+		find_item = layouts[i]->Search(query);
 		if (find_item != NULL)
 		{
 			break;
 		}
 	}
-	//send value to db search function
+	//send value to db Search function
 	if (find_item == NULL)
 	{
 		QMessageBox msgBox;
-		msgBox.setText("Your search found no items with that name.");
+		msgBox.setText("Your Search found no items with that name.");
 		msgBox.exec();
 		return;
 	}
@@ -266,7 +299,7 @@ void StuffFinder::onCustomContextMenu(const QPoint &point)
 }
 
 // When user clicks "Add Container" creates dialog box to enter information
-void StuffFinder::addContainerClicked()
+void StuffFinder::AddContainerClicked()
 {
 	// Create a container
 	Container *new_container = new Container;
@@ -282,8 +315,8 @@ void StuffFinder::addContainerClicked()
 		return;
 	}
 	// Create the container and reload list
-	db.Create_Container(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
-	Output_item_tree();
+	db.CreateContainer(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
+	OutputItemTree();
 }
 
 // When user clicks "Add Layout" button creates dialog box to enter information
@@ -303,7 +336,7 @@ void StuffFinder::on_addLayout_clicked()
 		return;
 	}
 	//Add layout to db
-	db.Create_Layout(new_layout);
+	db.CreateLayout(new_layout);
 	//Add layout to loaded layouts
 	layouts.push_back(new_layout);
 	//Add layout name and id to layout combo box
@@ -312,7 +345,7 @@ void StuffFinder::on_addLayout_clicked()
 }
 
 // Handles when "Add Container" is clicked with no parent 
-void StuffFinder::addTopContainerClicked()
+void StuffFinder::AddTopContainerClicked()
 {
 	// Create a container
 	Container *new_container = new Container;
@@ -329,19 +362,19 @@ void StuffFinder::addTopContainerClicked()
 		msgBox.exec();
 		return;
 	}
-	db.Create_Container(new_container, ui.layoutComboBox->currentData().toInt(), true);
-	Output_item_tree();
+	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
+	OutputItemTree();
 }
 
 // Deletes container from database then reloads lists
-void StuffFinder::deleteContainerClicked()
+void StuffFinder::DeleteContainerClicked()
 {
-	db.Delete_Container(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
-	Output_item_tree();
+	db.DeleteContainer(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	OutputItemTree();
 }
 
 // Doesn't do anything yet
-void StuffFinder::addItemClicked()
+void StuffFinder::AddItemClicked()
 {
 	Item * new_item = new Item;
 	//get container id and name to add item to
@@ -353,31 +386,31 @@ void StuffFinder::addItemClicked()
 	
 	if (new_item->get_min_quantity() != -1)
 	{
-		db.Create_Item(new_item,new_item->get_container_id(),new_item->get_category());
-		Output_item_tree();
+		db.CreateItem(new_item,new_item->get_container_id(),new_item->get_category());
+		OutputItemTree();
 	}
 }
 
 // Deletes item from database and reloads list
-void StuffFinder::deleteItemClicked()
+void StuffFinder::DeleteItemClicked()
 {
 	//Get current item name you want to delete
 	std::string str = ui.itemsTreeWidget->currentItem()->text(0).toStdString();
 	//Delete item from database
-	db.Delete_Item(str);
+	db.DeleteItem(str);
 	//Reload tree
-	Output_item_tree();
+	OutputItemTree();
 }
 
 // Doesn't do anything yet
-void StuffFinder::editItemClicked()
+void StuffFinder::EditItemClicked()
 {
 	int item_id = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
 	// Create a Item
 	Item *new_item = new Item;
 	for (int i = 0; i < layouts.size(); i++)
 	{
-		new_item = layouts[i]->search(item_id);
+		new_item = layouts[i]->Search(item_id);
 		if (new_item != NULL)
 		{
 			break;
@@ -402,9 +435,42 @@ void StuffFinder::editItemClicked()
 		new_item_window->exec();
 
 		//update database item
-		db.Update_Item(new_item);
-		Output_item_tree();
+		db.UpdateItem(new_item);
+		OutputItemTree();
 	}
+}
+
+void StuffFinder::EditContainerClicked()
+{
+	int container_id = ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt();
+	int parent_container_id = ui.itemsTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
+	Container *new_container = new Container;
+	for (int i = 0; i < layouts.size(); i++)
+	{
+		new_container = layouts[i]->SearchContainer(container_id);
+		if (new_container != NULL)
+		{
+			break;
+		}
+	}
+	if (new_container == NULL)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("Error: could not find container.(INTERNAL ERROR)");
+		msgBox.exec();
+		return;
+	}
+	else
+	{
+		// Popup dialog for user to enter
+		EditContainerDialog *new_container_window = new EditContainerDialog(this, new_container, parent_container_id, contcombo);
+		new_container_window->exec();
+
+		//update database container
+		db.UpdateContainer(new_container,parent_container_id);
+		OutputItemTree();
+	}
+
 }
 // Handles when user right clicks within category tab
 void StuffFinder::onCatCustomContextMenu(const QPoint &point)
@@ -424,7 +490,7 @@ void StuffFinder::onCatCustomContextMenu(const QPoint &point)
 }
 
 // Creates dialog window and creates a container from entered information
-void StuffFinder::addCategoryClicked()
+void StuffFinder::AddCategoryClicked()
 {
 	// Create a category
 	Category *new_category = new Category;
@@ -440,15 +506,15 @@ void StuffFinder::addCategoryClicked()
 		return;
 	}
 	//Add category to db
-	db.Create_Category(new_category);
+	db.CreateCategory(new_category);
 	//Reload trees
-	Output_item_tree();
+	OutputItemTree();
 }
 
 // Deletes selected category
-void StuffFinder::deleteCategoryClicked()
+void StuffFinder::DeleteCategoryClicked()
 {
 
-	db.Delete_Category(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
-	Output_item_tree();
+	db.DeleteCategory(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	OutputItemTree();
 }

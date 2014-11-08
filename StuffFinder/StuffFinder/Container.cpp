@@ -1,6 +1,13 @@
-#include "Container.h"
+/*container.cpp
 
-void Container::delete_item(Item* item) {
+This file will implement the functions declared in the
+container.h file.
+
+*/
+
+#include "container.h"
+
+void Container::DeleteItem(Item* item) {
 	for (unsigned int x = 0; x < items.size(); x++) {
 		if (items[x] == item) {
 			delete items[x];
@@ -10,7 +17,8 @@ void Container::delete_item(Item* item) {
 		}
 	}
 }
-void Container::delete_container(Container* container) {
+
+void Container::DeleteContainer(Container* container) {
 	for (unsigned int x = 0; x < containers.size(); x++) {
 		if (containers[x] == container) {
 			delete containers[x];
@@ -35,7 +43,7 @@ void Container::set_coords(int x1, int y1, int x2, int y2) {
 	coord2 = std::make_pair(x2, y2);
 	//update qt
 }
-Item* Container::search(int id) {
+Item* Container::Search(int id) {
 	Item* found = NULL;
 	for (unsigned int x = 0; x < items.size(); x++) {
 		if (items[x]->get_item_id() == id) {
@@ -49,7 +57,7 @@ Item* Container::search(int id) {
 	}
 
 	for (unsigned int x = 0; x < containers.size(); x++) {
-		found = containers[x]->search(id);
+		found = containers[x]->Search(id);
 		if (found != NULL) {
 			break;
 		}
@@ -62,7 +70,7 @@ Item* Container::search(int id) {
 		return NULL;
 	}
 }
-Item* Container::search(std::string name) {
+Item* Container::Search(std::string name) {
 	Item* found = NULL;
 	for (unsigned int x = 0; x < items.size(); x++) {
 		if (items[x]->get_name() == name) {
@@ -76,7 +84,32 @@ Item* Container::search(std::string name) {
 	}
 
 	for (unsigned int x = 0; x < containers.size(); x++) {
-		found = containers[x]->search(name);
+		found = containers[x]->Search(name);
+		if (found != NULL) {
+			break;
+		}
+	}
+
+	if (found != NULL) {
+		return found;
+	}
+	else {
+		return NULL;
+	}
+}
+
+Container* Container::SearchContainer(int id) {
+	Container* found = NULL;
+
+	for (unsigned int x = 0; x < containers.size(); x++) {
+		if (containers[x]->get_container_id() == id)
+		{
+			found = containers[x];
+		}
+		else
+		{
+			found = containers[x]->SearchContainer(id);
+		}
 		if (found != NULL) {
 			break;
 		}

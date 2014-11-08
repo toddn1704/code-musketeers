@@ -1,4 +1,11 @@
-#include "Addlayoutdialog.h"
+/*addlayoutdialog.cpp
+
+This file will implement the functions declared in the
+addlayoutdialog.h file.
+
+*/
+
+#include "addlayoutdialog.h"
 #include "qmessagebox.h"
 
 Addlayoutdialog::Addlayoutdialog(QWidget *parent, Layout *lay)
@@ -6,11 +13,11 @@ Addlayoutdialog::Addlayoutdialog(QWidget *parent, Layout *lay)
 {
 	new_layout = lay;
 	ui.setupUi(this);
-	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(savelayout()));
+	connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(SaveLayout()));
 
 }
 
-void Addlayoutdialog::savelayout()
+void Addlayoutdialog::SaveLayout()
 {
 	// Get user input and validate
 	std::string name = ui.layout_name->text().toStdString();

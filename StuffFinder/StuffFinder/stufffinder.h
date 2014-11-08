@@ -12,7 +12,7 @@ the database functions.
 #include <QtWidgets/QMainWindow>
 #include "ui_stufffinder.h"
 #include <QMessageBox>
-#include "Database.h"
+#include "database.h"
 
 class StuffFinder : public QMainWindow
 {
@@ -25,12 +25,13 @@ public:
 private:
 	Ui::StuffFinderClass ui;
 	Database db;
+	QGraphicsScene *scene_;
 	std::vector<Layout *> layouts;
 	std::vector<QString> contcombo;//holds container name then id ie[container1,conatainer1 id,container2,container2 id]
 	std::vector<QString> categorycombo;//holds category name and id
 
-	void Output_item_tree();
-	void setItems(QTreeWidgetItem * room, Container * cont, int level);
+	void OutputItemTree();
+	void SetItems(QTreeWidgetItem * room, Container * cont, int level);
 
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;
@@ -39,19 +40,21 @@ private:
 	QMenu* nocategoryContextMenu;
 
 private slots:
-void addContainerClicked();
-void addItemClicked();
-void editItemClicked();
-void deleteItemClicked();
-void addTopContainerClicked();
-void deleteContainerClicked();
-void handleLayoutChange(int index) { Output_item_tree(); }
-void addCategoryClicked();
-void deleteCategoryClicked();
+void AddContainerClicked();
+void EditContainerClicked();
+void AddItemClicked();
+void EditItemClicked();
+void DeleteItemClicked();
+void AddTopContainerClicked();
+void DeleteContainerClicked();
+void HandleLayoutChange(int index) { OutputItemTree(); }
+void AddCategoryClicked();
+void DeleteCategoryClicked();
 
+//These functions remain unedited
 public slots:
 void on_Search_button_clicked();
-void on_search_returnPressed();
+void on_Search_returnPressed();
 void on_addLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
 void onCatCustomContextMenu(const QPoint &point);

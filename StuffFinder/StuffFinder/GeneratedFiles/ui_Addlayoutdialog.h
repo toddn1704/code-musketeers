@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'Addlayoutdialog.ui'
+** Form generated from reading UI file 'addlayoutdialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.3.2
 **
@@ -35,24 +35,24 @@ public:
     {
         if (Addlayoutdialog->objectName().isEmpty())
             Addlayoutdialog->setObjectName(QStringLiteral("Addlayoutdialog"));
-        Addlayoutdialog->resize(389, 292);
+        Addlayoutdialog->resize(351, 201);
         buttonBox = new QDialogButtonBox(Addlayoutdialog);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 240, 341, 32));
+        buttonBox->setGeometry(QRect(-10, 160, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Save);
         layout_name = new QLineEdit(Addlayoutdialog);
         layout_name->setObjectName(QStringLiteral("layout_name"));
-        layout_name->setGeometry(QRect(130, 50, 141, 21));
+        layout_name->setGeometry(QRect(90, 20, 221, 21));
         label = new QLabel(Addlayoutdialog);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(70, 50, 53, 16));
+        label->setGeometry(QRect(30, 20, 53, 16));
         label_2 = new QLabel(Addlayoutdialog);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(40, 80, 71, 20));
+        label_2->setGeometry(QRect(20, 60, 71, 20));
         layout_description = new QTextEdit(Addlayoutdialog);
         layout_description->setObjectName(QStringLiteral("layout_description"));
-        layout_description->setGeometry(QRect(130, 80, 141, 87));
+        layout_description->setGeometry(QRect(90, 60, 221, 81));
 
         retranslateUi(Addlayoutdialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), Addlayoutdialog, SLOT(accept()));

@@ -1,4 +1,4 @@
-/*Category.h
+/*category.h
 
 This file contains the Category class, which simply defines
 a category. A category can have many items, which are stored
@@ -11,7 +11,7 @@ in a map of item names and item pointers.
 #include <string>
 #include <vector>
 #include <map>
-#include "Item.h"
+#include "item.h"
 
 class Category {
 public:
@@ -21,7 +21,7 @@ public:
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
 	void set_category_id(int i) { category_id = i; }
-	void add_item(Item* i) { items.insert(std::make_pair(i->get_name(),i)); }
+	void AddItem(Item* i) { items.insert(std::make_pair(i->get_name(), i)); }
 
 	int get_category_id() { return category_id; }
 	std::string get_name() { return name; }

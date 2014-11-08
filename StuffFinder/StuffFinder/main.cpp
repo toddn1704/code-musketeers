@@ -1,6 +1,14 @@
+/*main.cpp
+
+This function opens the main window of the application
+and creates a database object.
+
+*/
+
+
 #include "stufffinder.h"
 #include <QtWidgets/QApplication>
-#include "Database.h"
+#include "database.h"
 #include "qdebug.h"
 #include <iostream>
 #include <fstream>
@@ -20,12 +28,12 @@ int main(int argc, char *argv[])
 	int id;
 	test_item->set_description("hit stuff");
 	test_item->set_name("Hammer");
-	db.Create_Item(test_item);
-	db.Delete_Item(test_item);
+	db.CreateItem(test_item);
+	db.DeleteItem(test_item);
 
 	Container * test_cont = new Container;
-	db.Load_Items(test_cont);
-	std::vector<Container*> test_containers = db.Load_Containers(test_cont);
+	db.LoadItems(test_cont);
+	std::vector<Container*> test_containers = db.LoadContainers(test_cont);
 	for (int i = 0; i < test_containers.size(); i++)
 	{
 		qDebug() << test_containers[i]->get_container_id() << "," << test_containers[i]->get_name().c_str() <<
@@ -44,12 +52,12 @@ int main(int argc, char *argv[])
 	C1->set_description("General Tools");
 	L1->set_layout_name("Floor1");
 	L1->set_description("First floor of home");
-	db.Create_Category(C1);
-	db.Create_Layout(L1);
-	db.Create_Item(I1,0);
-	db.Delete_Layout(L1);
+	db.CreateCategory(C1);
+	db.CreateLayout(L1);
+	db.CreateItem(I1,0);
+	db.DeleteLayout(L1);
 	
-	std::vector<Layout*> all_layouts = db.Load_Layouts();
+	std::vector<Layout*> all_layouts = db.LoadLayouts();
 	for (int i = 0; i < all_layouts.size(); i++)
 	{
 		qDebug() << all_layouts[i]->get_name().c_str();

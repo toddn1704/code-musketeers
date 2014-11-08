@@ -67,7 +67,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="graphics_view">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -76,8 +76,11 @@
       <height>531</height>
      </rect>
     </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="search">
+   <widget class="QLineEdit" name="Search">
     <property name="geometry">
      <rect>
       <x>480</x>

@@ -1,4 +1,4 @@
-/*Container.h
+/*container.h
 
 This file contains the Container class, which describes a 
 container (eg. room, box, dresser, etc.). A container can hold
@@ -11,7 +11,7 @@ multiple items (as a vector of item pointers).
 #define __container_h_
 #include <string>
 #include <vector>
-#include "Item.h"
+#include "item.h"
 
 class Container {
 public:
@@ -27,14 +27,16 @@ public:
 	std::vector<Container*> get_container() { return containers; }
 	int get_container_id() { return container_id; }
 
-	void add_item(Item* item) { items.push_back(item); };
-	void add_container(Container* container) { containers.push_back(container); };
-	void delete_item(Item* item);
-	void delete_container(Container* container);
+	void AddItem(Item* item) { items.push_back(item); };
+	void AddContainer(Container* container) { containers.push_back(container); };
+	void DeleteItem(Item* item);
+	void DeleteContainer(Container* container);
 	void set_coords(int x1, int y1, int x2, int y2);
 	void set_containers(std::vector<Container*> loaded_containers) { containers = loaded_containers; }
-	Item* search(int id);
-	Item* search(std::string name);
+	
+	Item* Search(int id);
+	Item* Search(std::string name);
+	Container* SearchContainer(int id);
 private:
 	int container_id;
 	std::string name;

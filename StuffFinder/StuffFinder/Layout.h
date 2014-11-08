@@ -1,4 +1,4 @@
-/*Layout.h
+/*layout.h
 
 This file contains the Layout class, which represents a single 
 floor of a house. Each layout has a vector of Container pointers
@@ -9,8 +9,8 @@ which represent rooms on the floor.
 #ifndef __layout_h_
 #define __layout_h_
 #include <string>
-#include "Container.h"
-#include "Item.h"
+#include "container.h"
+#include "item.h"
 class Layout {
 	public:
 		Layout(){}
@@ -23,10 +23,14 @@ class Layout {
 		std::vector<Container *> get_rooms() { return rooms; }
 		void set_layout_id(int id) { layout_id = id; }
 
-		void add_room(Container * room) { rooms.push_back(room); };
-		void delete_room(Container * room);
-		Item* search(int id);
-		Item* search(std::string name);
+		void AddRoom(Container * room) { rooms.push_back(room); };
+		void DeleteRoom(Container * room);
+		Item* Search(int id);
+		Item* Search(std::string name);
+
+		//SearchContainer(int id), Search the current layout for a container based on container id.
+		//return a Container pointer if container found, else return NULL
+		Container* SearchContainer(int id);
 	private:
 		int layout_id;
 		std::string name;

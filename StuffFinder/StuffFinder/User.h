@@ -1,4 +1,4 @@
-/*User.h
+/*user.h
 
 This header file contains the User class, which defines
 a user of the application. 
@@ -13,7 +13,7 @@ class User {
 public:
 	User();
 	std::string get_name() { return name; }
-	bool login(std::string pw);
+	bool Login(std::string pw);
 
 private:
 	std::string name;

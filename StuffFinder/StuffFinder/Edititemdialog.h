@@ -1,6 +1,6 @@
-/*Edititemdialog.h
+/*edititemdialog.h
 
-This file holds the Edititemdialog class which defines
+This file holds the EditItemDialog class which defines
 a separate window that allows the user to add a new
 item.
 
@@ -10,9 +10,8 @@ item.
 #define EDITITEMDIALOG_H
 
 #include <qdialog.h>
-#include <Item.h>
-#include <ui_Edititemdialog.h>
-
+#include <item.h>
+#include <ui_edititemdialog.h>
 
 class Edititemdialog : public QDialog {Q_OBJECT
 	
@@ -26,7 +25,7 @@ private:
 	Item *new_item;
 
 	public slots:
-	void saveItem();
+	void SaveItem();
 
 };
 #endif
