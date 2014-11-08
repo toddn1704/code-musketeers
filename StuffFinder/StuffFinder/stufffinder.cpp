@@ -57,6 +57,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	*/
 
 	LayoutScene * layout_scene = new LayoutScene;
+	layout_scene->setSceneRect(0,0,665,525);
 	ui.graphics_view->setScene(layout_scene);
 
 	// Add layouts to comboBox
