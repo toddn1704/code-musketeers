@@ -46,6 +46,12 @@ public:
 		scene()->update();
 	}
 
+	void PopPointFromPolygon()
+	{
+		polygon.pop_back();
+		scene()->update();
+	}
+
 	// Does nothing right now
 	void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 	{
