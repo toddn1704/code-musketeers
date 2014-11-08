@@ -208,6 +208,7 @@
     </CustomBuild>
     <ClInclude Include="Item.h" />
     <ClInclude Include="Layout.h" />
+    <ClInclude Include="layoutgraphicsitem.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>

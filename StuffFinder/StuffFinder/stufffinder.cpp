@@ -9,6 +9,7 @@
 #include "Additemdialog.h"
 #include <vector>
 #include <Layout.h>
+#include <layoutgraphicsitem.h>
 //included for testing only
 #include<iostream>
 #include<fstream>
@@ -66,7 +67,20 @@ StuffFinder::StuffFinder(QWidget *parent)
 	categoryContextMenu->addAction("Delete Category", this, SLOT(deleteCategoryClicked()));
 
 	
-	
+	//
+	QGraphicsScene * scene = new QGraphicsScene;
+	ui.graphicsView->setScene(scene);
+	LayoutGraphicsItem * my_item = new LayoutGraphicsItem;
+	scene->addItem(my_item);
+	my_item->AddPointToPolygon(QPoint(10, 42));
+	my_item->AddPointToPolygon(QPoint(20, 20));
+
+	my_item->AddPointToPolygon(QPoint(21, 54));
+	my_item->AddPointToPolygon(QPoint(100, 200));
+
+
+
+
 }
 
 StuffFinder::~StuffFinder()
