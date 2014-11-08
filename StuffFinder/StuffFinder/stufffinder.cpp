@@ -20,7 +20,7 @@ with the database accordingly.
 #include "editcontainerdialog.h"
 #include <vector>
 #include <layout.h>
-#include <layoutgraphicsitem.h>
+#include <layoutscene.h>
 //included for testing only
 #include<iostream>
 #include<fstream>
@@ -28,6 +28,7 @@ with the database accordingly.
 #include<QGraphicsRectItem>
 #include<QGraphicsScene>
 #include<QGraphicsView>
+#include <layoutscene.h>
 
 // Constructo sets up ui and outputs whatever is currently in the database
 StuffFinder::StuffFinder(QWidget *parent)
@@ -36,7 +37,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.setupUi(this);
 
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
-
+	/*
 	//Test drawing
 	//create a scene to draw item on
 	QGraphicsScene *scene = new QGraphicsScene;
@@ -53,6 +54,10 @@ StuffFinder::StuffFinder(QWidget *parent)
 	//show the scene
 	ui.graphics_view->show();
 	//end of Test drawing
+	*/
+
+	LayoutScene * layout_scene = new LayoutScene;
+	ui.graphics_view->setScene(layout_scene);
 
 	// Add layouts to comboBox
 	//iterates through layouts and adds them to a combo box
@@ -100,15 +105,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 
 	
 	//
-	QGraphicsScene * scene = new QGraphicsScene;
-	ui.graphicsView->setScene(scene);
-	LayoutGraphicsItem * my_item = new LayoutGraphicsItem;
-	scene->addItem(my_item);
-	my_item->AddPointToPolygon(QPoint(10, 42));
-	my_item->AddPointToPolygon(QPoint(20, 20));
 
-	my_item->AddPointToPolygon(QPoint(21, 54));
-	my_item->AddPointToPolygon(QPoint(100, 200));
 
 
 

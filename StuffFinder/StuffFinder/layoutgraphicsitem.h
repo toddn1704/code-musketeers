@@ -1,9 +1,18 @@
+/*layoutgraphicsitem.h
+
+This file contains the LayoutGraphicsItem class.
+This class is a custom subclass of QGraphicsItem.
+It contains a polygon and has support for adding points.
+
+
+*/
 #ifndef LAYOUTGRAPHICSITEM_H
 #define LAYOUTGRAPHICSITEM_H
 
 #include <qgraphicsitem.h>
 #include <qpolygon.h>
 #include <qpainter.h>
+#include <qdebug.h>
 
 class LayoutGraphicsItem : public QGraphicsItem
 {
@@ -30,14 +39,22 @@ public:
 			painter->drawPolygon(polygon);
 		}
 	}
-
-	void AddPointToPolygon(QPoint point)
+	// Adds point to the polygon then updates parent scene
+	void AddPointToPolygon(QPointF point)
 	{
 		polygon.append(point);
+		scene()->update();
 	}
 
+	// Does nothing right now
+	void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
+	{
+		qDebug() << "GOT IT";
+	}
+
+
 private:
-	QPolygon polygon;
+	QPolygonF polygon;
 
 };
 
