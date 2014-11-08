@@ -240,21 +240,17 @@ void StuffFinder::on_Search_button_clicked()
 {
 	//get value from Search entry field & convert 
 	//to string.
-	//
-	std::string query = ui.Search->text().toStdString();
+	std::string name = ui.Search->text().toStdString();
+	//create search_result container to hold all items that were found
+	std::vector<Item> search_results;
 
 	//Search all layouts
-	Item * find_item = NULL;
 	for (int i = 0; i < layouts.size(); i++)
 	{
-		find_item = layouts[i]->Search(query);
-		if (find_item != NULL)
-		{
-			break;
-		}
+		layouts[i]->SearchName(name,search_results);
 	}
 	//send value to db Search function
-	if (find_item == NULL)
+	if (search_results.empty())
 	{
 		QMessageBox msgBox;
 		msgBox.setText("Your Search found no items with that name.");
@@ -264,8 +260,8 @@ void StuffFinder::on_Search_button_clicked()
 	else
 	{
 		QMessageBox msgBox;
-		std::string output = "Found your item!!!!\nName: " + find_item->get_name() + "\nDescription: " + find_item->get_description() + "\nCategory: " 
-			+ std::to_string(find_item->get_category()) + "\nQuantity: " + std::to_string(find_item->get_quantity());
+		std::string output = "Found your item!!!!\nName: " + search_results[0].get_name() + "\nDescription: " + search_results[0].get_description() + "\nCategory: "
+			+ std::to_string(search_results[0].get_category()) + "\nQuantity: " + std::to_string(search_results[0].get_quantity());
 		QString qstr = QString::fromStdString(output);
 		msgBox.setText(qstr);
 		msgBox.exec();

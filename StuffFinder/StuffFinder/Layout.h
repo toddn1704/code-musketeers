@@ -26,7 +26,7 @@ class Layout {
 		void AddRoom(Container * room) { rooms.push_back(room); };
 		void DeleteRoom(Container * room);
 		Item* Search(int id);
-		Item* Search(std::string name);
+		void SearchName(std::string name,std::vector<Item> &search_results);
 
 		//SearchContainer(int id), Search the current layout for a container based on container id.
 		//return a Container pointer if container found, else return NULL

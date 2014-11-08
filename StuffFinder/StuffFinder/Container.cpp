@@ -70,31 +70,20 @@ Item* Container::Search(int id) {
 		return NULL;
 	}
 }
-Item* Container::Search(std::string name) {
-	Item* found = NULL;
+/*
+	Search through the items in the given container, if name is = to item name save it.
+	then search through any containers in within this container.
+*/
+void Container::SearchName(std::string name,std::vector<Item> &search_results) {
 	for (unsigned int x = 0; x < items.size(); x++) {
-		if (items[x]->get_name() == name) {
-			found = items[x];
-			break;
+		if (stricmp(items[x]->get_name().c_str(),name.c_str()) == 0) {
+			//make a copy of the item
+			search_results.push_back(*items[x]);
 		}
-	}
-
-	if (found != NULL) {
-		return found;
 	}
 
 	for (unsigned int x = 0; x < containers.size(); x++) {
-		found = containers[x]->Search(name);
-		if (found != NULL) {
-			break;
-		}
-	}
-
-	if (found != NULL) {
-		return found;
-	}
-	else {
-		return NULL;
+		containers[x]->SearchName(name,search_results);
 	}
 }
 
