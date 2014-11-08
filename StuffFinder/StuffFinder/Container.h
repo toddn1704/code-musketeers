@@ -10,6 +10,7 @@ multiple items (as a vector of item pointers).
 #ifndef __container_h_
 #define __container_h_
 #include <string>
+#include <string.h>
 #include <vector>
 #include "item.h"
 
@@ -35,7 +36,7 @@ public:
 	void set_containers(std::vector<Container*> loaded_containers) { containers = loaded_containers; }
 	
 	Item* Search(int id);
-	Item* Search(std::string name);
+	void SearchName(std::string name,std::vector<Item> &search_results);
 	Container* SearchContainer(int id);
 private:
 	int container_id;

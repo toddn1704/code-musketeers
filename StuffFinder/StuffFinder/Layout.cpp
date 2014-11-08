@@ -33,21 +33,12 @@ Item* Layout::Search(int id) {
 		return NULL;
 	}
 }
-Item* Layout::Search(std::string name) {
-	Item* found;
+/*
+	Searches through all the layouts rooms
+*/
+void Layout::SearchName(std::string name,std::vector<Item> &search_results) {
 	for (unsigned int x = 0; x < rooms.size(); x++) {
-		found = rooms[x]->Search(name);
-		if (found != NULL) {
-			break;
-		}
-	}
-	if (found != NULL) {
-		//output found
-		return found;
-	}
-	else {
-		//output not found
-		return NULL;
+		rooms[x]->SearchName(name,search_results);
 	}
 }
 
