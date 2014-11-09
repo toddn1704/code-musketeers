@@ -36,8 +36,10 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab;
     QTreeWidget *itemsTreeWidget;
-    QWidget *tab_3;
+    QWidget *tab_2;
     QTreeWidget *categoryTreeWidget;
+    QWidget *tab_3;
+    QTreeWidget *search_result_treewidget;
     QGraphicsView *graphics_view;
     QLineEdit *Search;
     QPushButton *Search_button;
@@ -67,14 +69,23 @@ public:
         itemsTreeWidget->setObjectName(QStringLiteral("itemsTreeWidget"));
         itemsTreeWidget->setGeometry(QRect(0, 0, 331, 531));
         tabWidget->addTab(tab, QString());
-        tab_3 = new QWidget();
-        tab_3->setObjectName(QStringLiteral("tab_3"));
-        categoryTreeWidget = new QTreeWidget(tab_3);
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        categoryTreeWidget = new QTreeWidget(tab_2);
         QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem();
         __qtreewidgetitem1->setText(0, QStringLiteral("1"));
         categoryTreeWidget->setHeaderItem(__qtreewidgetitem1);
         categoryTreeWidget->setObjectName(QStringLiteral("categoryTreeWidget"));
         categoryTreeWidget->setGeometry(QRect(0, 0, 331, 531));
+        tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QStringLiteral("tab_3"));
+        search_result_treewidget = new QTreeWidget(tab_3);
+        QTreeWidgetItem *__qtreewidgetitem2 = new QTreeWidgetItem();
+        __qtreewidgetitem2->setText(0, QStringLiteral("1"));
+        search_result_treewidget->setHeaderItem(__qtreewidgetitem2);
+        search_result_treewidget->setObjectName(QStringLiteral("search_result_treewidget"));
+        search_result_treewidget->setGeometry(QRect(0, 0, 331, 531));
         tabWidget->addTab(tab_3, QString());
         graphics_view = new QGraphicsView(centralWidget);
         graphics_view->setObjectName(QStringLiteral("graphics_view"));
@@ -110,7 +121,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);
@@ -120,7 +131,8 @@ public:
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "List View", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Category view", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Category view", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Search Results", 0));
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         addLayout->setText(QApplication::translate("StuffFinderClass", "Add Layout", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));

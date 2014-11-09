@@ -59,7 +59,7 @@ void on_Search_returnPressed();
 void on_addLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
 void onCatCustomContextMenu(const QPoint &point);
-
+//void onSearchResultContextMenu(const QPoint &point);
 
 };
 

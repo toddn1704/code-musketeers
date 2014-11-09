@@ -105,8 +105,8 @@ StuffFinder::StuffFinder(QWidget *parent)
 	categoryContextMenu->addAction("Delete Category", this, SLOT(DeleteCategoryClicked()));
 
 	
-	//
-
+	//set current tab to list view
+	ui.tabWidget->setCurrentIndex(0);
 
 
 
@@ -131,6 +131,9 @@ void StuffFinder::OutputItemTree()
 	ui.categoryTreeWidget->header()->close();
 	ui.categoryTreeWidget->setColumnCount(1);
 	
+	ui.search_result_treewidget->clear();
+	ui.search_result_treewidget->header()->close();
+	ui.search_result_treewidget->setColumnCount(1);
 	// Get all the layouts and their items
 	layouts = db.LoadLayouts();
 	//ui.containerComboBox->clear();
@@ -245,6 +248,8 @@ void StuffFinder::on_Search_button_clicked()
 	//create search_result container to hold all items that were found
 	std::vector<Item> search_results;
 
+	//set current tab to search results
+	ui.tabWidget->setCurrentIndex(2);
 	//Search all layouts
 	for (int i = 0; i < layouts.size(); i++)
 	{
@@ -253,20 +258,19 @@ void StuffFinder::on_Search_button_clicked()
 	//send value to db Search function
 	if (search_results.empty())
 	{
-		QMessageBox msgBox;
-		msgBox.setText("Your Search found no items with that name.");
-		msgBox.exec();
+		QTreeWidgetItem *item = new QTreeWidgetItem(ui.search_result_treewidget);
+		item->setText(0, "Sorry could not find the item you searched.");
 		return;
 	}
 	else
 	{
-		QMessageBox msgBox;
-		std::string output = "Found your item!!!!\nName: " + search_results[0].get_name() + "\nDescription: " + search_results[0].get_description() + "\nCategory: "
-			+ std::to_string(search_results[0].get_category()) + "\nQuantity: " + std::to_string(search_results[0].get_quantity());
-		QString qstr = QString::fromStdString(output);
-		msgBox.setText(qstr);
-		msgBox.exec();
-		return;
+		for (int i = 0; i < search_results.size(); i++)
+		{
+			QTreeWidgetItem *item = new QTreeWidgetItem(ui.search_result_treewidget);
+			item->setText(0, QString::fromStdString(search_results[i].get_name()));
+			item->setData(0, Qt::UserRole, search_results[i].get_item_id());
+			ui.search_result_treewidget->addTopLevelItem(item);
+		}
 	}
 }
 
