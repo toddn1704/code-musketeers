@@ -37,6 +37,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.setupUi(this);
 
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
+	connect(ui.search_result_treewidget,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)), this, SLOT(SearchResultDoubleClicked(QTreeWidgetItem *,int)));
 	/*
 	//Test drawing
 	//create a scene to draw item on
@@ -248,8 +249,9 @@ void StuffFinder::on_Search_button_clicked()
 	//create search_result container to hold all items that were found
 	std::vector<Item> search_results;
 
-	//set current tab to search results
+	//set current tab to search results and clear last results
 	ui.tabWidget->setCurrentIndex(2);
+	ui.search_result_treewidget->clear();
 	//Search all layouts
 	for (int i = 0; i < layouts.size(); i++)
 	{
@@ -293,6 +295,37 @@ void StuffFinder::onCustomContextMenu(const QPoint &point)
 	else
 	{
 		itemContextMenu->exec(ui.itemsTreeWidget->mapToGlobal(point));
+	}
+}
+
+void StuffFinder::SearchResultDoubleClicked(QTreeWidgetItem *item, int col)
+{
+	QMessageBox msgBox;
+	std::string results,category = "None";
+	Item * return_item = new Item;
+	for (int i = 0; i < layouts.size(); i++)
+	{
+		return_item = layouts[i]->Search(item->data(0,Qt::UserRole).toInt());
+		if (return_item != NULL)
+		{
+			break;
+		}
+	}
+	if (return_item != NULL)
+	{
+		for (int i = 0; i < categorycombo.size(); i=i+2)
+		{
+			if (categorycombo[i + 1].toInt() == return_item->get_category())
+			{
+				category = categorycombo[i].toStdString();
+				break;
+			}
+		}
+		results = "Name: " + return_item->get_name() + "\nDescription: " + return_item->get_description() + "\nCategory: " + category +
+			"\nQantity: " + std::to_string(return_item->get_quantity());
+		msgBox.setText(QString::fromStdString(results));
+		msgBox.exec();
+		return;
 	}
 }
 
