@@ -60,6 +60,7 @@ void on_addLayout_clicked();
 void onCustomContextMenu(const QPoint &point);
 void onCatCustomContextMenu(const QPoint &point);
 void SearchResultDoubleClicked(QTreeWidgetItem *item, int col);
+void SearchResultRightClicked(const QPoint &point);
 //void onSearchResultContextMenu(const QPoint &point);
 
 };

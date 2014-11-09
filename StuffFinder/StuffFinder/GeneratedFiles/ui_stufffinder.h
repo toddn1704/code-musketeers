@@ -68,6 +68,7 @@ public:
         itemsTreeWidget->setHeaderItem(__qtreewidgetitem);
         itemsTreeWidget->setObjectName(QStringLiteral("itemsTreeWidget"));
         itemsTreeWidget->setGeometry(QRect(0, 0, 331, 531));
+        itemsTreeWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -121,7 +122,7 @@ public:
 
         retranslateUi(StuffFinderClass);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);

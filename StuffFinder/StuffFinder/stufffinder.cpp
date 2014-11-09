@@ -37,7 +37,11 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.setupUi(this);
 
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
+
+	//connect search_result_tree to double and single clicked
+	ui.search_result_treewidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui.search_result_treewidget,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)), this, SLOT(SearchResultDoubleClicked(QTreeWidgetItem *,int)));
+	connect(ui.search_result_treewidget,SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(SearchResultRightClicked(const QPoint &)));
 	/*
 	//Test drawing
 	//create a scene to draw item on
@@ -298,6 +302,11 @@ void StuffFinder::onCustomContextMenu(const QPoint &point)
 	}
 }
 
+/*
+	When a search_item is double clicked run this function.
+	This function will display item information in a messagebox.
+	*item is the item clicked in the treewidget.
+*/
 void StuffFinder::SearchResultDoubleClicked(QTreeWidgetItem *item, int col)
 {
 	QMessageBox msgBox;
@@ -327,6 +336,15 @@ void StuffFinder::SearchResultDoubleClicked(QTreeWidgetItem *item, int col)
 		msgBox.exec();
 		return;
 	}
+}
+
+void StuffFinder::SearchResultRightClicked(const QPoint &point)
+{
+	qDebug() << "rightclicked";
+	QMessageBox msgBox;
+	msgBox.setText("Temporary");
+	msgBox.exec();
+	return;
 }
 
 // When user clicks "Add Container" creates dialog box to enter information
