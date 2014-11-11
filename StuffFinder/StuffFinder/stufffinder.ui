@@ -149,6 +149,38 @@
      <string>Add Layout</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="graphic_view_status_text">
+    <property name="geometry">
+     <rect>
+      <x>979</x>
+      <y>600</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lock_unlock_button">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>620</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Lock/Unlock</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

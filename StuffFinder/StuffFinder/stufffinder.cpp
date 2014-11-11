@@ -112,10 +112,11 @@ StuffFinder::StuffFinder(QWidget *parent)
 	
 	//set current tab to list view
 	ui.tabWidget->setCurrentIndex(0);
-
-
-
-
+	//set graphic view status text to locked and background color red
+	ui.graphic_view_status_text->setText("Locked");
+	ui.graphic_view_status_text->setStyleSheet("QLineEdit{background: red;}");
+	//lock the graphic view window so that you can't draw
+	ui.graphics_view->setInteractive(false);
 }
 
 StuffFinder::~StuffFinder()
@@ -566,4 +567,20 @@ void StuffFinder::DeleteCategoryClicked()
 
 	db.DeleteCategory(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	OutputItemTree();
+}
+
+void StuffFinder::on_lock_unlock_button_clicked()
+{
+	if (ui.graphic_view_status_text->text() == "Locked")
+	{
+		ui.graphics_view->setInteractive(true);
+		ui.graphic_view_status_text->setText("Unlocked");
+		ui.graphic_view_status_text->setStyleSheet("QLineEdit{background: green;}");
+	}
+	else
+	{
+		ui.graphics_view->setInteractive(false);
+		ui.graphic_view_status_text->setText("Locked");
+		ui.graphic_view_status_text->setStyleSheet("QLineEdit{background: red;}");
+	}
 }

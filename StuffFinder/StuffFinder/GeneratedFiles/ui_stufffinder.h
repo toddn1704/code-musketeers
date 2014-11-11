@@ -45,6 +45,8 @@ public:
     QPushButton *Search_button;
     QComboBox *layoutComboBox;
     QPushButton *addLayout;
+    QLineEdit *graphic_view_status_text;
+    QPushButton *lock_unlock_button;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -104,6 +106,15 @@ public:
         addLayout = new QPushButton(centralWidget);
         addLayout->setObjectName(QStringLiteral("addLayout"));
         addLayout->setGeometry(QRect(190, 40, 93, 28));
+        graphic_view_status_text = new QLineEdit(centralWidget);
+        graphic_view_status_text->setObjectName(QStringLiteral("graphic_view_status_text"));
+        graphic_view_status_text->setGeometry(QRect(979, 600, 81, 20));
+        graphic_view_status_text->setAutoFillBackground(false);
+        graphic_view_status_text->setFrame(false);
+        graphic_view_status_text->setReadOnly(true);
+        lock_unlock_button = new QPushButton(centralWidget);
+        lock_unlock_button->setObjectName(QStringLiteral("lock_unlock_button"));
+        lock_unlock_button->setGeometry(QRect(990, 620, 71, 23));
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -136,6 +147,7 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Search Results", 0));
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         addLayout->setText(QApplication::translate("StuffFinderClass", "Add Layout", 0));
+        lock_unlock_button->setText(QApplication::translate("StuffFinderClass", "Lock/Unlock", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 
