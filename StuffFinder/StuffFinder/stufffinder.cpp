@@ -569,6 +569,7 @@ void StuffFinder::DeleteCategoryClicked()
 	OutputItemTree();
 }
 
+//handles lock/unlock graphic view button press
 void StuffFinder::on_lock_unlock_button_clicked()
 {
 	if (ui.graphic_view_status_text->text() == "Locked")
