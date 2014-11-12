@@ -98,7 +98,14 @@ void Database::CreateDatabase()
 		"CREATE TABLE CATEGORY("  \
 		"CATEGORY_ID INTEGER PRIMARY KEY     NOT NULL," \
 		"CATEGORY_NAME           TEXT         NOT NULL," \
-		"CATEGORY_DESCRIPTION    TEXT);";
+		"CATEGORY_DESCRIPTION    TEXT);"
+		
+		"CREATE TABLE CHANGELOG("  \
+		"ID INTEGER PRIMARY KEY     NOT NULL," \
+		"Year            INT         NOT NULL," \
+		"Month           INT         NOT NULL," \
+		"Day             INT         NOT NULL," \
+		"CHANGE_DESCRIPTION    TEXT);";
 	qDebug() << sql;
 	rc = sqlite3_exec(db, sql, Table_callback, 0,&zErrMsg);
 	if (rc != SQLITE_OK)
@@ -133,6 +140,13 @@ void Database::CreateItem(Item *newItem, int parent_id, int category)
 	else
 	{
 		qDebug() << "Item created successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Added Item: " + newItem->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
 	newItem->set_item_id(sqlite3_last_insert_rowid(db));
@@ -156,8 +170,14 @@ void Database::DeleteItem(Item* delItem)
 	else
 	{
 		qDebug() << "Item deleted successfully";
-	}
 
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Deleted Item: " + delItem->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	}
 }
 
 void Database::DeleteItem(std::string name)
@@ -177,8 +197,14 @@ void Database::DeleteItem(std::string name)
 	else
 	{
 		qDebug() << "Item deleted successfully";
-	}
 
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Deleted Item: " + name + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	}
 }
 void Database::UpdateItem(Item* up_item)
 {
@@ -200,6 +226,13 @@ void Database::UpdateItem(Item* up_item)
 	else
 	{
 		qDebug() << "Item updated successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Updated Item: " + up_item->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 }
 void Database::UpdateContainer(Container* container,int parent_id)
@@ -221,6 +254,13 @@ void Database::UpdateContainer(Container* container,int parent_id)
 	else
 	{
 		qDebug() << "Container updated successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Updated Container: " + container->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 }
 void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
@@ -250,6 +290,13 @@ void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
 	else
 	{
 		qDebug() << "Container created successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Created Container: " + new_cont->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 	qDebug() << "new container id: " << sqlite3_last_insert_rowid(db);
 	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
@@ -282,6 +329,13 @@ void Database::DeleteContainer(Container* del_cont)
 	else
 	{
 		qDebug() << "Container deleted successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Deleted Container: " + del_cont->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 
 }
@@ -303,6 +357,13 @@ void Database::CreateLayout(Layout* new_layout)
 	else
 	{
 		qDebug() << "Layout created successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Created Layout: " + new_layout->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 	qDebug() << "new layout id: " << sqlite3_last_insert_rowid(db);
 	new_layout->set_layout_id(sqlite3_last_insert_rowid(db));
@@ -328,6 +389,13 @@ void Database::DeleteLayout(Layout* del_layout)
 	else
 	{
 		qDebug() << "Container deleted successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Deleted Layout: " + del_layout->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 }
 
@@ -349,6 +417,13 @@ void Database::CreateCategory(Category* new_cat)
 	else
 	{
 		qDebug() << "Category created successfully";
+
+		time_t t = time(0);
+		struct tm *now = localtime(&t);
+		sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+			"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+			",' Created Category: " + new_cat->get_name() + "');";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	}
 	qDebug() << "new category id: " << sqlite3_last_insert_rowid(db);
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
@@ -371,6 +446,8 @@ void Database::DeleteCategory(int id)
 	else
 	{
 		qDebug() << "Category deleted successfully";
+
+		//TODO: get category name from id and update changelog
 	}
 
 }
