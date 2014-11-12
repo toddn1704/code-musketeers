@@ -140,12 +140,12 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	else
 	{
 		qDebug() << "Item created successfully";
-
-		UpdateChangeLog("Created Item: " + new_item->get_name());
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
 	new_item->set_item_id(sqlite3_last_insert_rowid(db));
 	//return sqlite3_last_insert_rowid(db);
+
+	UpdateChangeLog("Created Item: " + new_item->get_name());
 }
 
 void Database::DeleteItem(Item* del_item)
@@ -165,9 +165,9 @@ void Database::DeleteItem(Item* del_item)
 	else
 	{
 		qDebug() << "Item deleted successfully";
-
-		UpdateChangeLog("Deleted Item: " + del_item->get_name());
 	}
+
+	UpdateChangeLog("Deleted Item: " + del_item->get_name());
 }
 
 void Database::DeleteItem(std::string name)
@@ -187,9 +187,9 @@ void Database::DeleteItem(std::string name)
 	else
 	{
 		qDebug() << "Item deleted successfully";
-
-		UpdateChangeLog("Deleted Item: " + name);
 	}
+
+	UpdateChangeLog("Deleted Item: " + name);
 }
 void Database::UpdateItem(Item* up_item)
 {
@@ -211,9 +211,9 @@ void Database::UpdateItem(Item* up_item)
 	else
 	{
 		qDebug() << "Item updated successfully";
-
-		UpdateChangeLog("Updated Item: " + up_item->get_name());
 	}
+
+	UpdateChangeLog("Updated Item: " + up_item->get_name());
 }
 void Database::UpdateContainer(Container* container,int parent_id)
 {
@@ -234,9 +234,9 @@ void Database::UpdateContainer(Container* container,int parent_id)
 	else
 	{
 		qDebug() << "Container updated successfully";
-
-		UpdateChangeLog("Updated Container: " + container->get_name());
 	}
+
+	UpdateChangeLog("Updated Container: " + container->get_name());
 }
 void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
 {
@@ -265,11 +265,11 @@ void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
 	else
 	{
 		qDebug() << "Container created successfully";
-
-		UpdateChangeLog("Created Container: " + new_cont->get_name());
 	}
 	qDebug() << "new container id: " << sqlite3_last_insert_rowid(db);
 	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
+
+	UpdateChangeLog("Created Container: " + new_cont->get_name());
 }
 
 void Database::DeleteContainer(Container* del_cont)
@@ -299,10 +299,9 @@ void Database::DeleteContainer(Container* del_cont)
 	else
 	{
 		qDebug() << "Container deleted successfully";
-
-		UpdateChangeLog("Deleted Container: " + del_cont->get_name());
 	}
 
+	UpdateChangeLog("Deleted Container: " + del_cont->get_name());
 }
 void Database::CreateLayout(Layout* new_layout)
 {
@@ -322,11 +321,11 @@ void Database::CreateLayout(Layout* new_layout)
 	else
 	{
 		qDebug() << "Layout created successfully";
-
-		UpdateChangeLog("Created Layout: " + new_layout->get_name());
 	}
 	qDebug() << "new layout id: " << sqlite3_last_insert_rowid(db);
 	new_layout->set_layout_id(sqlite3_last_insert_rowid(db));
+
+	UpdateChangeLog("Created Layout: " + new_layout->get_name());
 }
 void Database::DeleteLayout(Layout* del_layout)
 {
@@ -349,9 +348,9 @@ void Database::DeleteLayout(Layout* del_layout)
 	else
 	{
 		qDebug() << "Container deleted successfully";
-
-		UpdateChangeLog("Deleted Layout: " + del_layout->get_name());
 	}
+
+	UpdateChangeLog("Deleted Layout: " + del_layout->get_name());
 }
 
 void Database::CreateCategory(Category* new_cat)
@@ -372,11 +371,11 @@ void Database::CreateCategory(Category* new_cat)
 	else
 	{
 		qDebug() << "Category created successfully";
-
-		UpdateChangeLog("Category Created: " + new_cat->get_name());
 	}
 	qDebug() << "new category id: " << sqlite3_last_insert_rowid(db);
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
+
+	UpdateChangeLog("Category Created: " + new_cat->get_name());
 }
 
 void Database::DeleteCategory(int id, std::string del_cat)
@@ -396,10 +395,9 @@ void Database::DeleteCategory(int id, std::string del_cat)
 	else
 	{
 		qDebug() << "Category deleted successfully";
-
-		UpdateChangeLog("Category Deleted: " + del_cat);
 	}
 
+	UpdateChangeLog("Category Deleted: " + del_cat);
 }
 
 void Database::UpdateChangeLog(std::string change) {
