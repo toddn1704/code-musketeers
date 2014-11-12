@@ -565,7 +565,7 @@ void StuffFinder::AddCategoryClicked()
 void StuffFinder::DeleteCategoryClicked()
 {
 
-	db.DeleteCategory(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(),ui.categoryTreeWidget->currentItem()->text);
+	db.DeleteCategory(ui.categoryTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), ui.categoryTreeWidget->currentItem()->text(0).toStdString());
 	OutputItemTree();
 }
 
