@@ -36,6 +36,7 @@ class Database
 
 		void UpdateItem(Item* up_item);
 		void UpdateContainer(Container* container, int parent_id);
+		void UpdateChangeLog(std::string change);
 
 		void LoadItems(Container * cont);
 		void LoadItems(Category * categ);
