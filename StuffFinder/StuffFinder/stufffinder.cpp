@@ -633,9 +633,8 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 		{
 			db.InsertCoords(scene_->CurrentContainerId(), points);
 		}
-			
+		GraphicViewSwitch();
 	}
-	GraphicViewSwitch();
 }
 
 void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
