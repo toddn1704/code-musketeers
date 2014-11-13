@@ -53,7 +53,7 @@ StuffFinder::StuffFinder(QWidget *parent)
 	scene_->setSceneRect(0,0,665,525);
 	ui.graphics_view->setScene(scene_);
 
-
+	connect(ui.itemsTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem * , int)), this, SLOT(TreeItemClicked(QTreeWidgetItem * , int)));
 
 	// Add layouts to comboBox
 	//iterates through layouts and adds them to a combo box
@@ -634,4 +634,11 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 		}
 			
 	}
+}
+
+void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
+{
+	qDebug() << "CLICKED";
+	scene_->HighlightItem(item->data(0, Qt::UserRole).toInt());
+	
 }

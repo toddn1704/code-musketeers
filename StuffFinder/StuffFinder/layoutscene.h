@@ -105,6 +105,20 @@ public:
 			}
 		}
 	}
+
+	void HighlightItem(int id)
+	{
+		QList<QGraphicsItem *> all_items = items();
+		QList<QGraphicsItem *>::iterator i;
+		clearSelection();
+		for (i = all_items.begin(); i != all_items.end(); i++)
+		{
+			if ((*i)->data(Qt::UserRole) == id)
+			{
+				(*i)->setSelected(true);
+			}
+		}
+	}
 private:
 	bool drawing = false;
 	LayoutGraphicsItem * current_item_;

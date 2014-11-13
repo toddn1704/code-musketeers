@@ -56,6 +56,7 @@ void HandleLayoutChange(int index) { OutputItemTree(); }
 void AddCategoryClicked();
 void DeleteCategoryClicked();
 
+
 //These functions remain unedited
 public slots:
 void on_Search_button_clicked();
@@ -68,6 +69,7 @@ void SearchResultRightClicked(const QPoint &point);
 void on_lock_unlock_button_clicked();
 void on_expand_button_clicked();
 //void onSearchResultContextMenu(const QPoint &point);
+void TreeItemClicked(QTreeWidgetItem * item, int column);
 
 };
 
