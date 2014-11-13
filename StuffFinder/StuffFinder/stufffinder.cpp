@@ -47,28 +47,13 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.search_result_treewidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui.search_result_treewidget,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)), this, SLOT(SearchResultDoubleClicked(QTreeWidgetItem *,int)));
 	connect(ui.search_result_treewidget,SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(SearchResultRightClicked(const QPoint &)));
-	/*
-	//Test drawing
-	//create a scene to draw item on
-	QGraphicsScene *scene = new QGraphicsScene;
-	scene_ = scene;
-	//set scene_ as a rectangle so it matches graphic_view
-	scene_->setSceneRect(0,0,665,525);
-	//set the graphic_view scene as scene_
-	ui.graphics_view->setScene(scene_);
-	//create a rectangle item
-	QGraphicsRectItem *item1 = new QGraphicsRectItem( QRect(0,0,200,100));
-	item1->setPen(QPen(Qt::red, 3, Qt::DashDotLine));
-	//draw item on scene
-	scene_->addItem(item1);
-	//show the scene
-	ui.graphics_view->show();
-	//end of Test drawing
-	*/
+	
 
 	scene_ = new LayoutScene;
 	scene_->setSceneRect(0,0,665,525);
 	ui.graphics_view->setScene(scene_);
+
+
 
 	// Add layouts to comboBox
 	//iterates through layouts and adds them to a combo box
@@ -603,5 +588,13 @@ void StuffFinder::on_expand_button_clicked()
 	else
 	{
 		this->setFixedSize(1206, 805);
+	}
+}
+
+void StuffFinder::keyPressEvent(QKeyEvent * e)
+{
+	if (e->key() == Qt::Key_Return)
+	{
+		scene_->StopDrawing();
 	}
 }

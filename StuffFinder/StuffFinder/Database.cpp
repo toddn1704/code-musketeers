@@ -99,13 +99,19 @@ void Database::CreateDatabase()
 		"CATEGORY_ID INTEGER PRIMARY KEY     NOT NULL," \
 		"CATEGORY_NAME           TEXT         NOT NULL," \
 		"CATEGORY_DESCRIPTION    TEXT);"
-		
+
 		"CREATE TABLE CHANGELOG("  \
 		"ID INTEGER PRIMARY KEY     NOT NULL," \
 		"Year            INT         NOT NULL," \
 		"Month           INT         NOT NULL," \
 		"Day             INT         NOT NULL," \
-		"CHANGE_DESCRIPTION    TEXT);";
+		"CHANGE_DESCRIPTION    TEXT);" \
+
+		"CREATE TABLE COORDS(" \
+		"ID INTEGER PRIMARY KEY NOT NULL," \
+		"CONTAINER_ID    INT NOT NULL," \
+		"xval            INT NOT NULL," \
+		"yval            INT NOT NULL);";
 	qDebug() << sql;
 	rc = sqlite3_exec(db, sql, Table_callback, 0,&zErrMsg);
 	if (rc != SQLITE_OK)
@@ -642,6 +648,61 @@ std::vector<Category*> Database::LoadCategories()
 	return return_Categories;
 }
 
+void Database::InsertCoords(int container_id, QVector<QPointF> points)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	for (int i = 0; i < points.size(); i++)
+	{
+		sql.append("INSERT INTO COORDS (CONTAINER_ID, xval, yval) VALUES ("
+			+ std::to_string(container_id) + "," + std::to_string(points[i].x()) +
+			"," + std::to_string(points[i].y()) + ");");
+	}
+	qDebug() << sql.c_str();
+
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Coords wasn't inserted";
+	}
+	else
+	{
+		qDebug() << "Coords inserted successfully";
+	}
+}
+
+QVector<QPointF> Database::LoadCoords(int container_id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM COORDS WHERE CONTAINER_ID = " + std::to_string(container_id) + ";";
+
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Coords werent loaded";
+	}
+	else
+	{
+		qDebug() << "Coords loaded successfully";
+	}
+	qDebug() << qry_result.size();
+	QVector<QPointF> points;
+	std::vector<std::vector<std::string>> c_qry_result = qry_result;
+	qry_result.clear();
+	for (int i = 0; i < c_qry_result.size(); i++)
+	{
+		Category * temp = new Category(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
+		LoadItems(temp);
+		points.push_back(QPointF(atof(c_qry_result[i][2].c_str()), atof(c_qry_result[i][3].c_str())));
+	}
+
+	return points;
+}
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;
 	qDebug() << "Table callback function called";

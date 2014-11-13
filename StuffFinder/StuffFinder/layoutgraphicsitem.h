@@ -24,6 +24,13 @@ public:
 		setFlag(ItemIsSelectable);
 	}
 
+	LayoutGraphicsItem(QVector<QPointF> & points)
+	{
+		setFlag(ItemIsMovable);
+		setFlag(ItemIsSelectable);
+		polygon = points;
+	}
+
 	QRectF boundingRect() const
 	{
 		return polygon.boundingRect();
@@ -70,7 +77,15 @@ public:
 		
 	}
 
+	int size()
+	{
+		return polygon.size();
+	}
 
+	QVector<QPointF> get_polygon()
+	{
+		return polygon;
+	}
 private:
 	QPolygonF polygon;
 };

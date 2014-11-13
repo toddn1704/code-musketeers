@@ -17,6 +17,7 @@ and deleting items, containers, layouts, and categories.
 #include "container.h"
 #include "layout.h"
 #include "category.h"
+#include "qvector.h"
 
 class Database
 {
@@ -45,6 +46,10 @@ class Database
 		void LoadLayoutContainers(Layout * lay);
 		std::vector<Category*> LoadCategories();
 		std::vector<Layout*> LoadLayouts();
+
+		void InsertCoords(int container_id, QVector<QPointF> points);
+		QVector<QPointF> LoadCoords(int container_id);
+
 
 		// Two dimensional vector to store latest query results
 		// Not sure this is the best way to do this

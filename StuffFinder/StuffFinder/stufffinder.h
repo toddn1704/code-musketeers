@@ -42,6 +42,8 @@ private:
 	QMenu* categoryContextMenu;
 	QMenu* nocategoryContextMenu;
 
+	void keyPressEvent(QKeyEvent * e);
+
 private slots:
 void AddContainerClicked();
 void EditContainerClicked();
