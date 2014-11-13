@@ -49,6 +49,7 @@ class Database
 
 		void InsertCoords(int container_id, QVector<QPointF> points);
 		QVector<QPointF> LoadCoords(int container_id);
+		void DeleteCoords(int container_id);
 
 
 		// Two dimensional vector to store latest query results

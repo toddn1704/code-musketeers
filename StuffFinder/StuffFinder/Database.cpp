@@ -284,6 +284,7 @@ void Database::DeleteContainer(Container* del_cont)
 	char *zErrMsg = 0;
 	int rc;
 
+	DeleteCoords(del_cont->get_container_id());
 	std::vector<Container *> sub_containers = del_cont->get_container();
 	for (int i = 0; i < sub_containers.size(); i++)
 	{
@@ -702,6 +703,27 @@ QVector<QPointF> Database::LoadCoords(int container_id)
 	}
 
 	return points;
+}
+
+void Database::DeleteCoords(int container_id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "DELETE FROM COORDS WHERE CONTAINER_ID = " + std::to_string(container_id) + ";";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Coords wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "Coords deleted successfully";
+	}
+
 }
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;

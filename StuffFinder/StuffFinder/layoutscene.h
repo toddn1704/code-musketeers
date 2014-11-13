@@ -54,22 +54,11 @@ protected:
 			current_item_->AddPointToPolygon(mouse_event->scenePos());
 		}
 	}
-	/*
-	// On pressing enter sets drawing false
-	void keyPressEvent(QKeyEvent * e)
-	{
-		if (e->key() == Qt::Key_Return)
-		{
-			if (drawing && current_item_->size() > 1)
-			{
-				current_item_->PopPointFromPolygon();
-				drawing = false;
-				current_item_ = NULL;
-			}
-		}
-	}*/
+	
 
 public:
+	// Removes last point from polygon and returns created item only if
+	// currently drawing and item has enough points
 	QVector<QPointF> StopDrawing()
 	{
 		if (drawing && current_item_->size() > 1)
@@ -81,6 +70,7 @@ public:
 		
 		return QVector<QPointF>();
 	}
+	// Creates a new empty graphicsitem and enables drawing
 	void NewContainer(int id)
 	{ 
 		drawing = true;
@@ -90,15 +80,30 @@ public:
 		current_item_->AddPointToPolygon(QPointF(0, 0));
 		current_item_->setData(Qt::UserRole, id);
 	}
+	// Builds a new graphics item from a vector
 	void NewContainer(int id, QVector<QPointF> &points)
 	{
 		current_item_ = new LayoutGraphicsItem(points);
 		current_item_->setData(Qt::UserRole, id);
 		addItem(current_item_);
 	}
+	
 	int CurrentContainerId()
 	{
 		return current_item_->data(Qt::UserRole).toInt();
+	}
+	// Finds the item with given id and removes it from scene
+	void DeleteContainer(int id)
+	{
+		QList<QGraphicsItem *> all_items = items();
+		QList<QGraphicsItem *>::iterator i;
+		for (i = all_items.begin(); i != all_items.end(); i++)
+		{
+			if ((*i)->data(Qt::UserRole) == id)
+			{
+				removeItem((*i));
+			}
+		}
 	}
 private:
 	bool drawing = false;

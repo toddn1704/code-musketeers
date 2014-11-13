@@ -444,7 +444,8 @@ void StuffFinder::AddTopContainerClicked()
 void StuffFinder::DeleteContainerClicked()
 {
 	db.DeleteContainer(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
-	OutputItemTree();
+	scene_->DeleteContainer(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	delete ui.itemsTreeWidget->currentItem();
 }
 
 // Doesn't do anything yet
