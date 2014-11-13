@@ -35,6 +35,7 @@ private:
 
 	void OutputItemTree();
 	void SetItems(QTreeWidgetItem * room, Container * cont, int level);
+	void GraphicViewSwitch();
 
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;
@@ -66,7 +67,6 @@ void onCustomContextMenu(const QPoint &point);
 void onCatCustomContextMenu(const QPoint &point);
 void SearchResultDoubleClicked(QTreeWidgetItem *item, int col);
 void SearchResultRightClicked(const QPoint &point);
-void on_lock_unlock_button_clicked();
 void on_expand_button_clicked();
 //void onSearchResultContextMenu(const QPoint &point);
 void TreeItemClicked(QTreeWidgetItem * item, int column);

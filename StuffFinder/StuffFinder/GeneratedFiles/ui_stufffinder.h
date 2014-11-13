@@ -45,7 +45,6 @@ public:
     QComboBox *layoutComboBox;
     QPushButton *addLayout;
     QLineEdit *graphic_view_status_text;
-    QPushButton *lock_unlock_button;
     QTabWidget *tabWidget_2;
     QWidget *tab_4;
     QTreeWidget *change_log_treewidget;
@@ -116,9 +115,6 @@ public:
         graphic_view_status_text->setAutoFillBackground(false);
         graphic_view_status_text->setFrame(false);
         graphic_view_status_text->setReadOnly(true);
-        lock_unlock_button = new QPushButton(centralWidget);
-        lock_unlock_button->setObjectName(QStringLiteral("lock_unlock_button"));
-        lock_unlock_button->setGeometry(QRect(990, 620, 71, 23));
         tabWidget_2 = new QTabWidget(centralWidget);
         tabWidget_2->setObjectName(QStringLiteral("tabWidget_2"));
         tabWidget_2->setGeometry(QRect(50, 640, 431, 111));
@@ -173,7 +169,6 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Search Results", 0));
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         addLayout->setText(QApplication::translate("StuffFinderClass", "Add Layout", 0));
-        lock_unlock_button->setText(QApplication::translate("StuffFinderClass", "Lock/Unlock", 0));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_4), QApplication::translate("StuffFinderClass", "Change Log", 0));
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("StuffFinderClass", "Notifications", 0));
         expand_button->setText(QApplication::translate("StuffFinderClass", "V", 0));

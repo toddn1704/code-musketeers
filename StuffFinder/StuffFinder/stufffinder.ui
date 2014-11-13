@@ -168,19 +168,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="lock_unlock_button">
-    <property name="geometry">
-     <rect>
-      <x>990</x>
-      <y>620</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lock/Unlock</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget_2">
     <property name="geometry">
      <rect>

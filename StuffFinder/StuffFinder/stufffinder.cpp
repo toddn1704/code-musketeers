@@ -436,6 +436,7 @@ void StuffFinder::AddTopContainerClicked()
 	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	OutputItemTree();
 
+	GraphicViewSwitch();
 	scene_->NewContainer(new_container->get_container_id());
 
 }
@@ -594,8 +595,8 @@ void StuffFinder::DeleteCategoryClicked()
 	OutputItemTree();
 }
 
-//handles lock/unlock graphic view button press
-void StuffFinder::on_lock_unlock_button_clicked()
+//lock/unlock graphic view
+void StuffFinder::GraphicViewSwitch()
 {
 	if (ui.graphic_view_status_text->text() == "Locked")
 	{
@@ -634,6 +635,7 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 		}
 			
 	}
+	GraphicViewSwitch();
 }
 
 void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
