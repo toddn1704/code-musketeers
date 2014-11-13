@@ -136,6 +136,10 @@ void StuffFinder::OutputItemTree()
 	contcombo.clear();
 	categorycombo.clear();
 	//ui.Category_menu->clear();
+
+	//clear scene
+	scene_->clear();
+	scene_->update();
 	
 	if (layouts.size())
 	{
