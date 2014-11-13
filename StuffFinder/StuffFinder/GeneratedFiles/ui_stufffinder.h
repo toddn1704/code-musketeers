@@ -46,6 +46,12 @@ public:
     QPushButton *addLayout;
     QLineEdit *graphic_view_status_text;
     QPushButton *lock_unlock_button;
+    QTabWidget *tabWidget_2;
+    QWidget *tab_4;
+    QTreeWidget *change_log_treewidget;
+    QWidget *tab_5;
+    QTreeWidget *notifications_treewidget;
+    QPushButton *expand_button;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QStatusBar *statusBar;
@@ -54,7 +60,7 @@ public:
     {
         if (StuffFinderClass->objectName().isEmpty())
             StuffFinderClass->setObjectName(QStringLiteral("StuffFinderClass"));
-        StuffFinderClass->resize(1206, 751);
+        StuffFinderClass->resize(1206, 712);
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
@@ -113,6 +119,30 @@ public:
         lock_unlock_button = new QPushButton(centralWidget);
         lock_unlock_button->setObjectName(QStringLiteral("lock_unlock_button"));
         lock_unlock_button->setGeometry(QRect(990, 620, 71, 23));
+        tabWidget_2 = new QTabWidget(centralWidget);
+        tabWidget_2->setObjectName(QStringLiteral("tabWidget_2"));
+        tabWidget_2->setGeometry(QRect(50, 640, 431, 111));
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QStringLiteral("tab_4"));
+        change_log_treewidget = new QTreeWidget(tab_4);
+        QTreeWidgetItem *__qtreewidgetitem3 = new QTreeWidgetItem();
+        __qtreewidgetitem3->setText(0, QStringLiteral("1"));
+        change_log_treewidget->setHeaderItem(__qtreewidgetitem3);
+        change_log_treewidget->setObjectName(QStringLiteral("change_log_treewidget"));
+        change_log_treewidget->setGeometry(QRect(0, 1, 426, 191));
+        tabWidget_2->addTab(tab_4, QString());
+        tab_5 = new QWidget();
+        tab_5->setObjectName(QStringLiteral("tab_5"));
+        notifications_treewidget = new QTreeWidget(tab_5);
+        QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem();
+        __qtreewidgetitem4->setText(0, QStringLiteral("1"));
+        notifications_treewidget->setHeaderItem(__qtreewidgetitem4);
+        notifications_treewidget->setObjectName(QStringLiteral("notifications_treewidget"));
+        notifications_treewidget->setGeometry(QRect(0, 1, 431, 191));
+        tabWidget_2->addTab(tab_5, QString());
+        expand_button = new QPushButton(centralWidget);
+        expand_button->setObjectName(QStringLiteral("expand_button"));
+        expand_button->setGeometry(QRect(10, 644, 16, 15));
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -129,6 +159,7 @@ public:
         retranslateUi(StuffFinderClass);
 
         tabWidget->setCurrentIndex(0);
+        tabWidget_2->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(StuffFinderClass);
@@ -143,6 +174,9 @@ public:
         Search_button->setText(QApplication::translate("StuffFinderClass", "Search", 0));
         addLayout->setText(QApplication::translate("StuffFinderClass", "Add Layout", 0));
         lock_unlock_button->setText(QApplication::translate("StuffFinderClass", "Lock/Unlock", 0));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_4), QApplication::translate("StuffFinderClass", "Change Log", 0));
+        tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("StuffFinderClass", "Notifications", 0));
+        expand_button->setText(QApplication::translate("StuffFinderClass", "V", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
     } // retranslateUi
 

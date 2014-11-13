@@ -12,6 +12,7 @@ and deleting items, containers, layouts, and categories.
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include <ctime>
 #include "item.h"
 #include "container.h"
 #include "layout.h"
@@ -31,10 +32,11 @@ class Database
 		void CreateLayout(Layout* new_layout);
 		void DeleteLayout(Layout* del_layout);
 		void CreateCategory(Category* new_cat);
-		void DeleteCategory(int id);
+		void DeleteCategory(int id, std::string del_cat);
 
 		void UpdateItem(Item* up_item);
 		void UpdateContainer(Container* container, int parent_id);
+		void UpdateChangeLog(std::string change);
 
 		void LoadItems(Container * cont);
 		void LoadItems(Category * categ);
