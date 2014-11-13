@@ -23,7 +23,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 
@@ -49,7 +48,6 @@ public:
     QPushButton *lock_unlock_button;
     QMenuBar *menuBar;
     QMenu *menuFile;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *StuffFinderClass)
@@ -118,13 +116,10 @@ public:
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 21));
+        menuBar->setGeometry(QRect(0, 0, 1206, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(StuffFinderClass);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        StuffFinderClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(StuffFinderClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         StuffFinderClass->setStatusBar(statusBar);

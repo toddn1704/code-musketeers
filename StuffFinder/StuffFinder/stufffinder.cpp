@@ -28,7 +28,6 @@ with the database accordingly.
 #include<QGraphicsRectItem>
 #include<QGraphicsScene>
 #include<QGraphicsView>
-#include <layoutscene.h>
 
 // Constructo sets up ui and outputs whatever is currently in the database
 StuffFinder::StuffFinder(QWidget *parent)
@@ -61,9 +60,9 @@ StuffFinder::StuffFinder(QWidget *parent)
 	//end of Test drawing
 	*/
 
-	LayoutScene * layout_scene = new LayoutScene;
-	layout_scene->setSceneRect(0,0,665,525);
-	ui.graphics_view->setScene(layout_scene);
+	scene_ = new LayoutScene;
+	scene_->setSceneRect(0,0,665,525);
+	ui.graphics_view->setScene(scene_);
 
 	// Add layouts to comboBox
 	//iterates through layouts and adds them to a combo box
@@ -414,6 +413,9 @@ void StuffFinder::AddTopContainerClicked()
 	}
 	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	OutputItemTree();
+
+	scene_->NewContainer(new_container->get_container_id());
+
 }
 
 // Deletes container from database then reloads lists

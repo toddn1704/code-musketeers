@@ -21,6 +21,7 @@ public:
 	LayoutGraphicsItem()
 	{
 		setFlag(ItemIsMovable);
+		setFlag(ItemIsSelectable);
 	}
 
 	QRectF boundingRect() const
@@ -32,6 +33,15 @@ public:
 	{
 		QPen pen;
 		pen.setWidth(5);
+		if (isSelected())
+		{
+			qDebug() << "Hello";
+			pen.setColor(Qt::red);
+		}
+		else
+		{
+			pen.setColor(Qt::black);
+		}
 		painter->setPen(pen);
 
 		if (!polygon.isEmpty())
@@ -56,12 +66,13 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 	{
 		qDebug() << "GOT IT";
+		scene()->update();
+		
 	}
 
 
 private:
 	QPolygonF polygon;
-
 };
 
 #endif

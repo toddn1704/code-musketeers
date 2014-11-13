@@ -13,6 +13,8 @@ the database functions.
 #include "ui_stufffinder.h"
 #include <QMessageBox>
 #include "database.h"
+#include <layoutscene.h>
+
 
 class StuffFinder : public QMainWindow
 {
@@ -25,7 +27,7 @@ public:
 private:
 	Ui::StuffFinderClass ui;
 	Database db;
-	QGraphicsScene *scene_;
+	LayoutScene *scene_;
 	std::vector<Layout *> layouts;
 	std::vector<QString> contcombo;//holds container name then id ie[container1,conatainer1 id,container2,container2 id]
 	std::vector<QString> categorycombo;//holds category name and id

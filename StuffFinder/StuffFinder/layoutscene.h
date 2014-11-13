@@ -22,22 +22,24 @@ protected:
 	// Handle a mouse press
 	void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 	{
+		
 		if (drawing)
 		{
-			current_item->AddPointToPolygon(mouseEvent->buttonDownScenePos(mouseEvent->button()));
-			current_item->AddPointToPolygon(mouseEvent->scenePos());
+		
+			current_item_->AddPointToPolygon(mouseEvent->buttonDownScenePos(mouseEvent->button()));
+			current_item_->AddPointToPolygon(mouseEvent->scenePos());
 		}
+		
 		// Checks if clicking on an item and if so sends the event to it
 		else if (QGraphicsItem * selected_item = itemAt(mouseEvent->buttonDownScenePos(mouseEvent->button()), QTransform()))
 		{
-			sendEvent(selected_item, mouseEvent);
+
+			update();
 		}
 		else
 		{
-			drawing = true;
-			current_item = new LayoutGraphicsItem;
-			addItem(current_item);
-			current_item->AddPointToPolygon(mouseEvent->buttonDownScenePos(mouseEvent->button()));		
+			clearSelection();
+			current_item_ = NULL;
 		}
 	
 		
@@ -48,8 +50,8 @@ protected:
 	{
 		if (drawing)
 		{
-			current_item->PopPointFromPolygon();
-			current_item->AddPointToPolygon(mouse_event->scenePos());
+			current_item_->PopPointFromPolygon();
+			current_item_->AddPointToPolygon(mouse_event->scenePos());
 		}
 	}
 	// On pressing enter sets drawing false
@@ -57,14 +59,27 @@ protected:
 	{
 		if (e->key() == Qt::Key_Return)
 		{
-			current_item->PopPointFromPolygon();
+			current_item_->PopPointFromPolygon();
 			drawing = false;
+			current_item_ = NULL;
 		}
 	}
+
+public:
+	void StopDrawing() { drawing = false; }
+	void NewContainer(int id)
+	{ 
+		drawing = true;
+		current_item_ = new LayoutGraphicsItem;
+
+		addItem(current_item_);
+		current_item_->AddPointToPolygon(QPointF(0, 0));
+		current_item_->setData(Qt::UserRole, id);
+	}
+
 private:
 	bool drawing = false;
-	LayoutGraphicsItem * current_item;
-	
+	LayoutGraphicsItem * current_item_;
 };
 
 #endif
