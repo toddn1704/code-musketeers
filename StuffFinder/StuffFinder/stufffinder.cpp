@@ -157,6 +157,9 @@ void StuffFinder::OutputItemTree()
 			// Get all of its children with recursive function
 			SetItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
+
+			scene_->NewContainer(layouts[j]->get_rooms()[i]->get_container_id(),
+				db.LoadCoords(layouts[j]->get_rooms()[i]->get_container_id()));
 		}
 	}
 	
@@ -209,6 +212,12 @@ void StuffFinder::SetItems(QTreeWidgetItem * room, Container * cont, int level)
 		contcombo.push_back(container_name);
 		contcombo.push_back(QString::number(cont->get_container()[j]->get_container_id()));
 		SetItems(subcontainer, cont->get_container()[j], ++level);
+
+		if (level == 1)
+		{
+			scene_->NewContainer(cont->get_container()[j]->get_container_id(),
+				db.LoadCoords(cont->get_container()[j]->get_container_id()));
+		}
 	}
 	// Add owned items to the tree
 	for (int i = 0; i < cont->get_items().size(); i++)
@@ -356,7 +365,29 @@ void StuffFinder::AddContainerClicked()
 	}
 	// Create the container and reload list
 	db.CreateContainer(new_container, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt(), false);
-	OutputItemTree();
+	if (!ui.itemsTreeWidget->currentItem()->parent())
+	{
+		qDebug() << new_container->get_container_id();
+		scene_->NewContainer(new_container->get_container_id());
+	}
+
+	QTreeWidgetItem * subcontainer = new QTreeWidgetItem(ui.itemsTreeWidget->currentItem());
+	subcontainer->setText(0, QString::fromStdString(new_container->get_name()));
+	// Add the container id to the tree widget item column "0"
+	subcontainer->setData(0, Qt::UserRole, new_container->get_container_id());
+	// Add the conainer id that the sub container is in to column "1"
+	subcontainer->setData(1, Qt::UserRole, ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
+	// Get container name and add "-" for each level its at
+	QString container_name = QString::fromStdString(new_container->get_name());
+	QTreeWidgetItem * parent = ui.itemsTreeWidget->currentItem();
+	while (ui.itemsTreeWidget->currentItem()->parent())
+	{
+		container_name = "-" + container_name;
+		parent = parent->parent();
+	}
+	contcombo.push_back(container_name);
+	contcombo.push_back(QString::number(new_container->get_container_id()));
+
 }
 
 // When user clicks "Add Layout" button creates dialog box to enter information
@@ -595,6 +626,11 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 {
 	if (e->key() == Qt::Key_Return)
 	{
-		scene_->StopDrawing();
+		QVector<QPointF> points = scene_->StopDrawing();
+		if (points.size() > 0)
+		{
+			db.InsertCoords(scene_->CurrentContainerId(), points);
+		}
+			
 	}
 }

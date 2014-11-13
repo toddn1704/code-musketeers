@@ -93,7 +93,12 @@ public:
 	void NewContainer(int id, QVector<QPointF> &points)
 	{
 		current_item_ = new LayoutGraphicsItem(points);
+		current_item_->setData(Qt::UserRole, id);
 		addItem(current_item_);
+	}
+	int CurrentContainerId()
+	{
+		return current_item_->data(Qt::UserRole).toInt();
 	}
 private:
 	bool drawing = false;
