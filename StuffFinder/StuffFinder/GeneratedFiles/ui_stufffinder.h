@@ -60,7 +60,7 @@ public:
     {
         if (StuffFinderClass->objectName().isEmpty())
             StuffFinderClass->setObjectName(QStringLiteral("StuffFinderClass"));
-        StuffFinderClass->resize(1206, 712);
+        StuffFinderClass->resize(1206, 700);
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
@@ -146,7 +146,7 @@ public:
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 26));
+        menuBar->setGeometry(QRect(0, 0, 1206, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         StuffFinderClass->setMenuBar(menuBar);

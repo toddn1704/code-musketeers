@@ -612,13 +612,13 @@ void StuffFinder::on_lock_unlock_button_clicked()
 
 void StuffFinder::on_expand_button_clicked()
 {
-	if (geometry().height() > 712)
+	if (geometry().height() > 700)
 	{
-		this->setFixedSize(1206,712);
+		this->setFixedSize(1206,700);
 	}
 	else
 	{
-		this->setFixedSize(1206, 805);
+		this->setFixedSize(1206, 800);
 	}
 }
 
