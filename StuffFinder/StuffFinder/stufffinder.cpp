@@ -36,6 +36,12 @@ StuffFinder::StuffFinder(QWidget *parent)
 {
 	ui.setupUi(this);
 
+	//lock the window size to current size
+	this->setFixedSize(geometry().width(),geometry().height());
+	//set current tab to changelog
+	ui.tabWidget_2->setCurrentIndex(0);
+
+
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
 
 	//connect search_result_tree to double and single clicked
@@ -583,5 +589,17 @@ void StuffFinder::on_lock_unlock_button_clicked()
 		ui.graphics_view->setInteractive(false);
 		ui.graphic_view_status_text->setText("Locked");
 		ui.graphic_view_status_text->setStyleSheet("QLineEdit{background: red;}");
+	}
+}
+
+void StuffFinder::on_expand_button_clicked()
+{
+	if (geometry().height() > 712)
+	{
+		this->setFixedSize(1206,712);
+	}
+	else
+	{
+		this->setFixedSize(1206, 805);
 	}
 }

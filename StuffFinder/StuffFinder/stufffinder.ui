@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1206</width>
-    <height>751</height>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -179,6 +179,72 @@
     </property>
     <property name="text">
      <string>Lock/Unlock</string>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>640</y>
+      <width>431</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Change Log</string>
+     </attribute>
+     <widget class="QTreeWidget" name="change_log_treewidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>1</y>
+        <width>426</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Notifications</string>
+     </attribute>
+     <widget class="QTreeWidget" name="notifications_treewidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>1</y>
+        <width>431</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="expand_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>644</y>
+      <width>16</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>V</string>
     </property>
    </widget>
   </widget>
