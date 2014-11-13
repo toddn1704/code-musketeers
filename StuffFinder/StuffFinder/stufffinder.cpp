@@ -380,7 +380,7 @@ void StuffFinder::AddContainerClicked()
 	// Get container name and add "-" for each level its at
 	QString container_name = QString::fromStdString(new_container->get_name());
 	QTreeWidgetItem * parent = ui.itemsTreeWidget->currentItem();
-	while (ui.itemsTreeWidget->currentItem()->parent())
+	while (parent->parent() != NULL)
 	{
 		container_name = "-" + container_name;
 		parent = parent->parent();
