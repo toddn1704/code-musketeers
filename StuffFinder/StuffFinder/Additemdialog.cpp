@@ -49,5 +49,7 @@ void Additemdialog::SaveItem()
 		new_item->set_quantity(quant);
 		new_item->set_category(category_id);
 		new_item->set_container_id(container_id);
+		//temp
+		new_item->set_min_quantity(0);
 	}
 }

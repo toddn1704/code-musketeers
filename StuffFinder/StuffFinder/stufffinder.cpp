@@ -461,7 +461,7 @@ void StuffFinder::AddItemClicked()
 	//get container id and name to add item to
 	int container_id = ui.itemsTreeWidget->currentItem()->data(0,Qt::UserRole).toInt();
 	std::string container_name = ui.itemsTreeWidget->currentItem()->text(0).toStdString();
-	
+	new_item->set_min_quantity(-1);
 	Additemdialog *new_item_window = new Additemdialog(this, new_item, container_id,container_name, categorycombo);
 	new_item_window->exec();
 	

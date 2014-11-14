@@ -14,8 +14,8 @@ in order to generate a shopping list.
 
 class Item {
 public:
-	Item() {}
-	Item(std::string iname,std::string d,int q,int c) : name(iname),description(d),quantity(q),category_id(c) {}
+	Item() { track = 0; min_quantity = 0; }
+	Item(std::string iname,std::string d,int q,int c) : name(iname),description(d),quantity(q),category_id(c),track(0),min_quantity(0) {}
 	void set_name(std::string n) { name = n; }
 	void set_description(std::string d) { description = d; }
 	void set_quantity(int q) { quantity = q; }
@@ -31,6 +31,7 @@ public:
 	int get_min_quantity() { return min_quantity; }
 	int get_item_id(){ return item_id;}
 	int get_container_id(){ return container_id; }
+	bool get_track() { return track; }
 	void Increment(int n = 1) { quantity += n; }
 	void Decrement(int n = 1) { quantity -= n; }
 

@@ -81,6 +81,7 @@ void Database::CreateDatabase()
 		"ITEM_DESCRIPTION    TEXT," \
 		"CATEGORY_ID    INT            NOT NULL," \
 		"QUANTITY        INT         NOT NULL," \
+		"MIN_QUANTITY        INT     NOT NULL," \
 		"TRACKER         INT );"\
 
 		"CREATE TABLE CONTAINER("  \
@@ -131,11 +132,15 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
-
-	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY_ID, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION) " \
+	int track = 0;
+	if (new_item->get_track() == true)
+	{
+		track = 1;
+	}
+	sql = "INSERT INTO ITEM (CONTAINER_ID, CATEGORY_ID, QUANTITY, ITEM_NAME, ITEM_DESCRIPTION,TRACKER,MIN_QUANTITY) " \
 		"VALUES(" + std::to_string(parent_id) + "," +
 		std::to_string(category) +"," + std::to_string(new_item->get_quantity()) + ",'" + 
-		new_item->get_name() + "','" + new_item->get_description() + "');";
+		new_item->get_name() + "','" + new_item->get_description() + "',"+ std::to_string(track) + "," + std::to_string(new_item->get_min_quantity()) + ");";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
@@ -202,11 +207,16 @@ void Database::UpdateItem(Item* up_item)
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
-
+	int track = 0;
+	if (up_item->get_track() == true)
+	{
+		track = 1;
+	}
 	sql = "UPDATE ITEM SET ITEM_NAME = '" + up_item->get_name() + "', ITEM_DESCRIPTION ='" +
 		up_item->get_description() + "', CATEGORY_ID = " + std::to_string(up_item->get_category()) + ", QUANTITY = " +
-		std::to_string(up_item->get_quantity()) + ", CONTAINER_ID = " + std::to_string(up_item->get_container_id()) + " WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) +
-		";";
+		std::to_string(up_item->get_quantity()) + ", CONTAINER_ID = " + std::to_string(up_item->get_container_id()) + 
+		", TRACKER = " + std::to_string(track) + ", MIN_QUANTITY = " + std::to_string(up_item->get_min_quantity()) + " WHERE ITEM_ID = " +
+		std::to_string(up_item->get_item_id()) + ";";
 	qDebug() << sql.c_str();
 
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
