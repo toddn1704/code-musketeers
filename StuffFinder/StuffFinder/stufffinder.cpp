@@ -639,6 +639,7 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 			db.InsertCoords(scene_->CurrentContainerId(), points);
 		}
 		GraphicViewSwitch();
+		OutputItemTree();
 	}
 }
 
