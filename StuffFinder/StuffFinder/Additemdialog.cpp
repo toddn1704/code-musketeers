@@ -31,8 +31,9 @@ void Additemdialog::SaveItem()
 	std::string name = ui.Item_name->text().toStdString();
 	std::string description = ui.Item_descript->toPlainText().toStdString();
 	int quant = ui.Item_quant->value();
+	int min_quant = ui.min_quant->value();
 	int category_id = ui.Add_category_menu->itemData(ui.Add_category_menu->currentIndex(), Qt::UserRole).toInt();
-
+	bool tracked = ui.Track_box->isChecked();
 	if (name.empty() || description.empty())
 	{
 		QMessageBox msgBox;
@@ -49,7 +50,7 @@ void Additemdialog::SaveItem()
 		new_item->set_quantity(quant);
 		new_item->set_category(category_id);
 		new_item->set_container_id(container_id);
-		//temp
-		new_item->set_min_quantity(0);
+		new_item->set_min_quantity(min_quant);
+		new_item->set_track(tracked);
 	}
 }
