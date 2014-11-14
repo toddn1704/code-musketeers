@@ -43,10 +43,8 @@ public:
     QLabel *label_4;
     QCheckBox *Track_box;
     QLabel *label_6;
-    QLineEdit *Min_quant;
-    QLabel *label_7;
-    QLineEdit *Item_cost;
     QSpinBox *Item_quant;
+    QSpinBox *min_quant;
 
     void setupUi(QDialog *Edititemdialog)
     {
@@ -88,7 +86,7 @@ public:
         label->setGeometry(QRect(20, 180, 61, 20));
         groupBox = new QGroupBox(Edititemdialog);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(30, 260, 291, 131));
+        groupBox->setGeometry(QRect(30, 260, 291, 91));
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(10, 30, 51, 16));
@@ -100,18 +98,12 @@ public:
         label_6->setEnabled(true);
         label_6->setGeometry(QRect(10, 60, 101, 16));
         label_6->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-        Min_quant = new QLineEdit(groupBox);
-        Min_quant->setObjectName(QStringLiteral("Min_quant"));
-        Min_quant->setGeometry(QRect(110, 60, 41, 20));
-        label_7 = new QLabel(groupBox);
-        label_7->setObjectName(QStringLiteral("label_7"));
-        label_7->setGeometry(QRect(10, 90, 91, 16));
-        Item_cost = new QLineEdit(groupBox);
-        Item_cost->setObjectName(QStringLiteral("Item_cost"));
-        Item_cost->setGeometry(QRect(100, 90, 71, 20));
         Item_quant = new QSpinBox(groupBox);
         Item_quant->setObjectName(QStringLiteral("Item_quant"));
         Item_quant->setGeometry(QRect(70, 30, 42, 22));
+        min_quant = new QSpinBox(groupBox);
+        min_quant->setObjectName(QStringLiteral("min_quant"));
+        min_quant->setGeometry(QRect(110, 60, 42, 22));
 
         retranslateUi(Edititemdialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), Edititemdialog, SLOT(accept()));
@@ -133,7 +125,6 @@ public:
         label_4->setText(QApplication::translate("Edititemdialog", "Quantity:", 0));
         Track_box->setText(QApplication::translate("Edititemdialog", "Track for shopping list", 0));
         label_6->setText(QApplication::translate("Edititemdialog", "Minimum Quantity:", 0));
-        label_7->setText(QApplication::translate("Edititemdialog", "Estimated Cost:", 0));
     } // retranslateUi
 
 };

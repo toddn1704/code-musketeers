@@ -464,6 +464,16 @@ void Database::LoadItems(Container * cont)
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
 		temp_item->set_container_id(atoi(c_qry_result[i][1].c_str()));
+		temp_item->set_min_quantity(atoi(c_qry_result[i][6].c_str()));
+		int tracker = atoi(c_qry_result[i][7].c_str());
+		if (tracker == 1)
+		{
+			temp_item->set_track(true);
+		}
+		else
+		{
+			temp_item->set_track(false);
+		}
 		//cont->AddItem(temp_item);
 		cont->AddItem(temp_item);
 	}
@@ -503,6 +513,17 @@ void Database::LoadItems(Category * categ)
 	{
 		Item * temp_item = new Item(c_qry_result[i][2], c_qry_result[i][3], atoi(c_qry_result[i][5].c_str()), atoi(c_qry_result[i][4].c_str()));
 		temp_item->set_item_id(atoi(c_qry_result[i][0].c_str()));
+		temp_item->set_container_id(atoi(c_qry_result[i][1].c_str()));
+		temp_item->set_min_quantity(atoi(c_qry_result[i][6].c_str()));
+		int tracker = atoi(c_qry_result[i][7].c_str());
+		if (tracker == 1)
+		{
+			temp_item->set_track(true);
+		}
+		else
+		{
+			temp_item->set_track(false);
+		}
 		categ->AddItem(temp_item);
 	}
 	return;

@@ -146,7 +146,7 @@
      <x>30</x>
      <y>260</y>
      <width>291</width>
-     <height>131</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="title">
@@ -197,44 +197,21 @@
      <set>Qt::LinksAccessibleByMouse</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Min_quant">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>60</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>91</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Estimated Cost:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="Item_cost">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>90</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QSpinBox" name="Item_quant">
     <property name="geometry">
      <rect>
       <x>70</x>
       <y>30</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="min_quant">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>60</y>
       <width>42</width>
       <height>22</height>
      </rect>

@@ -13,7 +13,8 @@ item.
 #include <item.h>
 #include <ui_edititemdialog.h>
 
-class Edititemdialog : public QDialog {Q_OBJECT
+class Edititemdialog : public QDialog {
+	Q_OBJECT
 	
 public:
 	Edititemdialog(QWidget *parent, Item *item, int cont_id, std::vector<QString> combocontainers, std::vector<QString> combocategory);
