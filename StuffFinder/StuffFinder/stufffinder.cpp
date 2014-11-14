@@ -107,6 +107,14 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.graphic_view_status_text->setStyleSheet("QLineEdit{background: red;}");
 	//lock the graphic view window so that you can't draw
 	ui.graphics_view->setInteractive(false);
+
+	//clear the notification and changelog trees
+	ui.notifications_treewidget->clear();
+	ui.notifications_treewidget->header()->close();
+	ui.notifications_treewidget->setColumnCount(1);
+	ui.change_log_treewidget->clear();
+	ui.change_log_treewidget->header()->close();
+	ui.change_log_treewidget->setColumnCount(1);
 }
 
 StuffFinder::~StuffFinder()
