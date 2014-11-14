@@ -158,12 +158,13 @@ void StuffFinder::OutputItemTree()
 				//layouts[j]->get_rooms()[i]->get_container_id());
 			contcombo.push_back(QString::fromStdString(layouts[j]->get_rooms()[i]->get_name()));
 			contcombo.push_back(QString::number(layouts[j]->get_rooms()[i]->get_container_id()));
+
+			scene_->NewContainer(layouts[j]->get_rooms()[i]->get_container_id(),
+				db.LoadCoords(layouts[j]->get_rooms()[i]->get_container_id()));
 			// Get all of its children with recursive function
 			SetItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
 
-			scene_->NewContainer(layouts[j]->get_rooms()[i]->get_container_id(),
-				db.LoadCoords(layouts[j]->get_rooms()[i]->get_container_id()));
 		}
 	}
 	
@@ -189,7 +190,7 @@ void StuffFinder::OutputItemTree()
 	}
 	//ui.Category_menu->setCurrentIndex(-1);
 	//ui.containerComboBox->setCurrentIndex(-1);
-
+	scene_->update();
 }
 
 // Adds children of containers to the QTreeWidget
@@ -215,13 +216,13 @@ void StuffFinder::SetItems(QTreeWidgetItem * room, Container * cont, int level)
 			//cont->get_container()[j]->get_container_id());
 		contcombo.push_back(container_name);
 		contcombo.push_back(QString::number(cont->get_container()[j]->get_container_id()));
-		SetItems(subcontainer, cont->get_container()[j], ++level);
-
 		if (level == 1)
 		{
 			scene_->NewContainer(cont->get_container()[j]->get_container_id(),
 				db.LoadCoords(cont->get_container()[j]->get_container_id()));
 		}
+		int lvl = level + 1;
+		SetItems(subcontainer, cont->get_container()[j], lvl);
 	}
 	// Add owned items to the tree
 	for (int i = 0; i < cont->get_items().size(); i++)
@@ -372,6 +373,7 @@ void StuffFinder::AddContainerClicked()
 	if (!ui.itemsTreeWidget->currentItem()->parent())
 	{
 		qDebug() << new_container->get_container_id();
+		GraphicViewSwitch();
 		scene_->NewContainer(new_container->get_container_id());
 	}
 
@@ -439,10 +441,8 @@ void StuffFinder::AddTopContainerClicked()
 	}
 	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	OutputItemTree();
-
 	GraphicViewSwitch();
 	scene_->NewContainer(new_container->get_container_id());
-
 }
 
 // Deletes container from database then reloads lists
@@ -451,6 +451,7 @@ void StuffFinder::DeleteContainerClicked()
 	db.DeleteContainer(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	scene_->DeleteContainer(ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	delete ui.itemsTreeWidget->currentItem();
+	scene_->update();
 }
 
 // Doesn't do anything yet
