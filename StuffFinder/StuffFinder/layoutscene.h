@@ -71,20 +71,21 @@ public:
 		return QVector<QPointF>();
 	}
 	// Creates a new empty graphicsitem and enables drawing
-	void NewContainer(int id)
+	void NewContainer(int id,int parent_id)
 	{ 
 		drawing = true;
 		current_item_ = new LayoutGraphicsItem;
-
+		current_item_->setData(Qt::UserRole, id);
+		current_item_->setData(Qt::DisplayRole, parent_id);
 		addItem(current_item_);
 		current_item_->AddPointToPolygon(QPointF(0, 0));
-		current_item_->setData(Qt::UserRole, id);
 	}
 	// Builds a new graphics item from a vector
-	void NewContainer(int id, QVector<QPointF> &points)
+	void NewContainer(int id, QVector<QPointF> &points,int parent_id)
 	{
 		current_item_ = new LayoutGraphicsItem(points);
 		current_item_->setData(Qt::UserRole, id);
+		current_item_->setData(Qt::DisplayRole,parent_id);
 		addItem(current_item_);
 	}
 	
@@ -101,6 +102,11 @@ public:
 		{
 			if ((*i)->data(Qt::UserRole) == id)
 			{
+				removeItem((*i));
+			}
+			else if ((*i)->data(Qt::DisplayRole) == id)
+			{
+				qDebug() << "found subcontainer_parent id: " << id << "\n";
 				removeItem((*i));
 			}
 		}

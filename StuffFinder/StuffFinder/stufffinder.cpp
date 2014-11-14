@@ -160,7 +160,7 @@ void StuffFinder::OutputItemTree()
 			contcombo.push_back(QString::number(layouts[j]->get_rooms()[i]->get_container_id()));
 
 			scene_->NewContainer(layouts[j]->get_rooms()[i]->get_container_id(),
-				db.LoadCoords(layouts[j]->get_rooms()[i]->get_container_id()));
+				db.LoadCoords(layouts[j]->get_rooms()[i]->get_container_id()),-1);
 			// Get all of its children with recursive function
 			SetItems(room, layouts[j]->get_rooms()[i], 1);
 			ui.itemsTreeWidget->addTopLevelItem(room);
@@ -219,7 +219,7 @@ void StuffFinder::SetItems(QTreeWidgetItem * room, Container * cont, int level)
 		if (level == 1)
 		{
 			scene_->NewContainer(cont->get_container()[j]->get_container_id(),
-				db.LoadCoords(cont->get_container()[j]->get_container_id()));
+				db.LoadCoords(cont->get_container()[j]->get_container_id()),cont->get_container_id());
 		}
 		int lvl = level + 1;
 		SetItems(subcontainer, cont->get_container()[j], lvl);
@@ -374,7 +374,7 @@ void StuffFinder::AddContainerClicked()
 	{
 		qDebug() << new_container->get_container_id();
 		GraphicViewSwitch();
-		scene_->NewContainer(new_container->get_container_id());
+		scene_->NewContainer(new_container->get_container_id(), ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	}
 
 	QTreeWidgetItem * subcontainer = new QTreeWidgetItem(ui.itemsTreeWidget->currentItem());
@@ -442,7 +442,7 @@ void StuffFinder::AddTopContainerClicked()
 	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	OutputItemTree();
 	GraphicViewSwitch();
-	scene_->NewContainer(new_container->get_container_id());
+	scene_->NewContainer(new_container->get_container_id(),-1);
 }
 
 // Deletes container from database then reloads lists
