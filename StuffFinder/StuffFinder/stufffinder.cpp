@@ -382,6 +382,7 @@ void StuffFinder::AddContainerClicked()
 	{
 		qDebug() << new_container->get_container_id();
 		GraphicViewSwitch();
+		DisableApp(true);
 		scene_->NewContainer(new_container->get_container_id(), ui.itemsTreeWidget->currentItem()->data(0, Qt::UserRole).toInt());
 	}
 
@@ -450,6 +451,8 @@ void StuffFinder::AddTopContainerClicked()
 	db.CreateContainer(new_container, ui.layoutComboBox->currentData().toInt(), true);
 	OutputItemTree();
 	GraphicViewSwitch();
+	//disable everything
+	DisableApp(true);
 	scene_->NewContainer(new_container->get_container_id(),-1);
 }
 
@@ -639,7 +642,8 @@ void StuffFinder::on_expand_button_clicked()
 
 void StuffFinder::keyPressEvent(QKeyEvent * e)
 {
-	if (e->key() == Qt::Key_Return)
+	//also check if we are drawing so that the graphicviewswitch doesn't get triggered
+	if (e->key() == Qt::Key_Return && scene_->get_drawing())
 	{
 		QVector<QPointF> points = scene_->StopDrawing();
 		if (points.size() > 0)
@@ -647,6 +651,7 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 			db.InsertCoords(scene_->CurrentContainerId(), points);
 		}
 		GraphicViewSwitch();
+		DisableApp(false);
 		OutputItemTree();
 	}
 }
@@ -656,4 +661,22 @@ void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
 	qDebug() << "CLICKED";
 	scene_->HighlightItem(item->data(0, Qt::UserRole).toInt());
 	
+}
+
+void StuffFinder::DisableApp(bool disable_switch)
+{
+	if (disable_switch == true)
+	{
+		ui.tabWidget->setDisabled(true);
+		ui.Search_button->setDisabled(true);
+		ui.layoutComboBox->setDisabled(true);
+		ui.addLayout->setDisabled(true);
+	}
+	else
+	{
+		ui.tabWidget->setDisabled(false);
+		ui.Search_button->setDisabled(false);
+		ui.layoutComboBox->setDisabled(false);
+		ui.addLayout->setDisabled(false);
+	}
 }

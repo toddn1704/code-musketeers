@@ -36,6 +36,7 @@ private:
 	void OutputItemTree();
 	void SetItems(QTreeWidgetItem * room, Container * cont, int level);
 	void GraphicViewSwitch();
+	void DisableApp(bool disable_switch);
 
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;

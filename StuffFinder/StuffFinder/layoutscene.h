@@ -125,6 +125,8 @@ public:
 			}
 		}
 	}
+
+	bool get_drawing(){ return drawing; }
 private:
 	bool drawing = false;
 	LayoutGraphicsItem * current_item_;
