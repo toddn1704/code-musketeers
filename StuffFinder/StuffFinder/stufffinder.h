@@ -36,6 +36,8 @@ private:
 	void OutputItemTree();
 	void SetItems(QTreeWidgetItem * room, Container * cont, int level);
 	void GraphicViewSwitch();
+	
+	//Dsiables interactiveness of widgets/buttons not related to drawing
 	void DisableApp(bool disable_switch);
 
 	QMenu* containerContextMenu;

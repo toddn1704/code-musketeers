@@ -663,6 +663,10 @@ void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
 	
 }
 
+/*
+	DisableApp(true), will disable all widgets/buttons not related to drawing
+	DisableApp(false), will enable all widgets/buttons that were disabled
+*/
 void StuffFinder::DisableApp(bool disable_switch)
 {
 	if (disable_switch == true)
