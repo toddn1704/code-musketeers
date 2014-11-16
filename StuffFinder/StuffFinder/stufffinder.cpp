@@ -436,6 +436,14 @@ void StuffFinder::AddTopContainerClicked()
 	// Create a container
 	Container *new_container = new Container;
 
+	//check if a layout is selected
+	if (ui.layoutComboBox->currentIndex() < 0)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("You don't have a layout selected or haven't created one silly!");
+		msgBox.exec();
+		return;
+	}
 	// Popup dialog for user to enter
 	Addcontainerdialog *new_container_window = new Addcontainerdialog(this, new_container);
 	new_container_window->exec();
