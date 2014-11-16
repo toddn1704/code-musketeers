@@ -249,7 +249,13 @@
      <string>File</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuShopping_List">
+    <property name="title">
+     <string>Shopping List</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuShopping_List"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

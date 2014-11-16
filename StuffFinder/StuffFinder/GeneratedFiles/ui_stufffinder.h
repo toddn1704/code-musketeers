@@ -53,6 +53,7 @@ public:
     QPushButton *expand_button;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QMenu *menuShopping_List;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *StuffFinderClass)
@@ -145,12 +146,15 @@ public:
         menuBar->setGeometry(QRect(0, 0, 1206, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
+        menuShopping_List = new QMenu(menuBar);
+        menuShopping_List->setObjectName(QStringLiteral("menuShopping_List"));
         StuffFinderClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(StuffFinderClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         StuffFinderClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuShopping_List->menuAction());
 
         retranslateUi(StuffFinderClass);
 
@@ -173,6 +177,7 @@ public:
         tabWidget_2->setTabText(tabWidget_2->indexOf(tab_5), QApplication::translate("StuffFinderClass", "Notifications", 0));
         expand_button->setText(QApplication::translate("StuffFinderClass", "V", 0));
         menuFile->setTitle(QApplication::translate("StuffFinderClass", "File", 0));
+        menuShopping_List->setTitle(QApplication::translate("StuffFinderClass", "Shopping List", 0));
     } // retranslateUi
 
 };
