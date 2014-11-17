@@ -663,6 +663,7 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 	}
 	else
 	{
+		//clear selected when not in draw mode, also happens when you hit escape key
 		ui.itemsTreeWidget->clearSelection();
 		scene_->UnHighlightItem();
 	}
