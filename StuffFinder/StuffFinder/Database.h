@@ -34,10 +34,14 @@ class Database
 		void DeleteLayout(Layout* del_layout);
 		void CreateCategory(Category* new_cat);
 		void DeleteCategory(int id, std::string del_cat);
+		void CreateItemData(int id);
+		void DeleteItemData(int id);
 
 		void UpdateItem(Item* up_item);
 		void UpdateContainer(Container* container, int parent_id);
 		void UpdateChangeLog(std::string change);
+		void UpdateItemData(int id, int amount);
+		std::vector<std::string> GenerateShoppingList();
 
 		void LoadItems(Container * cont);
 		void LoadItems(Category * categ);

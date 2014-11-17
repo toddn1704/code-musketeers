@@ -417,17 +417,109 @@ void Database::DeleteCategory(int id, std::string del_cat)
 	UpdateChangeLog("Category Deleted: " + del_cat);
 }
 
-void Database::UpdateChangeLog(std::string change) {
+void Database::CreateItemData(int id) 
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "CREATE TABLE ITEMDATA" + std::to_string(id) + "("  \
+		"ITEM_ID INTEGER PRIMARY KEY," \
+		"YEAR      INT     NOT NULL," \
+		"MONTH     INT     NOT NULL," \
+		"DAY       INT     NOT NULL," \
+		"AMOUNT    INT     NOT NULL);";
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: Item Data wasn't Created";
+	}
+	else
+	{
+		qDebug() << "Item Data was created successfully";
+	}
+}
+
+void Database::DeleteItemData(int id)
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "DROP TABLE ITEMDATA" + std::to_string(id);
+
+	qDebug() << sql.c_str();
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		qDebug() << "SQL error: ITEMDATA wasn't deleted";
+	}
+	else
+	{
+		qDebug() << "ITEMDATA deleted successfully";
+	}
+}
+
+void Database::UpdateChangeLog(std::string change) 
+{
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
 	
 	time_t t = time(0);
 	struct tm *now = localtime(&t);
-	sql = "INSERT INTO CHANGELOG (YEAR, MONTH, DAY, DESCRIPTION) " \
+	sql = "INSERT INTO CHANGELOG(YEAR, MONTH, DAY, DESCRIPTION) " \
 		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
 		",'" + change + "');";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+}
+
+void Database::UpdateItemData(int id, int amount) 
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	time_t t = time(0);
+	struct tm *now = localtime(&t);
+	sql = "INSERT INTO ITEMDATA" + std::to_string(id) + "(YEAR, MONTH, DAY, AMOUNT) " \
+		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+		"," + std::to_string(amount) + ");";
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+}
+
+std::vector<std::string> Database::GenerateShoppingList()
+{
+	std::string sql;
+	char *zErrMsg = 0;
+	int rc;
+
+	sql = "SELECT * FROM ITEM WHERE TRACKER = 1;";
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+
+	std::vector<int> item_ids;
+	std::vector<int> item_surplus;
+	std::vector<std::string> item_names;
+	for (int i = 0; i < qry_result.size(); i++)
+	{
+		item_ids.push_back(atoi(qry_result[i][0].c_str()));
+		item_surplus.push_back(atoi(qry_result[i][5].c_str()) - atoi(qry_result[i][6].c_str()));
+		item_names.push_back(qry_result[i][2].c_str());
+	}
+	qry_result.clear();
+	
+	std::vector<std::string> shopping_list;
+	for (int x = 0; x < item_ids.size(); x++)
+	{
+		sql = "SELECT * FROM ITEMDATA" + std::to_string(item_ids[x]) + ";";
+		//TODO: turn data into points(include in database?)
+		//apply best fit algorithm
+		//check if slope > surplus
+
+		qry_result.clear();
+	}
 }
 
 void Database::LoadItems(Container * cont)
