@@ -155,6 +155,10 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
 	new_item->set_item_id(sqlite3_last_insert_rowid(db));
 	//return sqlite3_last_insert_rowid(db);
+	if (new_item->get_track())
+	{
+		CreateItemData(new_item->get_container_id);
+	}
 
 	UpdateChangeLog("Created Item: " + new_item->get_name());
 }
@@ -428,7 +432,8 @@ void Database::CreateItemData(int id)
 		"YEAR      INT     NOT NULL," \
 		"MONTH     INT     NOT NULL," \
 		"DAY       INT     NOT NULL," \
-		"AMOUNT    INT     NOT NULL);";
+		"AMOUNT    INT     NOT NULL," \
+		"TIME      INT     NOT NULL);";
 
 	qDebug() << sql.c_str();
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, 0, &zErrMsg);
@@ -440,6 +445,14 @@ void Database::CreateItemData(int id)
 	{
 		qDebug() << "Item Data was created successfully";
 	}
+
+	time_t now_time = time(0);
+	struct tm *now = localtime(&now_time);
+
+	sql = "INSERT INTO ITEMDATA" + std::to_string(id) + "(YEAR, MONTH, DAY, AMOUNT, TIME) " \
+		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
+		",0,0);";
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 }
 
 void Database::DeleteItemData(int id)
@@ -482,11 +495,24 @@ void Database::UpdateItemData(int id, int amount)
 	char *zErrMsg = 0;
 	int rc;
 
-	time_t t = time(0);
-	struct tm *now = localtime(&t);
-	sql = "INSERT INTO ITEMDATA" + std::to_string(id) + "(YEAR, MONTH, DAY, AMOUNT) " \
+	sql = "SELECT * FROM ITEMDATA" + std::to_string(id) + " LIMIT 1;";
+	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	int old_time = atoi(qry_result[0][6].c_str());
+	struct tm *before;
+	before->tm_year = atoi(qry_result[0][2].c_str()) - 1900;
+	before->tm_mon = atoi(qry_result[0][3].c_str()) - 1;
+	before->tm_mday = atoi(qry_result[0][4].c_str());
+	qry_result.clear();
+
+	time_t now_time = time(0);
+	struct tm *now = localtime(&now_time);
+	now->tm_hour = 0;
+	now->tm_min = 0;
+	now->tm_sec = 0;
+	int x_diff = (int)(difftime(mktime(now), mktime(before))/(60*60*24));
+	sql = "INSERT INTO ITEMDATA" + std::to_string(id) + "(YEAR, MONTH, DAY, AMOUNT, TIME) " \
 		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
-		"," + std::to_string(amount) + ");";
+		"," + std::to_string(amount) + "," + std::to_string(x_diff + old_time) + ");";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 }
 
@@ -513,13 +539,46 @@ std::vector<std::string> Database::GenerateShoppingList()
 	std::vector<std::string> shopping_list;
 	for (int x = 0; x < item_ids.size(); x++)
 	{
+		std::vector<std::pair<int, int>> data;
 		sql = "SELECT * FROM ITEMDATA" + std::to_string(item_ids[x]) + ";";
+		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 		//TODO: turn data into points(include in database?)
+		int x_point = 0;
+		int y_point = 0;
+		for (int y = 0; y < qry_result.size(); y++)
+		{
+			if (atoi(qry_result[y][5].c_str()) != x_point)
+			{
+				data.push_back(std::make_pair(x_point,y_point));
+
+			}
+			x_point = atoi(qry_result[y][5].c_str());
+			y_point += atoi(qry_result[y][4].c_str());
+		}
+		data.push_back(std::make_pair(x_point, y_point));
+
 		//apply best fit algorithm
+		int sum_x = 0;
+		int sum_y = 0;
+		int sum_x_squared = 0;
+		int sum_x_y = 0;
+		for (int z = 0; z < data.size(); z++)
+		{
+			sum_x += data[z].first;
+			sum_y += data[z].second;
+			sum_x_squared += data[z].first * data[z].first;
+			sum_x_y += data[z].first * data[z].second;
+		}
+		double slope = (sum_x_y - (sum_x * (sum_y / data.size()))) / (sum_x_squared - (sum_x * (sum_x / data.size())));
 		//check if slope > surplus
+		if (slope > (double)item_surplus[x])
+		{
+			shopping_list.push_back(item_names[x]);
+		}
 
 		qry_result.clear();
 	}
+	return shopping_list;
 }
 
 void Database::LoadItems(Container * cont)
