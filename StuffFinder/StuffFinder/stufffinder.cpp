@@ -47,7 +47,6 @@ StuffFinder::StuffFinder(QWidget *parent)
 	ui.search_result_treewidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui.search_result_treewidget,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)), this, SLOT(SearchResultDoubleClicked(QTreeWidgetItem *,int)));
 	connect(ui.search_result_treewidget,SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(SearchResultRightClicked(const QPoint &)));
-	
 
 	scene_ = new LayoutScene;
 	scene_->setSceneRect(0,0,665,525);

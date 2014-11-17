@@ -18,16 +18,18 @@ class LayoutGraphicsItem : public QGraphicsItem
 {
 public:
 
-	LayoutGraphicsItem()
+	LayoutGraphicsItem(int pen_flag)
 	{
 		setFlag(ItemIsMovable);
 		setFlag(ItemIsSelectable);
+		pen_flag_ = pen_flag;
 	}
 
-	LayoutGraphicsItem(QVector<QPointF> & points)
+	LayoutGraphicsItem(QVector<QPointF> & points,int pen_flag)
 	{
 		setFlag(ItemIsMovable);
 		setFlag(ItemIsSelectable);
+		pen_flag_ = pen_flag;
 		polygon = points;
 	}
 
@@ -45,15 +47,33 @@ public:
 			qDebug() << "Hello";
 			pen.setColor(Qt::red);
 		}
-		else
+		else if (pen_flag_ < 0)//room
 		{
 			pen.setColor(Qt::black);
+		}
+		else if (pen_flag_ >= 0)//container
+		{
+			pen.setColor(Qt::blue);
+			pen.setWidth(3);
 		}
 		painter->setPen(pen);
 
 		if (!polygon.isEmpty())
 		{
-			painter->drawPolygon(polygon);
+			if (pen_flag_ >= 0)
+			{
+				QBrush brush;
+				brush.setColor(Qt::blue);
+				brush.setStyle(Qt::SolidPattern);
+				QPainterPath path;
+				path.addPolygon(polygon);
+				painter->fillPath(path, brush);
+				painter->drawPolygon(polygon);
+			}
+			else
+			{
+				painter->drawPolygon(polygon);
+			}
 		}
 	}
 	// Adds point to the polygon then updates parent scene
@@ -88,6 +108,7 @@ public:
 	}
 private:
 	QPolygonF polygon;
+	int pen_flag_;//used to determine pen color for rooms and containers
 };
 
 #endif

@@ -74,7 +74,7 @@ public:
 	void NewContainer(int id,int parent_id)
 	{ 
 		drawing = true;
-		current_item_ = new LayoutGraphicsItem;
+		current_item_ = new LayoutGraphicsItem(parent_id);
 		current_item_->setData(Qt::UserRole, id);
 		current_item_->setData(Qt::DisplayRole, parent_id);
 		addItem(current_item_);
@@ -83,7 +83,7 @@ public:
 	// Builds a new graphics item from a vector
 	void NewContainer(int id, QVector<QPointF> &points,int parent_id)
 	{
-		current_item_ = new LayoutGraphicsItem(points);
+		current_item_ = new LayoutGraphicsItem(points,parent_id);
 		current_item_->setData(Qt::UserRole, id);
 		current_item_->setData(Qt::DisplayRole,parent_id);
 		addItem(current_item_);
