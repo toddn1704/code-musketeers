@@ -498,13 +498,15 @@ void Database::UpdateItemData(int id, int amount)
 	sql = "SELECT * FROM ITEMDATA" + std::to_string(id) + " LIMIT 1;";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	int old_time = atoi(qry_result[0][6].c_str());
-	struct tm *before;
+
+	time_t now_time = time(0);
+	struct tm *before = { 0 };
 	before->tm_year = atoi(qry_result[0][2].c_str()) - 1900;
 	before->tm_mon = atoi(qry_result[0][3].c_str()) - 1;
 	before->tm_mday = atoi(qry_result[0][4].c_str());
 	qry_result.clear();
 
-	time_t now_time = time(0);
+	
 	struct tm *now = localtime(&now_time);
 	now->tm_hour = 0;
 	now->tm_min = 0;
