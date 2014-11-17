@@ -157,7 +157,7 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	//return sqlite3_last_insert_rowid(db);
 	if (new_item->get_track())
 	{
-		CreateItemData(new_item->get_container_id);
+		CreateItemData(new_item->get_container_id());
 	}
 
 	UpdateChangeLog("Created Item: " + new_item->get_name());
