@@ -126,6 +126,16 @@ public:
 		}
 	}
 
+	void UnHighlightItem()
+	{
+		QList<QGraphicsItem *> all_items = items();
+		QList<QGraphicsItem *>::iterator i;
+		clearSelection();
+		for (i = all_items.begin(); i != all_items.end(); i++)
+		{
+			(*i)->setSelected(false);
+		}
+	}
 	bool get_drawing(){ return drawing; }
 private:
 	bool drawing = false;

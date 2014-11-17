@@ -661,13 +661,17 @@ void StuffFinder::keyPressEvent(QKeyEvent * e)
 		DisableApp(false);
 		OutputItemTree();
 	}
+	else
+	{
+		ui.itemsTreeWidget->clearSelection();
+		scene_->UnHighlightItem();
+	}
 }
 
 void StuffFinder::TreeItemClicked(QTreeWidgetItem * item, int column)
 {
 	qDebug() << "CLICKED";
 	scene_->HighlightItem(item->data(0, Qt::UserRole).toInt());
-	
 }
 
 /*
