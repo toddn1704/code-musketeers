@@ -195,8 +195,8 @@ void StuffFinder::OutputItemTree()
 			item->setText(0, QString::fromStdString(it->first));
 		}
 	}
-	//ui.Category_menu->setCurrentIndex(-1);
-	//ui.containerComboBox->setCurrentIndex(-1);
+	//update notifications
+	UpdateNotifications();
 	scene_->update();
 }
 
@@ -756,4 +756,22 @@ std::vector<int> StuffFinder::FindItemContainer(int item_id)
 	//if we get hear somethink went wrong :(
 	found.push_back(-1);
 	return found;
+}
+/*
+	This function will update the notifications tree by loading the data from the database.
+*/
+void StuffFinder::UpdateNotifications()
+{
+	//clear Notifications tree
+	ui.notifications_treewidget->clear();
+	ui.notifications_treewidget->header()->close();
+	ui.notifications_treewidget->setColumnCount(1);
+
+	std::vector<std::string> notifications = db.GetNotifications();
+	for (int i = 0; i < notifications.size(); i++)
+	{
+		QTreeWidgetItem *new_note = new QTreeWidgetItem(ui.notifications_treewidget);
+		new_note->setText(0, QString::fromStdString(notifications[i]));
+		ui.notifications_treewidget->addTopLevelItem(new_note);
+	}
 }

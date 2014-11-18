@@ -36,6 +36,7 @@ private:
 	void OutputItemTree();
 	void SetItems(QTreeWidgetItem * room, Container * cont, int level);
 	void GraphicViewSwitch();
+	void UpdateNotifications();
 	
 	//Dsiables interactiveness of widgets/buttons not related to drawing
 	void DisableApp(bool disable_switch);

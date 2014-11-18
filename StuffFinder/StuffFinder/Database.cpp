@@ -655,6 +655,7 @@ std::vector<std::string> Database::GetNotifications()
 			notifications.push_back(qry_result[x][2]);
 		}
 	}
+	return notifications;
 }
 
 std::vector<std::string> Database::GetChangelog()
@@ -667,9 +668,11 @@ std::vector<std::string> Database::GetChangelog()
 	sql = "SELECT * FROM CHANGELOG;";
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	for (int x = 0; x < qry_result.size(); x++)
-	{		
+	{
 		changelog.push_back(qry_result[x][1] + "   " + qry_result[x][2] + "   " + qry_result[x][3] + "   " + qry_result[x][4]);
+
 	}
+	return changelog;
 }
 
 void Database::LoadItems(Container * cont)
