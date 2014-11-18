@@ -41,7 +41,7 @@ class Database
 		void UpdateContainer(Container* container, int parent_id);
 		void UpdateChangeLog(std::string name, std::string change);
 		void UpdateItemData(int id, int amount);
-		std::vector<std::string> GenerateShoppingList();
+		std::vector<std::string> GenerateShoppingList(int days);
 		std::vector<std::string> GetNotifications();
 		std::vector<std::string> GetChangelog();
 

@@ -216,7 +216,8 @@ void Database::UpdateItem(Item* up_item)
 	{
 		track = 1;
 	}
-
+	//gets the old data from the database and compares to the new ones
+	//sees if quanity or track tag has changed
 	sql = "SELECT ITEM WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) + ";";
 	if ((qry_result[0][7] == "1") && (atoi(qry_result[0][5].c_str()) > up_item->get_quantity()))
 	{
@@ -233,7 +234,7 @@ void Database::UpdateItem(Item* up_item)
 			DeleteItemData(up_item->get_item_id());
 		}
 	}
-	
+	qry_result.clear();
 	sql = "UPDATE ITEM SET ITEM_NAME = '" + up_item->get_name() + "', ITEM_DESCRIPTION ='" +
 		up_item->get_description() + "', CATEGORY_ID = " + std::to_string(up_item->get_category()) + ", QUANTITY = " +
 		std::to_string(up_item->get_quantity()) + ", CONTAINER_ID = " + std::to_string(up_item->get_container_id()) + 
@@ -444,7 +445,7 @@ void Database::CreateItemData(int id)
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
-
+	//table name includes item id
 	sql = "CREATE TABLE ITEMDATA" + std::to_string(id) + "("  \
 		"ITEM_ID INTEGER PRIMARY KEY," \
 		"YEAR      INT     NOT NULL," \
@@ -466,7 +467,7 @@ void Database::CreateItemData(int id)
 
 	time_t now_time = time(0);
 	struct tm *now = localtime(&now_time);
-
+	//first point (0,0)
 	sql = "INSERT INTO ITEMDATA" + std::to_string(id) + "(YEAR, MONTH, DAY, AMOUNT, TIME) " \
 		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
 		",0,0);";
@@ -503,7 +504,7 @@ void Database::UpdateChangeLog(std::string name,std::string change)
 	struct tm *now = localtime(&t);
 	std::string date;
 	std::string time;
-
+	//format date MM/DD/YYYY
 	if (now->tm_mon < 9)
 	{
 		date = "0";
@@ -514,7 +515,7 @@ void Database::UpdateChangeLog(std::string name,std::string change)
 		date += "0";
 	}
 	date += std::to_string(now->tm_mday) + "/" + std::to_string(now->tm_year + 1900);
-
+	//format time HH:MM:SS
 	if (now->tm_hour < 10)
 	{
 		time = "0";
@@ -530,7 +531,7 @@ void Database::UpdateChangeLog(std::string name,std::string change)
 		time += "0";
 	}
 	time += std::to_string(now->tm_sec);
-
+	//format name to be of size 15(assumes name is less than 16 characters normally)
 	if (name.size() < 15)
 	{
 		for (int x = name.size(); x < 15; x++)
@@ -553,7 +554,7 @@ void Database::UpdateItemData(int id, int amount)
 	sql = "SELECT * FROM ITEMDATA" + std::to_string(id) + " LIMIT 1;";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 	int old_time = atoi(qry_result[0][6].c_str());
-
+	//calculate date difference to determine the new time since the beginning
 	time_t now_time = time(0);
 	struct tm *before = { 0 };
 	before->tm_year = atoi(qry_result[0][2].c_str()) - 1900;
@@ -573,7 +574,7 @@ void Database::UpdateItemData(int id, int amount)
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
 }
 
-std::vector<std::string> Database::GenerateShoppingList()
+std::vector<std::string> Database::GenerateShoppingList(int days_until_next_shopping_trip)
 {
 	std::string sql;
 	char *zErrMsg = 0;
@@ -592,7 +593,7 @@ std::vector<std::string> Database::GenerateShoppingList()
 		item_names.push_back(qry_result[i][2].c_str());
 	}
 	qry_result.clear();
-	
+	//for each item that has a track tag, check to see if they need to be put on the shopping list
 	std::vector<std::string> shopping_list;
 	for (int x = 0; x < item_ids.size(); x++)
 	{
@@ -627,8 +628,8 @@ std::vector<std::string> Database::GenerateShoppingList()
 			sum_x_y += data[z].first * data[z].second;
 		}
 		double slope = (sum_x_y - (sum_x * (sum_y / data.size()))) / (sum_x_squared - (sum_x * (sum_x / data.size())));
-		//check if slope > surplus
-		if (slope > (double)item_surplus[x])
+		//check if slope*days > surplus
+		if ((slope * days_until_next_shopping_trip) > (double)item_surplus[x])
 		{
 			shopping_list.push_back(item_names[x]);
 		}
@@ -644,7 +645,7 @@ std::vector<std::string> Database::GetNotifications()
 	std::string sql;
 	char *zErrMsg = 0;
 	int rc;
-
+	//finds items that have quanities below their minimum
 	sql = "SELECT * FROM ITEM;";
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	for (int x = 0; x < qry_result.size(); x++)
@@ -667,7 +668,7 @@ std::vector<std::string> Database::GetChangelog()
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	for (int x = 0; x < qry_result.size(); x++)
 	{		
-		changelog.push_back(qry_result[x][1] + qry_result[x][2] + qry_result[x][3] + qry_result[x][4]);
+		changelog.push_back(qry_result[x][1] + "   " + qry_result[x][2] + "   " + qry_result[x][3] + "   " + qry_result[x][4]);
 	}
 }
 
