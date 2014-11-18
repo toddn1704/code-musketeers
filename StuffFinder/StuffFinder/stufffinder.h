@@ -40,6 +40,9 @@ private:
 	//Dsiables interactiveness of widgets/buttons not related to drawing
 	void DisableApp(bool disable_switch);
 
+	//Returns container id and layout that this container is in so that we can highlight it in scene
+	std::vector<int> FindItemContainer(int item_id);
+
 	QMenu* containerContextMenu;
 	QMenu* itemContextMenu;
 	QMenu* topLevelContainerMenu;
