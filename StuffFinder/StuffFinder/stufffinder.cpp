@@ -350,12 +350,35 @@ void StuffFinder::SearchResultDoubleClicked(QTreeWidgetItem *item, int col)
 	}
 }
 
+/*
+	highlights the container that the user right clicks in search results
+*/
 void StuffFinder::SearchResultRightClicked(const QPoint &point)
 {
 	qDebug() << "rightclicked";
-	QMessageBox msgBox;
-	msgBox.setText("Temporary");
-	msgBox.exec();
+	if (!ui.search_result_treewidget->itemAt(point))
+	{
+		//do nothing
+	}
+	else//item was clicked
+	{
+		int item_id = ui.search_result_treewidget->itemAt(point)->data(0, Qt::UserRole).toInt();
+		std::vector<int> found;
+		found = FindItemContainer(item_id);
+		if (found[0] == -1)//something went wrong
+		{
+			return;
+		}
+		for (int i = 0; i < ui.layoutComboBox->count(); i++)
+		{
+			if (ui.layoutComboBox->itemData(i, Qt::UserRole).toInt() == found[1])
+			{
+				ui.layoutComboBox->setCurrentIndex(i);
+				OutputItemTree();
+			}
+		}
+		scene_->HighlightItem(found[0]);
+	}
 	return;
 }
 
@@ -695,4 +718,42 @@ void StuffFinder::DisableApp(bool disable_switch)
 		ui.layoutComboBox->setDisabled(false);
 		ui.addLayout->setDisabled(false);
 	}
+}
+/*
+	Searches through layouts to find the container and layout that his item was found in
+*/
+std::vector<int> StuffFinder::FindItemContainer(int item_id)
+{
+	std::vector<int> found;
+	for (int i = 0; i < layouts.size(); i++)//search layouts
+	{
+		for (int k = 0; k < layouts[i]->get_rooms().size(); k++)//search rooms
+		{
+			for (int j = 0; j < layouts[i]->get_rooms()[k]->get_items().size(); j++)//search through room items first
+			{
+				if (layouts[i]->get_rooms()[k]->get_items()[j]->get_item_id() == item_id)
+				{
+					//save container id and layout id
+					found.push_back(layouts[i]->get_rooms()[k]->get_container_id());
+					found.push_back(layouts[i]->get_layout_id());
+					return found;
+				}
+			}
+
+			//we didnt find item in a room so search its containers
+			for (int j = 0; j < layouts[i]->get_rooms()[k]->get_container().size(); j++)
+			{
+				Item * found_item = layouts[i]->get_rooms()[k]->get_container()[j]->Search(item_id);
+				if (found_item != NULL)
+				{
+					found.push_back(layouts[i]->get_rooms()[k]->get_container()[j]->get_container_id());
+					found.push_back(layouts[i]->get_layout_id());
+					return found;
+				}
+			}
+		}
+	}
+	//if we get hear somethink went wrong :(
+	found.push_back(-1);
+	return found;
 }
