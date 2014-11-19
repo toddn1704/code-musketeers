@@ -72,6 +72,9 @@ StuffFinder::StuffFinder(QWidget *parent)
 	//updates list
 	OutputItemTree();
 
+	ui.search_result_treewidget->clear();
+	ui.search_result_treewidget->header()->close();
+	ui.search_result_treewidget->setColumnCount(1);
 	// Create context menus
 	//things that pop-up when you right-click
 	containerContextMenu = new QMenu(ui.itemsTreeWidget);
@@ -136,10 +139,7 @@ void StuffFinder::OutputItemTree()
 	ui.categoryTreeWidget->clear();
 	ui.categoryTreeWidget->header()->close();
 	ui.categoryTreeWidget->setColumnCount(1);
-	
-	ui.search_result_treewidget->clear();
-	ui.search_result_treewidget->header()->close();
-	ui.search_result_treewidget->setColumnCount(1);
+
 	layouts.clear();
 	// Get all the layouts and their items
 	layouts = db.LoadLayouts();
@@ -268,6 +268,9 @@ void StuffFinder::on_Search_button_clicked()
 	std::string name = ui.Search->text().toStdString();
 	//create search_result container to hold all items that were found
 	std::vector<Item> search_results;
+	ui.search_result_treewidget->clear();
+	ui.search_result_treewidget->header()->close();
+	ui.search_result_treewidget->setColumnCount(1);
 	search_results.clear();
 
 	//set current tab to search results and clear last results
