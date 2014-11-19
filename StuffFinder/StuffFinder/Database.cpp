@@ -154,6 +154,7 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	}
 	qDebug() << "new item id: " << sqlite3_last_insert_rowid(db);
 	new_item->set_item_id(sqlite3_last_insert_rowid(db));
+	qry_result.clear();
 	//return sqlite3_last_insert_rowid(db);
 	if (new_item->get_track())
 	{
@@ -181,7 +182,7 @@ void Database::DeleteItem(Item* del_item)
 	{
 		qDebug() << "Item deleted successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(del_item->get_name(),"Deleted Item");
 }
 
@@ -203,7 +204,7 @@ void Database::DeleteItem(std::string name)
 	{
 		qDebug() << "Item deleted successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(name,"Deleted Item");
 }
 void Database::UpdateItem(Item* up_item)
@@ -251,7 +252,7 @@ void Database::UpdateItem(Item* up_item)
 	{
 		qDebug() << "Item updated successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(up_item->get_name(),"Updated Item");
 }
 void Database::UpdateContainer(Container* container,int parent_id)
@@ -274,7 +275,7 @@ void Database::UpdateContainer(Container* container,int parent_id)
 	{
 		qDebug() << "Container updated successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(container->get_name(),"Updated Container");
 }
 void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
@@ -307,7 +308,7 @@ void Database::CreateContainer(Container* new_cont, int parent_id, bool top)
 	}
 	qDebug() << "new container id: " << sqlite3_last_insert_rowid(db);
 	new_cont->set_container_id(sqlite3_last_insert_rowid(db));
-
+	qry_result.clear();
 	UpdateChangeLog(new_cont->get_name(),"Created Container");
 }
 
@@ -340,7 +341,7 @@ void Database::DeleteContainer(Container* del_cont)
 	{
 		qDebug() << "Container deleted successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(del_cont->get_name(),"Deleted Container");
 }
 void Database::CreateLayout(Layout* new_layout)
@@ -364,7 +365,7 @@ void Database::CreateLayout(Layout* new_layout)
 	}
 	qDebug() << "new layout id: " << sqlite3_last_insert_rowid(db);
 	new_layout->set_layout_id(sqlite3_last_insert_rowid(db));
-
+	qry_result.clear();
 	UpdateChangeLog(new_layout->get_name(),"Created Layout:");
 }
 void Database::DeleteLayout(Layout* del_layout)
@@ -389,7 +390,7 @@ void Database::DeleteLayout(Layout* del_layout)
 	{
 		qDebug() << "Container deleted successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(del_layout->get_name(),"Deleted Layout");
 }
 
@@ -414,7 +415,7 @@ void Database::CreateCategory(Category* new_cat)
 	}
 	qDebug() << "new category id: " << sqlite3_last_insert_rowid(db);
 	new_cat->set_category_id(sqlite3_last_insert_rowid(db));
-
+	qry_result.clear();
 	UpdateChangeLog(new_cat->get_name(),"Category Created");
 }
 
@@ -436,7 +437,7 @@ void Database::DeleteCategory(int id, std::string del_cat)
 	{
 		qDebug() << "Category deleted successfully";
 	}
-
+	qry_result.clear();
 	UpdateChangeLog(del_cat, "Category Deleted");
 }
 
@@ -464,7 +465,7 @@ void Database::CreateItemData(int id)
 	{
 		qDebug() << "Item Data was created successfully";
 	}
-
+	qry_result.clear();
 	time_t now_time = time(0);
 	struct tm *now = localtime(&now_time);
 	//first point (0,0)
@@ -472,6 +473,7 @@ void Database::CreateItemData(int id)
 		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
 		",0,0);";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	qry_result.clear();
 }
 
 void Database::DeleteItemData(int id)
@@ -492,6 +494,7 @@ void Database::DeleteItemData(int id)
 	{
 		qDebug() << "ITEMDATA deleted successfully";
 	}
+	qry_result.clear();
 }
 
 void Database::UpdateChangeLog(std::string name,std::string change) 
@@ -543,6 +546,7 @@ void Database::UpdateChangeLog(std::string name,std::string change)
 	sql = "INSERT INTO CHANGELOG(DATE,TIME,OBJECT_NAME,CHANGE_DESCRIPTION) " \
 		"VALUES('" + date + "','" + time + "','" + name + "','" + change + "');";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	qry_result.clear();
 }
 
 void Database::UpdateItemData(int id, int amount) 
@@ -572,6 +576,7 @@ void Database::UpdateItemData(int id, int amount)
 		"VALUES(" + std::to_string(now->tm_year + 1900) + "," + std::to_string(now->tm_mon + 1) + "," + std::to_string(now->tm_mday) +
 		"," + std::to_string(amount) + "," + std::to_string(x_diff + old_time) + ");";
 	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	qry_result.clear();
 }
 
 std::vector<std::string> Database::GenerateShoppingList(int days_until_next_shopping_trip)
@@ -655,6 +660,7 @@ std::vector<std::string> Database::GetNotifications()
 			notifications.push_back(qry_result[x][2]);
 		}
 	}
+	qry_result.clear();
 	return notifications;
 }
 
@@ -672,6 +678,7 @@ std::vector<std::string> Database::GetChangelog()
 		changelog.push_back(qry_result[x][1] + "   " + qry_result[x][2] + "   " + qry_result[x][3] + "   " + qry_result[x][4]);
 
 	}
+	qry_result.clear();
 	return changelog;
 }
 
@@ -948,6 +955,7 @@ void Database::InsertCoords(int container_id, QVector<QPointF> points)
 	{
 		qDebug() << "Coords inserted successfully";
 	}
+	qry_result.clear();
 }
 
 QVector<QPointF> Database::LoadCoords(int container_id)
@@ -999,7 +1007,7 @@ void Database::DeleteCoords(int container_id)
 	{
 		qDebug() << "Coords deleted successfully";
 	}
-
+	qry_result.clear();
 }
 std::string Database::SetupStufffinderFolder()
 {
