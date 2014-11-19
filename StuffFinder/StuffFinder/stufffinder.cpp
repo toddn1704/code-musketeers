@@ -140,6 +140,7 @@ void StuffFinder::OutputItemTree()
 	ui.search_result_treewidget->clear();
 	ui.search_result_treewidget->header()->close();
 	ui.search_result_treewidget->setColumnCount(1);
+	layouts.clear();
 	// Get all the layouts and their items
 	layouts = db.LoadLayouts();
 	//ui.containerComboBox->clear();
@@ -267,16 +268,20 @@ void StuffFinder::on_Search_button_clicked()
 	std::string name = ui.Search->text().toStdString();
 	//create search_result container to hold all items that were found
 	std::vector<Item> search_results;
+	search_results.clear();
 
 	//set current tab to search results and clear last results
 	ui.tabWidget->setCurrentIndex(2);
 	ui.search_result_treewidget->clear();
+	ui.search_result_treewidget->header()->close();
+	ui.search_result_treewidget->setColumnCount(1);
 	//Search all layouts
+	qDebug() << layouts.size();
 	for (int i = 0; i < layouts.size(); i++)
 	{
 		layouts[i]->SearchName(name,search_results);
 	}
-	//send value to db Search function
+
 	if (search_results.empty())
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(ui.search_result_treewidget);
@@ -285,6 +290,7 @@ void StuffFinder::on_Search_button_clicked()
 	}
 	else
 	{
+		qDebug() << search_results.size();
 		for (int i = 0; i < search_results.size(); i++)
 		{
 			QTreeWidgetItem *item = new QTreeWidgetItem(ui.search_result_treewidget);
@@ -378,6 +384,7 @@ void StuffFinder::SearchResultRightClicked(const QPoint &point)
 			{
 				ui.layoutComboBox->setCurrentIndex(i);
 				OutputItemTree();
+				break;
 			}
 		}
 		scene_->HighlightItem(found[0]);

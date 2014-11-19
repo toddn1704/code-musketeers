@@ -16,9 +16,9 @@ Database::Database()
 {
 	char *zErrMsg = 0;
 	int rc;
-
+	std::string db_file_path = SetupStufffinderFolder();
 	// Open database and check if successful
-	rc = sqlite3_open("test2.db", &db);
+	rc = sqlite3_open(db_file_path.c_str(), &db);
 
 	if (rc)
 	{
@@ -869,7 +869,7 @@ std::vector<Layout*> Database::LoadLayouts()
 	int rc;
 
 	sql = "SELECT * FROM LAYOUT;";
-
+	qry_result.clear();
 	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
@@ -888,9 +888,9 @@ std::vector<Layout*> Database::LoadLayouts()
 		Layout * temp = new Layout(atoi(c_qry_result[i][0].c_str()), c_qry_result[i][1], c_qry_result[i][2]);
 		LoadLayoutContainers(temp);
 		return_layouts.push_back(temp);
-
 	}
-
+	qDebug() << "Layout size is";
+	qDebug() << return_layouts.size();
 	return return_layouts;
 }
 
@@ -1001,6 +1001,26 @@ void Database::DeleteCoords(int container_id)
 	}
 
 }
+std::string Database::SetupStufffinderFolder()
+{
+	//char stufffinder_folder[] = "\\StuffFinder";
+	char *sys_drive = getenv("SystemDrive");
+	std::string system_drive(sys_drive);
+	system_drive.append("\\StuffFinder");
+	qDebug() << system_drive.c_str();
+
+	//try to create stufffinder folder, if it already exists it would create again
+	if (_mkdir(system_drive.c_str()) < 0)
+	{
+		qDebug() << "Error couldnt make folder, or folder exists";
+	}
+	system_drive.append("\\stufffinder_db.db");
+	return system_drive;
+}
+
+/*
+	SQL callback functions
+*/
 int Table_callback(void *param, int argc, char **argv, char **azColName){
 	int i;
 	qDebug() << "Table callback function called";

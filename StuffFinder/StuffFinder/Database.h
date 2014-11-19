@@ -18,6 +18,8 @@ and deleting items, containers, layouts, and categories.
 #include "layout.h"
 #include "category.h"
 #include "qvector.h"
+#include <Shlobj.h>
+#include <direct.h>
 
 class Database
 {
@@ -64,6 +66,7 @@ class Database
 private:
 	void CreateDatabase();	// Creates Tables for Database
 	void DeleteDatabase(){ remove("test2.db"); };
+	std::string SetupStufffinderFolder();
 
 	Container* LoadContainer(int id);
 	sqlite3 *db;
