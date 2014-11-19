@@ -18,6 +18,7 @@ with the database accordingly.
 #include "edititemdialog.h"
 #include "additemdialog.h"
 #include "editcontainerdialog.h"
+#include "shoppinglist.h"
 #include <vector>
 #include <layout.h>
 #include <layoutscene.h>
@@ -781,4 +782,16 @@ void StuffFinder::UpdateNotifications()
 void StuffFinder::ShoppingListClicked()
 {
 	qDebug() << "shopping list clicked.";
+	std::vector<std::string> output;
+	//Test output
+	output.push_back("Hammer");
+	output.push_back("Milk");
+	output.push_back("Paper");
+	output.push_back("Pen");
+	output.push_back("Chips");
+	output.push_back("Toothpaste");
+	//End of Test output
+
+	Shoppinglist *shopping_list_window = new Shoppinglist(this, output);
+	shopping_list_window->exec();
 }

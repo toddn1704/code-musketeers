@@ -117,6 +117,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_stufffinder.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="shoppinglist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_shoppinglist.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_shoppinglist.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="stufffinder.h">
@@ -167,6 +176,12 @@
     <CustomBuild Include="layoutscene.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="shoppinglist.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shoppinglist.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_stufffinder.h">
@@ -210,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="layoutgraphicsitem.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_shoppinglist.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
