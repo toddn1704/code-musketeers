@@ -258,6 +258,11 @@
    <addaction name="menuShopping_List"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionGenerate">
+   <property name="text">
+    <string>Generate</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

@@ -77,7 +77,7 @@ void SearchResultRightClicked(const QPoint &point);
 void on_expand_button_clicked();
 //void onSearchResultContextMenu(const QPoint &point);
 void TreeItemClicked(QTreeWidgetItem * item, int column);
-
+void ShoppingListClicked();
 };
 
 #endif // STUFFFINDER_H

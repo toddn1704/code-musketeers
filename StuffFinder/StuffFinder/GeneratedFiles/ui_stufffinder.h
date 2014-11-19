@@ -31,6 +31,7 @@ QT_BEGIN_NAMESPACE
 class Ui_StuffFinderClass
 {
 public:
+    QAction *actionGenerate;
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -61,6 +62,8 @@ public:
         if (StuffFinderClass->objectName().isEmpty())
             StuffFinderClass->setObjectName(QStringLiteral("StuffFinderClass"));
         StuffFinderClass->resize(1206, 700);
+        actionGenerate = new QAction(StuffFinderClass);
+        actionGenerate->setObjectName(QStringLiteral("actionGenerate"));
         centralWidget = new QWidget(StuffFinderClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
@@ -168,6 +171,7 @@ public:
     void retranslateUi(QMainWindow *StuffFinderClass)
     {
         StuffFinderClass->setWindowTitle(QApplication::translate("StuffFinderClass", "StuffFinder", 0));
+        actionGenerate->setText(QApplication::translate("StuffFinderClass", "Generate", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StuffFinderClass", "List View", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StuffFinderClass", "Category view", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("StuffFinderClass", "Search Results", 0));

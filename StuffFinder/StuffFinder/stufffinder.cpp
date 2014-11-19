@@ -40,6 +40,8 @@ StuffFinder::StuffFinder(QWidget *parent)
 	//set current tab to changelog
 	ui.tabWidget_2->setCurrentIndex(0);
 
+	//Add Generate button to shopping list menu button
+	ui.menuShopping_List->addAction("Generate", this, SLOT(ShoppingListClicked()));
 
 	connect(ui.layoutComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(HandleLayoutChange(int)));
 
@@ -774,4 +776,9 @@ void StuffFinder::UpdateNotifications()
 		new_note->setText(0, QString::fromStdString(notifications[i]));
 		ui.notifications_treewidget->addTopLevelItem(new_note);
 	}
+}
+
+void StuffFinder::ShoppingListClicked()
+{
+	qDebug() << "shopping list clicked.";
 }
