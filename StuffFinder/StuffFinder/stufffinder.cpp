@@ -113,13 +113,6 @@ StuffFinder::StuffFinder(QWidget *parent)
 	//lock the graphic view window so that you can't draw
 	ui.graphics_view->setInteractive(false);
 
-	//clear the notification and changelog trees
-	ui.notifications_treewidget->clear();
-	ui.notifications_treewidget->header()->close();
-	ui.notifications_treewidget->setColumnCount(1);
-	ui.change_log_treewidget->clear();
-	ui.change_log_treewidget->header()->close();
-	ui.change_log_treewidget->setColumnCount(1);
 }
 
 StuffFinder::~StuffFinder()
@@ -201,6 +194,8 @@ void StuffFinder::OutputItemTree()
 	}
 	//update notifications
 	UpdateNotifications();
+	//update changlog
+	UpdateChangeLog();
 	scene_->update();
 }
 
@@ -792,16 +787,24 @@ void StuffFinder::UpdateNotifications()
 void StuffFinder::ShoppingListClicked()
 {
 	qDebug() << "shopping list clicked.";
-	std::vector<std::string> output;
-	//Test output
-	output.push_back("Hammer");
-	output.push_back("Milk");
-	output.push_back("Paper");
-	output.push_back("Pen");
-	output.push_back("Chips");
-	output.push_back("Toothpaste");
-	//End of Test output
+	std::vector<std::string> output = db.GenerateShoppingList(2);
 
 	Shoppinglist *shopping_list_window = new Shoppinglist(this, output);
 	shopping_list_window->exec();
+}
+
+void StuffFinder::UpdateChangeLog()
+{
+	ui.change_log_treewidget->clear();
+	ui.change_log_treewidget->header()->close();
+	ui.change_log_treewidget->setColumnCount(1);
+
+	//load changelog
+	std::vector<std::string> changelog = db.GetChangelog();
+	for (int i = 0; i < changelog.size(); i++)
+	{
+		QTreeWidgetItem *new_log = new QTreeWidgetItem(ui.change_log_treewidget);
+		new_log->setText(0, QString::fromStdString(changelog[i]));
+		ui.change_log_treewidget->addTopLevelItem(new_log);
+	}
 }

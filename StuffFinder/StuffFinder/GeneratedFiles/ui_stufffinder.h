@@ -129,7 +129,8 @@ public:
         __qtreewidgetitem3->setText(0, QStringLiteral("1"));
         change_log_treewidget->setHeaderItem(__qtreewidgetitem3);
         change_log_treewidget->setObjectName(QStringLiteral("change_log_treewidget"));
-        change_log_treewidget->setGeometry(QRect(0, 1, 426, 191));
+        change_log_treewidget->setGeometry(QRect(0, 0, 428, 91));
+        change_log_treewidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         tabWidget_2->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QStringLiteral("tab_5"));
@@ -138,7 +139,8 @@ public:
         __qtreewidgetitem4->setText(0, QStringLiteral("1"));
         notifications_treewidget->setHeaderItem(__qtreewidgetitem4);
         notifications_treewidget->setObjectName(QStringLiteral("notifications_treewidget"));
-        notifications_treewidget->setGeometry(QRect(0, 1, 431, 191));
+        notifications_treewidget->setGeometry(QRect(0, 0, 428, 91));
+        notifications_treewidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         tabWidget_2->addTab(tab_5, QString());
         expand_button = new QPushButton(centralWidget);
         expand_button->setObjectName(QStringLiteral("expand_button"));
