@@ -632,7 +632,15 @@ std::vector<std::string> Database::GenerateShoppingList(int days_until_next_shop
 			sum_x_squared += data[z].first * data[z].first;
 			sum_x_y += data[z].first * data[z].second;
 		}
-		double slope = (sum_x_y - (sum_x * (sum_y / data.size()))) / (sum_x_squared - (sum_x * (sum_x / data.size())));
+		double slope;
+		if (data.size() > 1)
+		{
+			slope = (sum_x_y - (sum_x * (sum_y / data.size()))) / (sum_x_squared - (sum_x * (sum_x / data.size())));
+		}
+		else
+		{
+			slope = 0;
+		}
 		//check if slope*days > surplus
 		if ((slope * days_until_next_shopping_trip) > (double)item_surplus[x])
 		{
