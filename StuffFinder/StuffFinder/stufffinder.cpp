@@ -787,7 +787,7 @@ void StuffFinder::UpdateNotifications()
 void StuffFinder::ShoppingListClicked()
 {
 	qDebug() << "shopping list clicked.";
-	std::vector<std::string> output = db.GenerateShoppingList(2);
+	std::vector<std::string> output = db.GenerateShoppingList(7);
 
 	Shoppinglist *shopping_list_window = new Shoppinglist(this, output);
 	shopping_list_window->exec();
