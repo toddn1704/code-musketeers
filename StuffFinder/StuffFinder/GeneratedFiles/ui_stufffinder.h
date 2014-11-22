@@ -21,7 +21,6 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
@@ -55,13 +54,12 @@ public:
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuShopping_List;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *StuffFinderClass)
     {
         if (StuffFinderClass->objectName().isEmpty())
             StuffFinderClass->setObjectName(QStringLiteral("StuffFinderClass"));
-        StuffFinderClass->resize(1206, 700);
+        StuffFinderClass->resize(1206, 689);
         actionGenerate = new QAction(StuffFinderClass);
         actionGenerate->setObjectName(QStringLiteral("actionGenerate"));
         centralWidget = new QWidget(StuffFinderClass);
@@ -148,15 +146,12 @@ public:
         StuffFinderClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StuffFinderClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1206, 21));
+        menuBar->setGeometry(QRect(0, 0, 1206, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuShopping_List = new QMenu(menuBar);
         menuShopping_List->setObjectName(QStringLiteral("menuShopping_List"));
         StuffFinderClass->setMenuBar(menuBar);
-        statusBar = new QStatusBar(StuffFinderClass);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        StuffFinderClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuShopping_List->menuAction());

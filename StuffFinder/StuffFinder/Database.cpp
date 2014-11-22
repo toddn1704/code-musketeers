@@ -158,7 +158,7 @@ void Database::CreateItem(Item *new_item, int parent_id, int category)
 	//return sqlite3_last_insert_rowid(db);
 	if (new_item->get_track())
 	{
-		CreateItemData(new_item->get_container_id());
+		CreateItemData(new_item->get_item_id());
 	}
 
 	UpdateChangeLog(new_item->get_name(),"Created Item");
@@ -219,12 +219,15 @@ void Database::UpdateItem(Item* up_item)
 	}
 	//gets the old data from the database and compares to the new ones
 	//sees if quanity or track tag has changed
-	sql = "SELECT ITEM WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) + ";";
-	if ((qry_result[0][7] == "1") && (atoi(qry_result[0][5].c_str()) > up_item->get_quantity()))
+	sql = "SELECT * FROM ITEM WHERE ITEM_ID = " + std::to_string(up_item->get_item_id()) + ";";
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	std::vector<std::vector<std::string>> old_data = qry_result;
+	qry_result.clear();
+	if ((old_data[0][7] == "1") && (atoi(old_data[0][5].c_str()) > up_item->get_quantity()))
 	{
-		UpdateItemData(up_item->get_item_id(), atoi(qry_result[0][5].c_str()) - up_item->get_quantity());
+		UpdateItemData(up_item->get_item_id(), atoi(old_data[0][5].c_str()) - up_item->get_quantity());
 	}
-	if (atoi(qry_result[0][7].c_str()) != track)
+	if (atoi(old_data[0][7].c_str()) != track)
 	{
 		if (up_item->get_track())
 		{
@@ -556,14 +559,14 @@ void Database::UpdateItemData(int id, int amount)
 	int rc;
 
 	sql = "SELECT * FROM ITEMDATA" + std::to_string(id) + " LIMIT 1;";
-	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
-	int old_time = atoi(qry_result[0][6].c_str());
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
+	int old_time = atoi(qry_result[0][5].c_str());
 	//calculate date difference to determine the new time since the beginning
 	time_t now_time = time(0);
-	struct tm *before = { 0 };
-	before->tm_year = atoi(qry_result[0][2].c_str()) - 1900;
-	before->tm_mon = atoi(qry_result[0][3].c_str()) - 1;
-	before->tm_mday = atoi(qry_result[0][4].c_str());
+	struct tm *before = new tm;
+	before->tm_year = atoi(qry_result[0][1].c_str()) - 1900;
+	before->tm_mon = atoi(qry_result[0][2].c_str()) - 1;
+	before->tm_mday = atoi(qry_result[0][3].c_str());
 	qry_result.clear();
 
 	
@@ -586,7 +589,7 @@ std::vector<std::string> Database::GenerateShoppingList(int days_until_next_shop
 	int rc;
 
 	sql = "SELECT * FROM ITEM WHERE TRACKER = 1;";
-	rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+	rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 
 	std::vector<int> item_ids;
 	std::vector<int> item_surplus;
@@ -604,7 +607,7 @@ std::vector<std::string> Database::GenerateShoppingList(int days_until_next_shop
 	{
 		std::vector<std::pair<int, int>> data;
 		sql = "SELECT * FROM ITEMDATA" + std::to_string(item_ids[x]) + ";";
-		rc = sqlite3_exec(db, sql.c_str(), Insert_callback, 0, &zErrMsg);
+		rc = sqlite3_exec(db, sql.c_str(), Select_callback, this, &zErrMsg);
 		//turn data into points
 		int x_point = 0;
 		int y_point = 0;
