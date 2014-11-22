@@ -45,6 +45,11 @@ void Layout::SearchName(std::string name,std::vector<Item> &search_results) {
 Container* Layout::SearchContainer(int id) {
 	Container* found;
 	for (unsigned int x = 0; x < rooms.size(); x++) {
+		if (rooms[x]->get_container_id() == id)
+		{
+			found = rooms[x];
+			return found;
+		}
 		found = rooms[x]->SearchContainer(id);
 		if (found != NULL) {
 			break;
